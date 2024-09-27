@@ -147,6 +147,11 @@ export const register = () => {
                     </Form.Item>
                 </Col>
             </Row>
+            <Row>
+                <Col span={24} className='register__inputs'>
+                    <Link to='/' className='register__text'>Iniciar sesión</Link>
+                </Col>
+            </Row>
             </Form>
     </div>
   )

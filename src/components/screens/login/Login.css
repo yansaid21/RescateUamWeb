@@ -94,3 +94,6 @@
     color: #000;
 }
 
+.content .content__error{
+    color: red;
+}
