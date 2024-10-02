@@ -6,28 +6,23 @@ import { GoogleButton } from '../../atoms/GoogleButton/GoogleButton';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 
-const onFinish = (values) => {
-    console.log('Success:', values);
-};
-
-const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-};
-
 export const Login = () => {
     const validate = values => {
         const errors = {};
         if (!values.email) {
-        errors.email = 'Este campo es requerido';
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Correo inválido, debe ser dominio @autonoma';
+            errors.email = 'Este campo es requerido';
+        } else if (!/^[A-Z0-9._%+-]+@autonoma\.edu\.co$/i.test(values.email)) {
+            errors.email = 'Correo inválido, debe ser dominio @autonoma';
         }
-    
+        if (!values.password) {
+            errors.password = 'Este campo es requerido';
+        }
         return errors;
     }; 
     const formik = useFormik({
         initialValues: {
             email: '',
+            password: ''
         },
         validate,
         onSubmit: values => {
@@ -44,38 +39,30 @@ export const Login = () => {
                 labelCol={{
                     span: 8,
                 }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 onSubmit={formik.handleSubmit}
             >
-                <Form.Item
-                    rules={[
-                        {
-                        required: true,
-                        message: '¡Ingresa tu correo!',
-                        },
-                    ]}
-                    >
+                <Form.Item>
                     <Input 
                         placeholder="Correo" 
                         className='content__input'
                         id="email"
                         name="email"
                         onChange={formik.handleChange}
-                        value={formik.values.firstName}
-                        />
+                        value={formik.values.email}
+                    />
                         {formik.errors.email ? <div className='content__error'>{formik.errors.email}</div> : null}
                 </Form.Item>
-                <Form.Item
-                    rules={[
-                        {
-                        required: true,
-                        message: '¡Ingresa tu contraseña!',
-                        },
-                    ]}
-                    >
-                    <Input.Password placeholder='Contraseña' className='content__input'/>
+                <Form.Item>
+                    <Input.Password 
+                        placeholder='Contraseña' 
+                        className='content__input'
+                        id='password'
+                        name='password'
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                        />
+                        {formik.errors.password ? <div className='content__error'>{formik.errors.password}</div> : null}
                 </Form.Item>
                 <Form.Item>
                     <Button htmlType="submit" className='content__button' type="submit">

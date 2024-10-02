@@ -109,3 +109,7 @@ input[type="password"]::placeholder {
     margin: 10px;
     text-decoration: underline;
 }
+
+.register .register__error{
+    color: red;
+}
