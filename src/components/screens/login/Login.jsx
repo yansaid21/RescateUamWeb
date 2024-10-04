@@ -33,13 +33,8 @@ export const Login = () => {
         <div className='content'>
             <img src={Logo} className='content__logo'/>
             <h2 className='content__title'>Bienvenido a Rescate UAM</h2>
-            <Form
-                name="basic"
+            <form
                 className='content__form'
-                labelCol={{
-                    span: 8,
-                }}
-                autoComplete="off"
                 onSubmit={formik.handleSubmit}
             >
                 <Form.Item>
@@ -69,7 +64,7 @@ export const Login = () => {
                         Aceptar
                     </Button>
                 </Form.Item>
-            </Form>
+            </form>
             <h4 className='content__text'>Entrar con</h4>
             <GoogleButton/>
             <Link className='content__text' to='/register'>Registrarse</Link>

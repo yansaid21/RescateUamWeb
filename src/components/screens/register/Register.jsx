@@ -10,51 +10,44 @@ export const register = () => {
         const errors = {};
         
         //email validation
-        if (!/^[A-Z0-9._%+-]+@autonoma\.edu\.co$/i.test(values.email)) {
-            errors.email = 'Correo inválido, debe ser dominio @autonoma';
-        } else if (!values.email){
+        if (!values.email){
             errors.email = 'Este campo es requerido';
+        } else if (!/^[A-Z0-9._%+-]+@autonoma\.edu\.co$/i.test(values.email)) {
+            errors.email = 'Correo inválido, debe ser dominio @autonoma';
         }
         
         //pasword validation
-        if (values.password.length < 8){
+        if (!values.password){
             errors.password = 'La contraseña debe tener más de 8 dígitos'
-        } else if (!values.password){
+        } else if (values.password.length < 8){
             errors.password = 'Este campo es requerido';
         }
 
         // repassword validation
-        if (values.password !== values.repassword){
+        if (!values.password ){
             errors.repassword = 'Las contraseñas no coinciden'
-        } else if (!values.password){
+        } else if (values.password !== values.repassword){
             errors.repassword = 'Este campo es requerido';
         }
         
         //name validation 
-        if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.name)){
+        if(!values.name){
             errors.name = 'El nombre solo contiene letras'
-        } else if (!values.name ){
+        } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.name)){
             errors.name = 'Este campo es requerido';
         }
         
         //lastname validation
-        if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.lastname)){
+        if(!values.lastname){
             errors.lastname = 'El apellido solo contiene letras'
-        } else if (!values.lastname){
+        } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.lastname)){
             errors.lastname = 'Este campo es requerido';
-        }
-        
-        //program validation
-        if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.program)){
-            errors.program = 'Este campo es requerido';
-        } else if (!values.program){
-            errors.program = 'El programa solo contiene letras'
         }
 
         // id validation
-        if (!/^[0-9]+$/.test(values.id)){
+        if (!values.id){
             errors.id = 'La identificación es con números'
-        } else if(!values.id){
+        } else if(!/^[0-9]+$/.test(values.id)){
             errors.repassword = 'Este campo es requerido';
         }
 
@@ -72,8 +65,8 @@ export const register = () => {
             name: '',
             lastname: '',
             repassword: '',
-            program: '',
-            id: ''
+            id: '',
+            terms: false
         },
         validate,
         onSubmit: values => {
@@ -84,12 +77,7 @@ export const register = () => {
     <div className='register'>
         <img src={Logo} className='register__logo'/>
         <h2 className='register__title'>Regístrate en Rescate UAM</h2>
-        <Form
-            name="basic"
-            labelCol={{
-                span: 8,
-            }}
-            autoComplete="off"
+        <form
             onSubmit={formik.handleSubmit}
         >   
             <Row gutter={16}>
@@ -172,22 +160,6 @@ export const register = () => {
                 <Col>
                     <Form.Item>
                         <Input 
-                            placeholder="Programa" 
-                            className='register__input'
-                            id="program"
-                            name="program"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.program}
-                            />
-                            {formik.touched.program && formik.errors.program ? (<div className='register__error'>{formik.errors.program}</div>) : null}
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={24} className='register__inputs'>
-                    <Form.Item>
-                        <Input 
                             placeholder="Cédula/Tarjeta Identidad" 
                             className='register__input'
                             id="id"
@@ -235,7 +207,7 @@ export const register = () => {
                     <Link to='/' className='register__text'>Iniciar sesión</Link>
                 </Col>
             </Row>
-            </Form>
+            </form>
     </div>
   )
 }
