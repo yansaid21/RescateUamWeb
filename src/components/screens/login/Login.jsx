@@ -65,8 +65,6 @@ export const Login = () => {
                     </Button>
                 </Form.Item>
             </form>
-            <h4 className='content__text'>Entrar con</h4>
-            <GoogleButton/>
             <Link className='content__text' to='/register'>Registrarse</Link>
         </div>
     )

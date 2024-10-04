@@ -79,8 +79,9 @@ export const register = () => {
         <h2 className='register__title'>Regístrate en Rescate UAM</h2>
         <form
             onSubmit={formik.handleSubmit}
+            className='register__form'
         >   
-            <Row gutter={16}>
+            <Row gutter={16} className='register__inputs'>
                 <Col>
                     <Form.Item>
                         <Input 
@@ -111,7 +112,7 @@ export const register = () => {
                     
                 </Col>
             </Row>
-            <Row gutter={16}>
+            <Row gutter={16} className='register__inputs'>
                 <Col >
                     <Form.Item>
                         <Input.Password 
@@ -142,7 +143,7 @@ export const register = () => {
                     </Form.Item>
                 </Col>
             </Row>
-            <Row gutter={16}>
+            <Row gutter={16} className='register__inputs'>
                 <Col>
                     <Form.Item>
                         <Input.Password 
