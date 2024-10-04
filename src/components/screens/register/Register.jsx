@@ -1,11 +1,11 @@
 import React from 'react'
-import  Logo  from '../../../assets/Logos_UAM-07.png';
+import  Logo  from '../../../assets/UAM/Logos_UAM-07.png';
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import './Register.css';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 
-export const register = () => {
+export const Register = () => {
     const validate = values => {
         const errors = {};
         

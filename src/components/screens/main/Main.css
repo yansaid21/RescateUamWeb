@@ -1,0 +1,12 @@
+.mainContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.BigButton{
+  margin-top: 50px;
+}
+.mainTypeEmergencyButton{
+  margin-top: 30px;
+}
