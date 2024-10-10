@@ -2,12 +2,15 @@ import React from 'react';
 import './Login.css';
 import  Logo  from '../../../assets/Logos_UAM-07.png'
 import { Button, Form, Input } from 'antd';
-import { GoogleButton } from '../../atoms/GoogleButton/GoogleButton';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { Auth } from '../../../api/auth';
+
+const authController = new Auth();
 
 export const Login = () => {
     const validate = values => {
+
         const errors = {};
         if (!values.email) {
             errors.email = 'Este campo es requerido';
@@ -19,16 +22,46 @@ export const Login = () => {
         }
         return errors;
     }; 
+    
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: ''
         },
         validate,
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: async values => {
+
+            const data = {
+                email: values.email,
+                password: values.password,
+                device_name: 'myDevice' 
+            };
+
+            try{
+                const response = await authController.login(data);
+                
+                console.log('response en login ', response);
+                
+                if (response.token) {
+                    console.log('Login exitoso', response);
+                } else if(response.status === 422){
+                    console.log('Error de login', response);
+                    alert('Contraseña incorrecta. Inténtalo de nuevo.');
+                }
+            } catch(error){
+                if (error.response) {
+                    if (error.response.status === 422) {
+                        alert('Contraseña incorrecta. Inténtalo de nuevo.');
+                    } else {
+                        alert('Error durante el inicio de sesión. Por favor, intenta más tarde.');
+                    }
+                }
+            }
+
         }
     });
+
     return (
         <div className='content'>
             <img src={Logo} className='content__logo'/>
