@@ -5,6 +5,7 @@ import { Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Auth } from '../../../api/auth';
+import CompleteRegister from '../../atoms/completeRegister/CompleteRegister';
 
 const authController = new Auth();
 
@@ -95,6 +96,9 @@ export const Login = () => {
                 <Form.Item>
                     <Button htmlType="submit" className='content__button' type="submit">
                         Aceptar
+                    </Button>
+                    <Button>
+                        <CompleteRegister/>
                     </Button>
                 </Form.Item>
             </form>
