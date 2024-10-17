@@ -3,14 +3,23 @@
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    width: auto;
 }
 
 .content .content__logo{
-    position: absolute;
+    display: flex;
     width: 247px;
     height: 147px;
-    left: 0px;
-    top: 2px;
+    justify-content: center;
+}
+
+.content .content__form {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .content .content__title{
@@ -21,11 +30,12 @@
     line-height: 43px;
     text-align: center;
     color: #0090D0;
-    margin-top: 86px;
+    margin: 20px;
 }
 
 .content .content__input{
-    width: 413px;
+    width: 300px;
+    max-width: 600px;
     height: 48px;
     background: #D9D9D9;
     border-radius: 20px;
@@ -96,4 +106,39 @@
 
 .content .content__error{
     color: red;
+}
+
+/* pantallas medianas */
+@media (min-width: 768px) {
+    .content .content__button {
+        width: 180px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .content .content__text {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
+/* Estilos para pantallas grandes (desktops) */
+@media (min-width: 1024px) {
+    .content .content__logo {
+        position: absolute;
+        width: 247px;
+        height: 147px;
+        left: 0px;
+        top: 2px;
+    }
+
+    .content .content__title {
+        font-size: 36px;
+        line-height: 43px;
+        margin-top: 86px;
+    }
+
+    .content .content__input{
+        width: 450px;
+    }
 }

@@ -1,68 +1,62 @@
-.register{
+/* Estilo base para móviles (mobile-first) */
+.register {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
 }
 
-.register .register__logo{
-    position: absolute;
-    width: 247px;
-    height: 147px;
-    left: 0px;
-    top: 2px;
+.register .register__logo {
+    display: flex;
+    width: 200px;
+    height: 100px;
+    justify-content: center;
 }
 
-.register .register__title{
-    width: 310px;
-    height: 86px;
+.register .register__title {
+    width: 100%;
     font-weight: 400;
-    font-size: 36px;
-    line-height: 43px;
+    font-size: 24px;
+    line-height: 30px;
     text-align: center;
     color: #0090D0;
-    margin-top: 86px;
 }
 
-.register .register__form{
+.register .register__form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.register .register__inputs {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: nowrap;
 }
 
-.register .register__inputs{
+.register .register__input {
     display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.register .register__input{
-    width: 413px;
+    width: 300px;
+    max-width: 600px;
     height: 48px;
     background: #D9D9D9;
-    border-radius: 20px;
+    border-radius: 15px;
+    margin: 10px;
 }
 
-.register__input:focus {
-    border-color: #D9D9D9; 
-    box-shadow: 0 0 5px #D9D9D9; 
-    outline: none;
-}
-
+.register__input:focus,
 .register__input:hover {
-    border-color: #D9D9D9; 
-    box-shadow: 0 0 5px #D9D9D9; 
+    border-color: #D9D9D9;
+    box-shadow: 0 0 5px #D9D9D9;
     outline: none;
 }
 
 .register__input::placeholder {
-    color: #000; 
-    opacity: 1; 
-}
-
-.register__input .ant-input-suffix .anticon {
     color: #000;
+    opacity: 1;
 }
 
 input[type="password"]::placeholder {
@@ -70,46 +64,107 @@ input[type="password"]::placeholder {
     opacity: 1;
 }
 
-.register .register__button{
-    width: 212px;
-    height: 49px;
+.register__input .ant-input-suffix .anticon {
+    color: #000;
+}
+
+.register .register__button {
+    width: 150px;
+    height: 40px;
     background: #0069A3;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 19px;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     color: #FFFFFF;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     margin: 10px;
 }
 
-:where(.css-dev-only-do-not-override-qnu6hi).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
-    background: #D9D9D9;
-    border-color: #D9D9D9;
-    color: #000;
-}
-
-.ant-checkbox-input{
-    background: #0069A3;
-}
-
-.register .register__terms{
+.register .register__terms {
     text-decoration: underline;
-    color:#0090D0;
+    color: #0090D0;
 }
 
-.register .register__text{
+.register .register__text {
     font-style: normal;
     font-weight: 900;
-    font-size: 15px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 20px;
     text-align: center;
     color: #BDBDBD;
     margin: 10px;
     text-decoration: underline;
 }
 
-.register .register__error{
+.register .register__error {
     color: red;
+}
+
+@media (min-width: 768px) {
+    .register {
+        padding: 20px;
+    }
+
+    .register .register__logo {
+        width: 247px;
+        height: 147px;
+    }
+
+    .register .register__title {
+        font-size: 36px;
+        margin: 20px;
+    }
+
+    .register .register__inputs {
+        margin-top: 10px;
+    }
+
+    .register .register__button {
+        width: 180px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .register .register__text {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .register {
+        padding: 40px;
+    }
+
+    .register .register__logo {
+        position: absolute;
+        width: 247px;
+        height: 147px;
+        left: 0px;
+        top: 2px;
+    }
+
+    .register .register__title {
+        width: 310px;
+        font-size: 36px;
+        line-height: 43px;
+        margin-top: 86px;
+    }
+
+    .register .register__input {
+        width: 450px;
+    }
+
+    .register .register__button {
+        width: 212px;
+        height: 49px;
+        font-size: 20px;
+    }
+
+    .register .register__text {
+        font-size: 15px;
+        line-height: 24px;
+    }
 }
