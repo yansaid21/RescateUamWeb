@@ -1,0 +1,31 @@
+.typeButtonContainer {
+  border-radius: 19px; /* Para asegurar que el contenedor también sea redondo */
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); /* Sombra similar a React Native */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 212px;  
+  height: 49px; 
+  transition: background-color 0.3s; /* Añade una transición suave */
+}
+
+.typeButton {
+  background-color: #8CB7D0; /* Color del botón */
+}
+
+.typeButtonPressed {
+  background-color: #F4D73B; /* Color del botón cuando se presiona */
+}
+
+.typeButtonText {
+  color: #FFFFFF;
+  font-size: 20px;
+  text-align: center;  
+  font-weight: bold;
+  text-shadow: 0 3px 3px rgba(0, 0, 0, 0.25); /* Sombra del texto */
+}
+
+.typeButtonPressedText {
+  color: #000000; /* Color del texto cuando se presiona el botón */
+}
