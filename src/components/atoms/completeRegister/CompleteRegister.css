@@ -119,6 +119,11 @@
     margin-bottom: 15px;
 }
 
+.section{
+    display: flex;
+    flex-direction: column;
+}
+
 @media (min-width: 768px) {
     .modal .modal__content {
         width: 550px;
@@ -134,10 +139,14 @@
 
 @media (min-width: 1024px) {
     .modal .modal__content {
-        width: 600px;
+        width: auto;
         padding: 1rem;
     }
     .form .form__input {
-        width: 500px;
+        width: 400px;
+        margin: 10px;
+    }
+    .section{
+        flex-direction: row;
     }
 }

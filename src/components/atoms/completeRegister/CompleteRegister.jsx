@@ -67,6 +67,7 @@ const CompleteRegister = () => {
                     className='form'
                     onSubmit={formik.handleSubmit}
                 >
+                    <div className='section'>
                     <Form.Item>
                         <Input 
                             placeholder="Grupo sanguíneo" 
@@ -89,6 +90,9 @@ const CompleteRegister = () => {
                         />
                         {formik.errors.phone_number ? <div className='error__text'>{formik.errors.phone_number}</div> : null}
                     </Form.Item>
+                    </div>
+                    <div className='section'>
+
                     <Form.Item>
                         <Input 
                             placeholder="EPS" 
@@ -111,6 +115,7 @@ const CompleteRegister = () => {
                         />
                         {formik.errors.code ? <div className='error__text'>{formik.errors.code}</div> : null}
                     </Form.Item>
+                    </div>
                     <Form.Item>
                         <label className="upload__label" htmlFor="photo">
                             <UploadOutlined className="upload__icon" />
