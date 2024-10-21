@@ -1,8 +1,9 @@
 import React from 'react';
 import './Login.css';
-import  Logo  from '../../../assets/Logos_UAM-07.png'
+import Logo from '../../../assets/UAM/Logos_UAM-07.png';
 import { Button, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { GoogleButton } from '../../atoms/GoogleButton/GoogleButton';
+import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { useFormik } from 'formik';
 import { Auth } from '../../../api/auth';
 import CompleteRegister from '../../atoms/completeRegister/CompleteRegister';
@@ -10,6 +11,8 @@ import CompleteRegister from '../../atoms/completeRegister/CompleteRegister';
 const authController = new Auth();
 
 export const Login = () => {
+    const navigate = useNavigate(); // Obtén la función de navegación
+
     const validate = values => {
 
         const errors = {};
@@ -46,6 +49,7 @@ export const Login = () => {
                 
                 if (response.token) {
                     console.log('Login exitoso', response);
+                    navigate('/main');
                 } else if(response.status === 422){
                     console.log('Error de login', response);
                     alert('Contraseña incorrecta. Inténtalo de nuevo.');
@@ -65,11 +69,15 @@ export const Login = () => {
 
     return (
         <div className='content'>
-            <img src={Logo} className='content__logo'/>
+            <img src={Logo} className='content__logo' />
             <h2 className='content__title'>Bienvenido a Rescate UAM</h2>
             <form
                 className='content__form'
-                onSubmit={formik.handleSubmit}
+                labelCol={{
+                    span: 8,
+                }}
+                autoComplete="off"
+                onFinish={formik.handleSubmit} 
             >
                 <Form.Item>
                     <Input 
@@ -80,7 +88,7 @@ export const Login = () => {
                         onChange={formik.handleChange}
                         value={formik.values.email}
                     />
-                        {formik.errors.email ? <div className='content__error'>{formik.errors.email}</div> : null}
+                    {formik.errors.email ? <div className='content__error'>{formik.errors.email}</div> : null}
                 </Form.Item>
                 <Form.Item>
                     <Input.Password 
@@ -90,11 +98,11 @@ export const Login = () => {
                         name='password'
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        />
-                        {formik.errors.password ? <div className='content__error'>{formik.errors.password}</div> : null}
+                    />
+                    {formik.errors.password ? <div className='content__error'>{formik.errors.password}</div> : null}
                 </Form.Item>
                 <Form.Item>
-                    <Button htmlType="submit" className='content__button' type="submit">
+                    <Button htmlType="submit" className='content__button'>
                         Aceptar
                     </Button>
                     <Button>
@@ -104,7 +112,5 @@ export const Login = () => {
             </form>
             <Link className='content__text' to='/register'>Registrarse</Link>
         </div>
-    )
+    );
 }
-
-
