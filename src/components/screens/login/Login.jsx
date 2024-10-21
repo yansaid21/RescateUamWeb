@@ -5,11 +5,16 @@ import { Button, Form, Input } from 'antd';
 import { GoogleButton } from '../../atoms/GoogleButton/GoogleButton';
 import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { useFormik } from 'formik';
+import { Auth } from '../../../api/auth';
+import CompleteRegister from '../../atoms/completeRegister/CompleteRegister';
+
+const authController = new Auth();
 
 export const Login = () => {
     const navigate = useNavigate(); // Obtén la función de navegación
 
     const validate = values => {
+
         const errors = {};
         if (!values.email) {
             errors.email = 'Este campo es requerido';
@@ -20,7 +25,8 @@ export const Login = () => {
             errors.password = 'Este campo es requerido';
         }
         return errors;
-    };
+    }; 
+    
 
     const formik = useFormik({
         initialValues: {
@@ -28,10 +34,36 @@ export const Login = () => {
             password: ''
         },
         validate,
-        onSubmit: values => {
-            //alert(JSON.stringify(values, null, 2));
-            
-            navigate('/main'); 
+        onSubmit: async values => {
+
+            const data = {
+                email: values.email,
+                password: values.password,
+                device_name: 'myDevice' 
+            };
+
+            try{
+                const response = await authController.login(data);
+                
+                console.log('response en login ', response);
+                
+                if (response.token) {
+                    console.log('Login exitoso', response);
+                    navigate('/main');
+                } else if(response.status === 422){
+                    console.log('Error de login', response);
+                    alert('Contraseña incorrecta. Inténtalo de nuevo.');
+                }
+            } catch(error){
+                if (error.response) {
+                    if (error.response.status === 422) {
+                        alert('Contraseña incorrecta. Inténtalo de nuevo.');
+                    } else {
+                        alert('Error durante el inicio de sesión. Por favor, intenta más tarde.');
+                    }
+                }
+            }
+
         }
     });
 
@@ -39,8 +71,7 @@ export const Login = () => {
         <div className='content'>
             <img src={Logo} className='content__logo' />
             <h2 className='content__title'>Bienvenido a Rescate UAM</h2>
-            <Form
-                name="basic"
+            <form
                 className='content__form'
                 labelCol={{
                     span: 8,
@@ -74,10 +105,11 @@ export const Login = () => {
                     <Button htmlType="submit" className='content__button'>
                         Aceptar
                     </Button>
+                    <Button>
+                        <CompleteRegister/>
+                    </Button>
                 </Form.Item>
-            </Form>
-            <h4 className='content__text'>Entrar con</h4>
-            <GoogleButton />
+            </form>
             <Link className='content__text' to='/register'>Registrarse</Link>
         </div>
     );
