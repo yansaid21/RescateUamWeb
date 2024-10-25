@@ -2,13 +2,14 @@ import React from 'react'
 import  Logo  from '../../../assets/UAM/Logos_UAM-07.png';
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import './Register.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Auth } from '../../../api/auth';
 
 const authController = new Auth();
 
 export const Register = () => {
+    const navigate = useNavigate();
     const validate = values => {
         const errors = {};
         
@@ -87,9 +88,10 @@ export const Register = () => {
             console.log('response ', response);
             
             if (response.data.is_active) {
-                console.log('Login exitoso', response);
+                console.log('register exitoso', response);
+                navigate('/');
             } else {
-                console.log('Error de login', response);
+                console.log('Error de register', response);
             }
         }
     });

@@ -124,6 +124,11 @@
     flex-direction: column;
 }
 
+.btn{
+    display: flex;
+    justify-content: center;
+}
+
 @media (min-width: 768px) {
     .modal .modal__content {
         width: 550px;

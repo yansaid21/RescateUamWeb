@@ -2,11 +2,9 @@ import React from 'react';
 import './Login.css';
 import Logo from '../../../assets/UAM/Logos_UAM-07.png';
 import { Button, Form, Input } from 'antd';
-import { GoogleButton } from '../../atoms/GoogleButton/GoogleButton';
 import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { useFormik } from 'formik';
 import { Auth } from '../../../api/auth';
-import CompleteRegister from '../../atoms/completeRegister/CompleteRegister';
 
 const authController = new Auth();
 
@@ -49,6 +47,8 @@ export const Login = () => {
                 
                 if (response.token) {
                     console.log('Login exitoso', response);
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('id', response.user.id);
                     navigate('/main');
                 } else if(response.status === 422){
                     console.log('Error de login', response);
@@ -73,11 +73,8 @@ export const Login = () => {
             <h2 className='content__title'>Bienvenido a Rescate UAM</h2>
             <form
                 className='content__form'
-                labelCol={{
-                    span: 8,
-                }}
                 autoComplete="off"
-                onFinish={formik.handleSubmit} 
+                onSubmit={formik.handleSubmit} 
             >
                 <Form.Item>
                     <Input 
@@ -104,9 +101,6 @@ export const Login = () => {
                 <Form.Item>
                     <Button htmlType="submit" className='content__button'>
                         Aceptar
-                    </Button>
-                    <Button>
-                        <CompleteRegister/>
                     </Button>
                 </Form.Item>
             </form>
