@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import Logo from '../../../assets/UAM/Logos_UAM-07.png';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { useFormik } from 'formik';
 import { Auth } from '../../../api/auth';
+import { Spinner } from '../../atoms/Spinner/Spinner';
 
 const authController = new Auth();
 
 export const Login = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate(); // Obtén la función de navegación
 
     const validate = values => {
@@ -33,7 +35,7 @@ export const Login = () => {
         },
         validate,
         onSubmit: async values => {
-
+            setIsLoading(true);
             const data = {
                 email: values.email,
                 password: values.password,
@@ -50,6 +52,7 @@ export const Login = () => {
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('id', response.user.id);
                     navigate('/main');
+                    setIsLoading(false);
                 } else if(response.status === 422){
                     console.log('Error de login', response);
                     alert('Contraseña incorrecta. Inténtalo de nuevo.');
@@ -66,6 +69,10 @@ export const Login = () => {
 
         }
     });
+
+    if(isLoading){
+        return <Spinner/>
+    }
 
     return (
         <div className='content'>
