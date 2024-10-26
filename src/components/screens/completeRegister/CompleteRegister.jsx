@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import './CompleteRegister.css'; 
 //import { updateUserInfoComplete } from '../../auth/put';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Select  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
+import { User } from '../../../api/user';
+import { useNavigate } from 'react-router-dom';
 
-const CompleteRegister = () => {
+const userController = new User();
+
+const CompleteRegister = ({ onClose }) => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
+    const navigate = useNavigate();
+
     const validate = values => {
 
         const errors = {};
         if (!values.rhgb) {
             errors.rhgb = 'Este campo es requerido';
-        } else if (!/^(A|B|AB|O)[+-]$/i.test(values.rhgb)) {
-            errors.rhgb = 'Inválido. Por ejemplo, debe ser A+, O+, etc.';
         }
         if(!values.phone_number){
             errors.phone_number = 'Este campo es requerido';
@@ -47,6 +51,28 @@ const CompleteRegister = () => {
         validate,
         onSubmit: async values => {
             console.log('values ', { ...values, photo: file });
+            try {
+                const token = localStorage.getItem('token');  
+                const id_user = localStorage.getItem('id');
+                
+                const userInfo = await userController.getUserInfo(token, Number(id_user));
+                console.log('userInfo:', userInfo);
+                const userData = {
+                    ...values,
+                    photo: file,
+                    name: userInfo.data.name,
+                    last_name: userInfo.data.last_name, 
+                    id_card: userInfo.data.id_card
+                };
+                
+                
+                const response = await userController.updateUser(token, Number(id_user), userData);
+                console.log('Datos actualizados correctamente', response);
+                onClose();
+                navigate('/main');
+            } catch (error) {
+                console.error('Error al actualizar los datos:', error);
+            }
         }
     });
 
@@ -67,15 +93,25 @@ const CompleteRegister = () => {
                     className='form'
                     onSubmit={formik.handleSubmit}
                 >
+                    <div className='section'>
                     <Form.Item>
-                        <Input 
-                            placeholder="Grupo sanguíneo" 
+                        <Select
+                            placeholder="Selecciona tu grupo sanguíneo"
                             className='form__input'
                             id="rhgb"
                             name="rhgb"
-                            onChange={formik.handleChange}
+                            onChange={value => formik.setFieldValue('rhgb', value)} // Actualiza el valor en Formik
                             value={formik.values.rhgb}
-                        />
+                        >
+                            <Select.Option value="A+">A+</Select.Option>
+                            <Select.Option value="A-">A-</Select.Option>
+                            <Select.Option value="B+">B+</Select.Option>
+                            <Select.Option value="B-">B-</Select.Option>
+                            <Select.Option value="AB+">AB+</Select.Option>
+                            <Select.Option value="AB-">AB-</Select.Option>
+                            <Select.Option value="O+">O+</Select.Option>
+                            <Select.Option value="O-">O-</Select.Option>
+                        </Select>
                         {formik.errors.rhgb ? <div className='error__text'>{formik.errors.rhgb}</div> : null}
                     </Form.Item>
                     <Form.Item>
@@ -89,6 +125,9 @@ const CompleteRegister = () => {
                         />
                         {formik.errors.phone_number ? <div className='error__text'>{formik.errors.phone_number}</div> : null}
                     </Form.Item>
+                    </div>
+                    <div className='section'>
+
                     <Form.Item>
                         <Input 
                             placeholder="EPS" 
@@ -111,6 +150,7 @@ const CompleteRegister = () => {
                         />
                         {formik.errors.code ? <div className='error__text'>{formik.errors.code}</div> : null}
                     </Form.Item>
+                    </div>
                     <Form.Item>
                         <label className="upload__label" htmlFor="photo">
                             <UploadOutlined className="upload__icon" />
@@ -130,7 +170,7 @@ const CompleteRegister = () => {
                             <img src={preview} alt="Preview" className="preview__img" />
                         </div>
                     )}
-                    <Form.Item>
+                    <Form.Item className='btn'>
                         <Button htmlType="submit" className='form__button' type="submit">
                             Aceptar
                         </Button>

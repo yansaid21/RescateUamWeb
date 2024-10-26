@@ -5,5 +5,6 @@ export const ENV = {
     API_ROUTES: {
         REGISTER: 'users',
         LOGIN: 'auth/login',
+        GET_USERS: 'users'
     }
 };
