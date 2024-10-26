@@ -16,10 +16,9 @@
 
 .emergencyButtonPressed {
   background-color: #0090D0;
-  width: 100;
 }
 
-.emergencyLogo {
-  width: 150px;
-  height: 250px;
+.emergencyLogo{
+  width: auto;
+  height: 270px;
 }
