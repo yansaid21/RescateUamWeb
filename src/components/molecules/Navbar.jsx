@@ -22,9 +22,11 @@ const Navbar = () => {
           </Link>
         </button>
         <button className="icon-button">
-          <div className="icon">
-          <MenuOutlined />
-          </div>
+        <Link to="/main/report">
+            <div className="icon">
+            <MenuOutlined />
+            </div>
+        </Link>
         </button>
       </div>
     </div>
