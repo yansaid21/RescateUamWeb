@@ -3,10 +3,12 @@ import './CreateReport.css';
 import { Button, Input  } from 'antd';
 import { useFormik } from 'formik';
 const { TextArea } = Input;
+import { Risk_situation } from '../../../api/risk_situations';
 
-export const CreateReport = ({ onClose }) => {
+const riskController = new Risk_situation();
+
+export const CreateReport = ({ onClose, incidentType  }) => {
     const validate = values => {
-
         const errors = {};
         if (!values.description) {
             errors.description = 'Este campo es requerido';
@@ -22,7 +24,21 @@ export const CreateReport = ({ onClose }) => {
         validate,
         onSubmit: async values => {
             console.log('values ', values);
-            onClose();
+
+            let data = {
+                name: incidentType,
+                description: values.description,
+                id_institution: 1
+            }
+            try{
+                const token = await localStorage.getItem('token');
+                const response = await riskController.createRiskSituation(token, data, data.id_institution);
+                console.log('response ', response);
+                onClose();
+            } catch (error){
+                console.log(error);
+                
+            }
         }
     });
 

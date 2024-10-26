@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import './TypeEmergencyButton.css'; // Asegúrate de crear un archivo CSS para los estilos
 
 
-const TypeEmergencyButton = ({ text }) => {
+const TypeEmergencyButton = ({ text, onClick  }) => {
     const [isYellow, setIsYellow] = useState(true);
 
     const handlePress = () => {
         setIsYellow(!isYellow); 
+        onClick(text);
     };
 
     return (
