@@ -2,7 +2,6 @@ import './App.css'
 import 'typeface-fira-sans';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { GeneralRoutes } from './config/routes';
-import { Login } from './components/screens/login/login';
 
 function App() {
 
@@ -14,7 +13,11 @@ function App() {
             <Route
               key={index}
               path={route.path}
-              element={<route.component />}
+              element={
+              <route.Layout>
+                <route.component />
+              </route.Layout>
+              }
             />
         ))}
       </Routes>
