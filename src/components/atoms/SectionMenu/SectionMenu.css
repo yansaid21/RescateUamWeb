@@ -1,0 +1,35 @@
+.section-menu-container {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+}
+
+.section-menu-link {
+  text-decoration: none;
+}
+
+.section-menu-content {
+  width: 352px;
+  height: 44px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  box-shadow: 0px 4px 12px rgba(39, 34, 70, 0.1);
+  border-radius: 20px;
+}
+
+.section-menu-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 20px;
+}
+
+.section-menu-text {
+  color: #363853;
+}

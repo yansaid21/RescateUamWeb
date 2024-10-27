@@ -53,7 +53,7 @@ export const Main = () => {
     {showCompleteRegister && (
         <CompleteRegister onClose={handleCompleteRegisterClose} />
     )}
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className='mainContainer'>
       <div className='BigButton'>
     <BigEmergencyButton/>
