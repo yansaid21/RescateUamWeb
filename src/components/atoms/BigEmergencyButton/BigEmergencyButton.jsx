@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './BigEmergencyButton.css'; // Asegúrate de crear un archivo CSS para los estilos
-import logo1 from '../../../assets/UAM/Logos_UAM-08.png'; // Ajusta la ruta según tu estructura
+import logo1 from '../../../assets/UAM/Logos_UAM-06.png'; // Ajusta la ruta según tu estructura
 import logo2 from '../../../assets/UAM/Logos_UAM-10.png'
 
 export const BigEmergencyButton = ({ onClick }) => {

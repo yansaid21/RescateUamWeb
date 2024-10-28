@@ -83,7 +83,7 @@ export const Main = () => {
         <CompleteRegister onClose={handleCompleteRegisterClose} />
     )}
     {showCreateReport && <CreateReport onClose={handleReportSubmit} incidentType={incidentType}/>}
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className='mainContainer'>
       <div className='BigButton'>
     <BigEmergencyButton onClick={toggleAlarm}/>
