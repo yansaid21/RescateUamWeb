@@ -6,8 +6,10 @@ import TypeEmergencyButton from '../../atoms/TypeEmergencyButton/TypeEmergencyBu
 import { User } from '../../../api/user';
 import CompleteRegister from '../../screens/completeRegister/CompleteRegister'
 import { CreateReport } from '../CreateReport/CreateReport'
+import { Incidents } from '../../../api/incidents'
 
 const userController = new User();
+const incidentController = new Incidents();
 
 export const Main = () => {
   const [userData, setUserData] = useState(null);
@@ -51,21 +53,37 @@ export const Main = () => {
   const handleCompleteRegisterClose = () => {
     setShowCompleteRegister(false); 
   };
-
-  const toggleAlarm = () => {
+  const [isToggling, setIsToggling] = useState(false);
+  const toggleAlarm = async () => {
+    if (isToggling) return; // Prevenir ejecución si ya está en progreso
+    setIsToggling(true); // Marcar como en ejecución
     
     setAlarmOn(prevAlarmOn => {
       const newAlarmState = !prevAlarmOn;
-
-      if (!newAlarmState) { // Cuando la alarma se desactiva (de true a false)
-          setShowCreateReport(true);
-      } else { // Cuando la alarma se activa
-          setShowCreateReport(false);
+  
+      if (!newAlarmState) {
+        setShowCreateReport(true);
+      } else {
+        setShowCreateReport(false);
+        (async () => {
+          try {
+            const token = await localStorage.getItem('token');
+            console.log('token en create incident ', token);
+            
+            const incident = await incidentController.createIncident(token, 1, 1);
+            localStorage.setItem('id_incident', incident.data.id);
+            console.log('response create incidente', incident);
+          } catch (error) {
+            console.error('Error al crear el incidente:', error);
+          } finally {
+            setIsToggling(false); // Liberar bandera al finalizar
+          }
+        })();
       }
-
+  
       return newAlarmState;
-  });
-};
+    });
+  };
 
   const handleReportSubmit = () => {
     setShowCreateReport(false); 
