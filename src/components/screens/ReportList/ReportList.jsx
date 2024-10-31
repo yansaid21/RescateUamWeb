@@ -1,33 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './ReportList.css';
 import { Button, Input, Space, Table } from 'antd';
-import { AudioOutlined } from '@ant-design/icons';
+import { Incidents } from '../../../api/incidents';
+
+const incidentController = new Incidents();
 
 const columns = [
     {
-        title: 'Incidente',
+        title: 'Situación de riesgo',
         dataIndex: 'incidente',
     },
     {
         title: 'Fecha',
         dataIndex: 'fecha',
-        sorter: (a, b) => a.age - b.age,
+        sorter: (a, b) => new Date(a.fecha) - new Date(b.fecha),
     },
     {
         title: 'Hora INICIO - FIN',
         dataIndex: 'hora',
     },
 ];
-
-const data = Array.from({
-    length: 5,
-    }).map((_, i) => ({
-        key: i,
-        name: 'John Brown',
-        age: Number(`${i}2`),
-        address: `New York No. ${i} Lake Park`,
-        description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-}));
 
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
@@ -38,21 +30,38 @@ export const ReportList = () => {
     const [top, setTop] = useState('none');
     const [bottom, setBottom] = useState('bottomRight');
     const [yScroll, setYScroll] = useState(false);
-    const [rowSelection, setRowSelection] = useState({
-        type: 'radio', // Cambia el tipo de selección a radio
-    });
+    const [incidentsData, setIncidentsData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const scroll = {};
-    if (yScroll) {
-        scroll.y = 240;
-    }
-    const tableColumns = columns.map((item) => ({
-        ...item,
-    }));
+    const fetchIncidents = async () => {
+        setLoading(true);
+        try {
+            const token = await localStorage.getItem('token'); 
+            const response = await incidentController.getIncidents(token, 1, 1);
+            console.log("Incidents fetched:", response);
+            const formattedData = response.data.map((incident, index) => ({
+                key: index,
+                incidente: incident.risk_situation.name, 
+                fecha: incident.initial_date.split(' ')[0],
+                hora: `${incident.initial_date.split(' ')[1]} - ${incident.final_date.split(' ')[1]}`, 
+            }));
+            setIncidentsData(formattedData);
+        } catch (error) {
+            console.error("Error al obtener los incidentes:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchIncidents();
+    }, []);
+
     const tableProps = {
-        scroll,
         bordered,
-        rowSelection
+        rowSelection: { type: 'radio' },
+        pagination: { position: [top, bottom] },
+        scroll: yScroll ? { y: 240 } : undefined,
     };
     return (
         <>
@@ -70,9 +79,9 @@ export const ReportList = () => {
                     pagination={{
                         position: [top, bottom],
                     }}
-                    columns={tableColumns}
-                    dataSource={hasData ? data : []}
-                    scroll={scroll}
+                    columns={columns}
+                    dataSource={hasData ? incidentsData : []}
+                    loading={loading}
                     className='listreport__table'
                 />
                 <Button className='listreport__button'>

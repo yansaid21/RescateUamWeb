@@ -35,6 +35,8 @@ export class Auth {
     login = async (data) => {
         const url = `${BASE_PATH}/${API_ROUTES.LOGIN}`;
         console.log(url);
+        console.log('data de login ', data);
+        
         const noActive = {
             active: false
         };

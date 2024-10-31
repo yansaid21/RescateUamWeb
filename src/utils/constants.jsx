@@ -7,6 +7,7 @@ export const ENV = {
         REGISTER: 'users',
         LOGIN: 'auth/login',
         GET_USERS: 'users',
-        RISK_SITUATION: 'risk_situations'
+        RISK_SITUATION: 'risk_situations',
+        INCIDENT: 'incidents'
     }
 };
