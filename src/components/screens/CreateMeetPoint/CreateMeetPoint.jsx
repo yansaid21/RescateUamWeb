@@ -3,9 +3,12 @@ import './CreateMeetPoint.css';
 import TextArea from 'antd/es/input/TextArea';
 import { useFormik } from 'formik';
 import { Button, Form, Input, Select } from 'antd';
+import { MeetPoints } from '../../../api/meet_points';
 
-export const CreateMeetPoint = () => {
-    const [zones, setZones] = useState([]);
+const meetPointController = new MeetPoints();
+
+export const CreateMeetPoint = ({ onClose }) => {
+    const [zones, setZones] = useState([{ id: 1, name: 'Zona 1' }]);
 
     const validate = values => {
         const errors = {};
@@ -22,7 +25,7 @@ export const CreateMeetPoint = () => {
 
         if (!values.description) {
             errors.description = 'Este campo es requerido';
-        } else if (!/^[a-zA-Z0-9\s]+$/.test(values.description)) {
+        } else if (!/^[a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ\s]+$/.test(values.description)) {
             errors.description = 'No admite caracteres especiales';
         }
         return errors;
@@ -31,12 +34,26 @@ export const CreateMeetPoint = () => {
     const formik = useFormik({
         initialValues: {
             name: '',
-            zone: '',
+            zone: 1,
             description: '',
         },
         validate,
         onSubmit: async values => {
             console.log('values ', values);
+            try{
+                const token = await localStorage.getItem('token');
+                const meetPointData = {
+                    name: values.name,
+                    description: values.description,
+                    zones: [ Number(values.zone) ] 
+                };
+                const meet_point = await meetPointController.createMeetPoint(token, 1, meetPointData);
+                console.log('meet_point createMeetPoint ', meet_point);
+                onClose();
+            } catch (error){
+                console.log(error);
+                
+            }
         }
     });
 

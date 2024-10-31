@@ -8,6 +8,7 @@ export const ENV = {
         LOGIN: 'auth/login',
         GET_USERS: 'users',
         RISK_SITUATION: 'risk_situations',
-        INCIDENT: 'incidents'
+        INCIDENT: 'incidents',
+        MEETPOINT: 'meet_points'
     }
 };
