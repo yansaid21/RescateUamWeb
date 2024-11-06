@@ -45,8 +45,8 @@ export class Incidents {
         }
     }
 
-    async getIncidents(accessToken, id_institution, id_risk_situation) {
-        const url = `${BASE_PATH}/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}`;
+    async getIncidents(accessToken, id_institution) {
+        const url = `${BASE_PATH}/institutions/${id_institution}/${API_ROUTES.INCIDENT}`;
         console.log('url get getIncidents ', url);
         
         try {

@@ -100,9 +100,9 @@ export const CreateMeetPoint = ({ onClose }) => {
                             }} 
                             value={formik.values.zone}
                         >
-                            {zones.map((zone, index) => (
-                                <Select.Option key={index} value={zone}>
-                                    {zone}
+                            {zones.map((zone) => (
+                                <Select.Option key={zone.id} value={zone.id}>
+                                    {zone.name}
                                 </Select.Option>
                             ))}
                             <Select.Option value="addZone" style={{ color: '#007BFF', fontWeight: 'bold' }}>

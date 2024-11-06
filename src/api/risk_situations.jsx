@@ -27,4 +27,24 @@ export class Risk_situation {
             throw error;
         }
     }
+
+    async getRiskSituation(accessToken, id_institution) {
+        const url = `${BASE_PATH}/institutions/${id_institution}/${API_ROUTES.RISK_SITUATION}`;
+        console.log('url get getRiskSituation ', url);
+        
+        try {
+            const response = await axios.get(url, {
+                headers: {
+                    "Content-Type": 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            console.log("respuesta despues del getRiskSituation", response.data);
+            return response.data; 
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
 }   

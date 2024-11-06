@@ -7,7 +7,7 @@ import { Incidents } from '../../../api/incidents';
 
 const incidentController = new Incidents();
 
-export const CreateReport = ({ onClose, incidentType  }) => {
+export const CreateReport = ({ onClose, risk }) => {
     const validate = values => {
         const errors = {};
         if (!values.description) {
@@ -27,7 +27,7 @@ export const CreateReport = ({ onClose, incidentType  }) => {
             try{
                 const token = await localStorage.getItem('token');
                 const id_incident = await localStorage.getItem('id_incident');
-                const update_incident = await incidentController.updateIncident(token, 1, 1, values.description, id_incident);
+                const update_incident = await incidentController.updateIncident(token, 1, risk, values.description, id_incident);
                 console.log('update_incident createReport ', update_incident);
                 onClose();
             } catch (error){

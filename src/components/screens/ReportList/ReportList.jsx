@@ -37,7 +37,7 @@ export const ReportList = () => {
         setLoading(true);
         try {
             const token = await localStorage.getItem('token'); 
-            const response = await incidentController.getIncidents(token, 1, 1);
+            const response = await incidentController.getIncidents(token, 1);
             console.log("Incidents fetched:", response);
             const formattedData = response.data.map((incident, index) => ({
                 key: index,
@@ -60,7 +60,7 @@ export const ReportList = () => {
     const tableProps = {
         bordered,
         rowSelection: { type: 'radio' },
-        pagination: { position: [top, bottom] },
+        pagination: incidentsData.length > 5 ? { pageSize: 5, position: [top, bottom] } : false,
         scroll: yScroll ? { y: 240 } : undefined,
     };
     return (
@@ -76,9 +76,6 @@ export const ReportList = () => {
                 </Space>
                 <Table
                     {...tableProps}
-                    pagination={{
-                        position: [top, bottom],
-                    }}
                     columns={columns}
                     dataSource={hasData ? incidentsData : []}
                     loading={loading}
