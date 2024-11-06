@@ -3,11 +3,12 @@ import './BigEmergencyButton.css'; // Asegúrate de crear un archivo CSS para lo
 import logo1 from '../../../assets/UAM/Logos_UAM-06.png'; // Ajusta la ruta según tu estructura
 import logo2 from '../../../assets/UAM/Logos_UAM-10.png'
 
-export const BigEmergencyButton = () => {
+export const BigEmergencyButton = ({ onClick }) => {
     const [isYellow, setIsYellow] = useState(true);
 
     const handlePress = () => {
         setIsYellow(!isYellow); 
+        onClick();
     };
 
     return (

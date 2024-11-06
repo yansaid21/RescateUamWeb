@@ -7,9 +7,8 @@ export class User {
 
     async getUserInfo(accessToken, id) {
         const accessTokenString = accessToken.access; 
-        console.log("el accesstokenstring", accessTokenString);
         const url = `${BASE_PATH}/${API_ROUTES.GET_USERS}/${id}`;
-        console.log('url get ', url);
+        //console.log('url get ', url);
         
         try {
             const response = await axios.get(url, {
@@ -19,7 +18,7 @@ export class User {
                 },
             });
 
-            console.log("respuesta despues del getMe", response.data);
+            //console.log("respuesta despues del getMe", response.data);
             return response.data; 
         } catch (error) {
             console.log(error);
@@ -31,8 +30,7 @@ export class User {
         //se actualiza sin el email
         const accessTokenString = accessToken.access; 
         const url = `${BASE_PATH}/${API_ROUTES.GET_USERS}/${id}`;
-        console.log('url get ', url);
-        console.log("Log de userData: ", userData);
+        //console.log('url get ', url);
 
         const formData = new FormData();
         formData.append('_method', 'PUT'); 

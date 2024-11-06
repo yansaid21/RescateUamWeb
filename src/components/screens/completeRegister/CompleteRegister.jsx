@@ -96,7 +96,7 @@ const CompleteRegister = ({ onClose }) => {
                     <div className='section'>
                     <Form.Item>
                         <Select
-                            placeholder="Selecciona tu grupo sanguíneo"
+                            placeholder="Grupo sanguíneo"
                             className='form__input'
                             id="rhgb"
                             name="rhgb"
