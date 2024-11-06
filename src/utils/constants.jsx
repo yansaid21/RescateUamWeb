@@ -1,5 +1,8 @@
-const SERVER_IP = '192.168.20.21:8000';
+const SERVER_IP = '127.0.0.1:8000';
 // Geral's house 192.168.20.21
+// jean's house 192.168.1.12
+// jean's iphone 172.20.10.14
+
 
 export const ENV = {
     BASE_PATH: `http://${SERVER_IP}/api`,
@@ -9,6 +12,7 @@ export const ENV = {
         GET_USERS: 'users',
         RISK_SITUATION: 'risk_situations',
         INCIDENT: 'incidents',
-        MEETPOINT: 'meet_points'
+        MEETPOINT: 'meet_points',
+        ZONES: 'zones',
     }
 };

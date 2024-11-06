@@ -4,11 +4,13 @@ import TextArea from 'antd/es/input/TextArea';
 import { useFormik } from 'formik';
 import { Button, Form, Input, Select } from 'antd';
 import { MeetPoints } from '../../../api/meet_points';
+import { CreateZones } from '../CreateZones/CreateZones';
 
 const meetPointController = new MeetPoints();
 
-export const CreateMeetPoint = ({ onClose }) => {
+export const CreateMeetPoint = ({ onClose, onAddZone }) => {
     const [zones, setZones] = useState([{ id: 1, name: 'Zona 1' }]);
+    const [showCreateZone, setShowCreateZone] = useState(false);
 
     const validate = values => {
         const errors = {};
@@ -58,21 +60,17 @@ export const CreateMeetPoint = ({ onClose }) => {
     });
 
     const handleAddZone = () => {
-        const newZone = prompt("Ingrese el nombre de la nueva zona:");
-        if (newZone && !zones.includes(newZone)) {
-            setZones([...zones, newZone]);
-            formik.setFieldValue('zone', newZone); //nueva zona como la seleccionada
-        }
-    };
-
-    return (
-        <div className="meetpoint">
+        onAddZone();
+        };
+        
+        return (
+            <div className="meetpoint">
             <div className="meetpoint__content">
                 <h2 className="meetpoint__title">¡Añadir punto de encuentro!</h2>
                 <form
                     className='form'
                     onSubmit={formik.handleSubmit}
-                >
+                    >
                 <div className='meetpoint__form'>
                     <Form.Item>
                         <Input 
@@ -82,7 +80,7 @@ export const CreateMeetPoint = ({ onClose }) => {
                             name="name"
                             onChange={formik.handleChange}
                             value={formik.values.name}
-                        />
+                            />
                         {formik.errors.name ? <div className='error__text'>{formik.errors.name}</div> : null}
                     </Form.Item>
                     <Form.Item>
@@ -99,7 +97,7 @@ export const CreateMeetPoint = ({ onClose }) => {
                                 }
                             }} 
                             value={formik.values.zone}
-                        >
+                            >
                             {zones.map((zone) => (
                                 <Select.Option key={zone.id} value={zone.id}>
                                     {zone.name}
@@ -110,6 +108,7 @@ export const CreateMeetPoint = ({ onClose }) => {
                             </Select.Option>
                         </Select>
                         {formik.errors.zone ? <div className='error__text'>{formik.errors.zone}</div> : null}
+                        {showCreateZone && <CreateZones onClose={() => setShowCreateZone(false)}/>}
                     </Form.Item>
                 </div>
                     <TextArea 
@@ -121,7 +120,7 @@ export const CreateMeetPoint = ({ onClose }) => {
                         id="description"
                         onChange={formik.handleChange}
                         value={formik.values.description}
-                    />
+                        />
                     {formik.errors.description ? <div className='error__text'>{formik.errors.description}</div> : null}
                     <div className='btnmeetpoint'>
                         <Button htmlType="submit" className='form__buttonmeetpoint' type="submit">
