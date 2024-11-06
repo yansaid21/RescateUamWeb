@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CreateMeetPoint.css';
 import TextArea from 'antd/es/input/TextArea';
 import { useFormik } from 'formik';
 import { Button, Form, Input, Select } from 'antd';
 import { MeetPoints } from '../../../api/meet_points';
 import { CreateZones } from '../CreateZones/CreateZones';
+import { Zones } from '../../../api/zones';
 
 const meetPointController = new MeetPoints();
+const zonesController = new Zones();
+
 
 export const CreateMeetPoint = ({ onClose, onAddZone }) => {
+    useEffect(() => {
+        const getZones = async () => {
+            try {
+                const token = await localStorage.getItem('token');
+                console.log('token ', token);
+                
+                const rawZones = await zonesController.getZones(token,1);
+                const zones = rawZones.data
+                console.log('zones ', zones);
+                setZones(zones);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getZones();
+    }, []);
     const [zones, setZones] = useState([{ id: 1, name: 'Zona 1' }]);
     const [showCreateZone, setShowCreateZone] = useState(false);
 
