@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './MeetPointList.css';
-import { Button,  Table } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Table } from 'antd';
 import { CreateMeetPoint } from '../CreateMeetPoint/CreateMeetPoint';
+import { CreateZones } from '../CreateZones/CreateZones';
 import { MeetPoints } from '../../../api/meet_points';
 
 const meetPointController = new MeetPoints();
@@ -30,7 +30,8 @@ export const MeetPointList = () => {
     const [top, setTop] = useState('none');
     const [bottom, setBottom] = useState('bottomRight');
     const [showCreateMeetPoint, setShowCreateMeetPoint] = useState(false);
-    const [meetPoints, setMeetPoints] = useState([]); // Para almacenar los puntos de encuentro
+    const [showCreateZone, setShowCreateZone] = useState(false);
+    const [meetPoints, setMeetPoints] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const fetchMeetPoints = async () => {
@@ -47,7 +48,6 @@ export const MeetPointList = () => {
             setMeetPoints(formattedData); 
         } catch (error) {
             console.error("Error fetching meet points:", error);
-            setLoading(false); 
         } finally {
             setLoading(false);
         }
@@ -57,6 +57,11 @@ export const MeetPointList = () => {
         fetchMeetPoints();
     }, []);
 
+    const handleOpenCreateZone = () => {
+        setShowCreateMeetPoint(false);
+        setShowCreateZone(true);
+    };
+
     const tableProps = {
         bordered,
         pagination: { position: [top, bottom] },
@@ -64,7 +69,7 @@ export const MeetPointList = () => {
     };
 
     const handleAddMeetPoint = () => {
-        setShowCreateMeetPoint(true); // Cambia el estado para mostrar el componente
+        setShowCreateMeetPoint(true);
     };
 
     return (
@@ -73,11 +78,8 @@ export const MeetPointList = () => {
                 <h2>Puntos de encuentro</h2>
                 <Table
                     {...tableProps}
-                    pagination={{
-                        position: [top, bottom],
-                    }}
                     columns={columns}
-                    dataSource={hasData ? meetPoints: []} 
+                    dataSource={hasData ? meetPoints : []} 
                     bordered={bordered}
                     loading={loading} 
                     className='listmeetpoint__table'
@@ -85,9 +87,14 @@ export const MeetPointList = () => {
                 <Button className='listmeetpoint__button' onClick={handleAddMeetPoint}>
                     Añadir puntos de encuentro
                 </Button>
-                {showCreateMeetPoint && <CreateMeetPoint onClose={() => setShowCreateMeetPoint(false)}/>}
+                {showCreateMeetPoint && (
+                    <CreateMeetPoint 
+                        onClose={() => setShowCreateMeetPoint(false)} 
+                        onAddZone={handleOpenCreateZone} 
+                    />
+                )}
+                {showCreateZone && <CreateZones onClose={() => setShowCreateZone(false)} />}
             </div>
         </>
-    )
-}
-
+    );
+};
