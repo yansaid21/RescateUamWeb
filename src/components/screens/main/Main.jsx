@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../../molecules/Navbar'
+import Navbar from '../../molecules/Navbar/Navbar'
 import { BigEmergencyButton } from '../../atoms/BigEmergencyButton/BigEmergencyButton'
 import "./Main.css"
 import TypeEmergencyButton from '../../atoms/TypeEmergencyButton/TypeEmergencyButton'

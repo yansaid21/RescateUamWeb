@@ -5,6 +5,8 @@ import './Navbar.css';
 import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
+const token = localStorage.getItem('token');
+
   return (
     <div className="navbar">
       <div className="icons-container">
@@ -16,7 +18,7 @@ const Navbar = () => {
           </Link>
         </button>
         <button className="icon-button">
-          <Link to="/crudBrigradist">
+          <Link to="/usersStadistics">
             <div className="icon" >
             <BarChartOutlined />
             </div>
