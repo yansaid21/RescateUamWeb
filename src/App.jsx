@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {GeneralRoutes.map((route, index) => {
-          const LayoutComponent = route.Layout || Layout; // Usa Layout de antd si Layout no está definido
+          const LayoutComponent = route.Layout || Layout; 
           return (
             <Route
               key={index}

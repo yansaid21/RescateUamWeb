@@ -1,0 +1,12 @@
+.users-stadistics-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 2rem;
+
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.5rem; /* Equivale a 24px */
+}
