@@ -20,7 +20,8 @@
     "react-router-dom": "^6.26.2",
     "styled-components": "^6.1.13",
     "typeface-fira-sans": "^1.1.13",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

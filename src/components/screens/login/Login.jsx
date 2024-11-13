@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import Logo from '../../../assets/UAM/Logos_UAM-07.png';
 import { Button, Form, Input } from 'antd';
@@ -6,10 +6,29 @@ import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { useFormik } from 'formik';
 import { Auth } from '../../../api/auth';
 import { Spinner } from '../../atoms/Spinner/Spinner';
+import { userStore } from '../../../store/user'; 
+/* import { getRoutes } from '../../../config/routes'; */
+
 
 const authController = new Auth();
-
+/*   useEffect(() => {
+    const loadRoutes = async () => {
+        const routes = await getRoutes();
+        setAppRoutes(routes);
+        };
+        loadRoutes();
+        }, []); */
+        
 export const Login = () => {
+    const setUser = userStore(state => state.setUser);
+    
+    const handleSetUser = (newUser) => {
+        console.log("entrando al handlesetUser en login");
+        setUser(newUser);
+/*         const user = userStore(state => state.user);
+        console.log('usuario seteado en zustand', user); */
+        
+    }
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate(); // Obtén la función de navegación
 
@@ -46,7 +65,8 @@ export const Login = () => {
                 const response = await authController.login(data);
                 
                 console.log('response en login ', response);
-                
+                console.log('response.user en login ', response.user);
+                handleSetUser(response.user);
                 if (response.token) {
                     console.log('Login exitoso', response);
                     localStorage.setItem('token', response.token);

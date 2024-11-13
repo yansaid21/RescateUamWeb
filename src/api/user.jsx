@@ -59,4 +59,25 @@ export class User {
             throw error;
         }
     }
+    async getRole(accessToken, institutionId, userId) {
+        const accessTokenString = accessToken.access; 
+        const url = `${BASE_PATH}/institutions/${institutionId}/users/${userId}`;
+        console.log('url get in get role', url);
+
+        try {
+            const response = await axios.get(url, {
+                headers: {
+                    "Content-Type": 'application/json',
+                    Authorization: `Bearer ${accessTokenString}`,
+                },
+            });
+
+            console.log("respuesta despues del getRole", response.data);
+            return response.data; 
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
 }
+
