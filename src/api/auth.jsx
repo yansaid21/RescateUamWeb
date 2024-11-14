@@ -34,7 +34,7 @@ export class Auth {
 
     login = async (data) => {
         const url = `${BASE_PATH}/${API_ROUTES.LOGIN}`;
-        console.log(url);
+        console.log("url en auth",url);
         console.log('data de login ', data);
         
         const noActive = {
@@ -44,7 +44,7 @@ export class Auth {
         try {
             const response = await axios.post(url, data, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type':  'application/json',
                 },
             });
 
