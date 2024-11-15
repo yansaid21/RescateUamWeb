@@ -7,7 +7,11 @@ const { BASE_PATH, API_ROUTES } = ENV;
 export class Risk_situation {
 
     async createRiskSituation(accessToken, data, id_institution) {
-        const accessTokenString = accessToken.access; 
+/*         const accessTokenString = accessToken.access; 
+        console.log('accessTokenString ', accessTokenString);
+        console.log('accesstoken ', accessToken); */
+        
+        
         const url = `${BASE_PATH}/institutions/${id_institution}/${API_ROUTES.RISK_SITUATION}/`;
         console.log('url post risk_situation ', url);
         console.log('data post risk_situation ', data);
@@ -16,7 +20,8 @@ export class Risk_situation {
             const response = await axios.post(url, data, {
                 headers: {
                     "Content-Type": 'application/json',
-                    Authorization: `Bearer ${accessTokenString}`,
+                    /* Authorization: `Bearer ${accessTokenString}`, */
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

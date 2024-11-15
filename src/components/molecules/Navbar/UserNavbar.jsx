@@ -4,33 +4,28 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { FaUserCircle } from 'react-icons/fa';
 
-const Navbar = () => {
+const UserNavbar = () => {
+
   return (
     <div className="navbar">
       <div className="icons-container">
         <button className="icon-button">
-          <Link to="/main">
+          <Link to="/user">
             <div className='icon'>
             <BellOutlined/>
             </div>
           </Link>
         </button>
+
         <button className="icon-button">
-          <Link to="/crudBrigradist">
-            <div className="icon" >
-            <BarChartOutlined />
-            </div>
-          </Link>
-        </button>
-        <button className="icon-button">
-          <Link to="/menu">
+          <Link to="/user/menu">
             <div className="icon">
             <MenuOutlined />
             </div>
           </Link>
         </button>
         <button className="icon-button">
-          <Link to="/user">
+          <Link to="/user/gestion">
             <div className="icon">
             <FaUserCircle />
             </div>
@@ -41,5 +36,4 @@ const Navbar = () => {
     </div>
   );
 };
-
-export default Navbar;
+export default UserNavbar;

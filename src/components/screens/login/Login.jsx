@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import Logo from '../../../assets/UAM/Logos_UAM-07.png';
 import { Button, Form, Input } from 'antd';
@@ -6,10 +6,29 @@ import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { useFormik } from 'formik';
 import { Auth } from '../../../api/auth';
 import { Spinner } from '../../atoms/Spinner/Spinner';
+import { userStore } from '../../../store/user'; 
+import { User } from '../../../api/user';
+/* import { getRoutes } from '../../../config/routes'; */
+
 
 const authController = new Auth();
+const userController = new User();
 
+        
 export const Login = () => {
+    const setUser = userStore(state => state.setUser);
+    const setRole = userStore(state => state.setRole);
+    
+    const handleSetUser = (newUser, role) => {
+        console.log("entrando al handlesetUser en login");
+        setUser(newUser);  
+        setRole(role);      
+        localStorage.setItem("role", role);
+        console.log("user seteado en login");
+        
+
+        
+    }
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate(); // Obtén la función de navegación
 
@@ -46,13 +65,32 @@ export const Login = () => {
                 const response = await authController.login(data);
                 
                 console.log('response en login ', response);
+                console.log('response.user en login ', response.user);
+                const rawRole = await userController.getRole(response.token, '1', response.user.id);
+                const role = rawRole.data.role.id;
+
+                console.log('role en login ', role);
+                
+                handleSetUser(response.user, role);
+                console.log("user seteado en login");
                 
                 if (response.token) {
                     console.log('Login exitoso', response);
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('id', response.user.id);
-                    navigate('/main');
-                    setIsLoading(false);
+                    if (role ==1) {
+                        navigate('/admin');
+                        setIsLoading(false);
+                    
+                    }else if (role == 2){
+                        navigate('/brigadist');
+                        setIsLoading(false);
+                    
+                    }
+                    else if (role == 3){
+                        navigate('/user');
+                        setIsLoading(false);
+                    }
                 } else if(response.status === 422){
                     console.log('Error de login', response);
                     alert('Contraseña incorrecta. Inténtalo de nuevo.');
