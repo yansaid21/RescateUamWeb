@@ -8,6 +8,9 @@ import { Risk_situation } from '../../../api/risk_situations';
 const riskSituationController = new Risk_situation();
 
 export const CreateRiskSituation = ({ onClose }) => {
+    if (typeof onClose !== 'function') {
+        console.error('La prop onClose no es una función:', onClose);
+    }
     const validate = values => {
         const errors = {};
 
@@ -82,6 +85,15 @@ export const CreateRiskSituation = ({ onClose }) => {
                     <div className='btnrisk'>
                         <Button htmlType="submit" className='form__buttonrisk' type="submit">
                             Aceptar
+                        </Button>
+                    </div>
+                    <div className='btnrisk'>
+                        <Button className='form__buttonrisk' onClick={() => {
+                                console.log('onClose:', onClose); // Verifica si es una función aquí
+                                onClose();
+                            }}
+                        >
+                                Cancelar
                         </Button>
                     </div>
                 </form>
