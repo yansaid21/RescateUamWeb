@@ -99,6 +99,7 @@ export const Main = () => {
             console.error('Error al crear el incidente:', error);
           } finally {
             setIsToggling(false); // Liberar bandera al finalizar
+            
           }
         })();
       }
@@ -113,8 +114,11 @@ export const Main = () => {
 
   //seleccionar tipo de incidente
   const handleTypeButtonClick = (id) => {
-    setIncidentTypeId(id); 
-    //console.log("Tipo de incidente seleccionado:", type);
+    if (!incidentTypeId) { // Solo permitir selección si no hay un tipo de incidente
+      setIncidentTypeId(id);
+    }else{
+      setIncidentTypeId(null);
+    }
   };
   
   return (
@@ -126,14 +130,19 @@ export const Main = () => {
     {/* <Navbar/> */}
     <div className='mainContainer'>
       <div className='BigButton'>
-    <BigEmergencyButton onClick={toggleAlarm}/>
+    <BigEmergencyButton 
+    onClick={toggleAlarm}
+    disabled={incidentTypeId === null? true: false}
+    />
       </div>
       <div className='mainTypeEmergencyButton'>
         {riskSituations.map((situation) => (
           <TypeEmergencyButton 
             key={situation.id} 
             text={situation.name} 
-            onClick={() => handleTypeButtonClick(situation.id)}
+            disabled={incidentTypeId === null? false: situation.id ===incidentTypeId ? false : true}
+            onClick={() => handleTypeButtonClick(situation.id)
+            }
           />
         ))}
       </div>

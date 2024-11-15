@@ -8,10 +8,12 @@
   width: 212px;  
   height: 49px; 
   transition: background-color 0.3s; /* Añade una transición suave */
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .typeButton {
-  background-color: #8CB7D0; /* Color del botón */
+  background-color: #0090D0;
 }
 
 .typeButtonPressed {
@@ -28,4 +30,8 @@
 
 .typeButtonPressedText {
   color: #000000; /* Color del texto cuando se presiona el botón */
+}
+.typeButtonDisabled {
+  background-color: #8CB7D0;
+  cursor: not-allowed;
 }

@@ -27,7 +27,7 @@ export class Incidents {
 
     async updateIncident(accessToken, id_institution, id_risk_situation, description, id_incident) {
         const url = `${BASE_PATH}/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}/${id_incident}`;
-        console.log('url post createIncident ', url);
+        console.log('url put createIncident ', url);
         
         try {
             const response = await axios.put(url, description, {
