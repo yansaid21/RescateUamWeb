@@ -8,7 +8,7 @@ export const BigEmergencyButton = ({ onClick, disabled }) => {
 
     const handlePress = () => {
             if(!disabled){
-                console.log(disabled," en emergency button disabled");
+          
                 
             setIsYellow(!isYellow); 
             onClick();

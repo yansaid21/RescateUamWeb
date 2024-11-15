@@ -73,23 +73,30 @@ export const Main = () => {
   };
 
   const [isToggling, setIsToggling] = useState(false);
-  const toggleAlarm = async () => {
-    if (isToggling) return; // Prevenir ejecución si ya está en progreso
+  const toggleAlarm = () => {
+    if (isToggling){
+console.log('isToggling ', isToggling);
+
+      return; // Prevenir ejecución si ya está en progreso
+    } 
     setIsToggling(true); // Marcar como en ejecución
-    
+    console.log('isToggling ', isToggling);
     setAlarmOn(prevAlarmOn => {
       const newAlarmState = !prevAlarmOn;
-  
+      console.log('newAlarmState ', newAlarmState);
+      
       if (!newAlarmState) {
         setShowCreateReport(true);
       } else {
         setShowCreateReport(false);
         (async () => {
           try {
-            const token = await localStorage.getItem('token');
+            const token = localStorage.getItem('token');
             console.log('token en create incident ', token);
             if (incidentTypeId) { // Verificamos que haya un tipo de incidente seleccionado
               const incident = await incidentController.createIncident(token, 1, incidentTypeId );
+              console.log(incident.data);
+              
               localStorage.setItem('id_incident', incident.data.id);
               console.log('response create incidente', incident);
             } else {
@@ -98,11 +105,15 @@ export const Main = () => {
           } catch (error) {
             console.error('Error al crear el incidente:', error);
           } finally {
-            setIsToggling(false); // Liberar bandera al finalizar
+            
+            console.log('isToggling  en funa¿¿¿¿asdufjsdfj', isToggling);
             
           }
-        })();
-      }
+        }
+        
+      )();
+    }
+    setIsToggling(false); // Liberar bandera al finalizar
   
       return newAlarmState;
     });

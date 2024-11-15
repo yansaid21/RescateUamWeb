@@ -8,7 +8,8 @@ export class Incidents {
     async createIncident(accessToken, id_institution, id_risk_situation) {
         const url = `${BASE_PATH}/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}`;
         console.log('url post createIncident ', url);
-        
+        var count = 0 ;
+        console.log("entrando aquí ", count + 1);
         try {
             const response = await axios.post(url, {}, {
                 headers: {
