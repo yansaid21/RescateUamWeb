@@ -65,4 +65,5 @@ export class Incidents {
             throw error;
         }
     }
+
 }

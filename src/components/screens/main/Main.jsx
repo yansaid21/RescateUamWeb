@@ -8,10 +8,12 @@ import CompleteRegister from '../../screens/completeRegister/CompleteRegister'
 import { CreateReport } from '../CreateReport/CreateReport'
 import { Incidents } from '../../../api/incidents'
 import { Risk_situation } from '../../../api/risk_situations'
+import { Institution } from '../../../api/institution'
 
 const userController = new User();
 const incidentController = new Incidents();
 const riskSituationController = new Risk_situation();
+const institutionController = new Institution(); 
 
 export const Main = () => {
   const [userData, setUserData] = useState(null);
@@ -20,6 +22,8 @@ export const Main = () => {
   const [showCreateReport, setShowCreateReport] = useState(false);
   const [incidentTypeId, setIncidentTypeId] = useState(null);
   const [riskSituations, setRiskSituations] = useState([]);
+  const [isToggling, setIsToggling] = useState(false);
+  const [newAlarmState, setNewAlarmState] = useState(null);
 
   const checkUserInfo = async () => {
     try {
@@ -49,6 +53,26 @@ export const Main = () => {
     }
   };
 
+  const checkInstitutionInfo= async () => {
+    try {
+      const token = await localStorage.getItem('token');
+      const id_institution = 1; 
+      if (token && id_institution) {
+        const institution = await institutionController.getInstitution(token, id_institution);
+        console.log("institution ", institution.data);
+       const institutionIncidentId= institution.data.active_incident
+        console.log("id de el incidente activo: ",institutionIncidentId);
+  /*       if(institutionIncidentId === null){
+          setIsToggling(false);
+        }else{
+          setIsToggling(true);
+        } */
+        
+      }
+    } catch (error) {
+      console.error("Error al obtener las situaciones de riesgo:", error);
+    }
+  }
   const fetchRiskSituations = async () => {
     try {
       const token = await localStorage.getItem('token');
@@ -68,11 +92,16 @@ export const Main = () => {
     fetchRiskSituations();
   }, []);
 
+  useEffect(() => {
+    checkInstitutionInfo();
+  }, [isToggling]);
+
+
+
   const handleCompleteRegisterClose = () => {
     setShowCompleteRegister(false); 
   };
 
-  const [isToggling, setIsToggling] = useState(false);
   const toggleAlarm = () => {
     if (isToggling){
 console.log('isToggling ', isToggling);
@@ -82,7 +111,7 @@ console.log('isToggling ', isToggling);
     setIsToggling(true); // Marcar como en ejecución
     console.log('isToggling ', isToggling);
     setAlarmOn(prevAlarmOn => {
-      const newAlarmState = !prevAlarmOn;
+      setNewAlarmState(!prevAlarmOn);
       console.log('newAlarmState ', newAlarmState);
       
       if (!newAlarmState) {
