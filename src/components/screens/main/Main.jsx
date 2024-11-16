@@ -9,6 +9,7 @@ import { CreateReport } from '../CreateReport/CreateReport'
 import { Incidents } from '../../../api/incidents'
 import { Risk_situation } from '../../../api/risk_situations'
 import { Institution } from '../../../api/institution'
+import { Spinner } from '../../atoms/Spinner/Spinner'
 
 const userController = new User();
 const incidentController = new Incidents();
@@ -22,13 +23,15 @@ export const Main = () => {
   const [showCreateReport, setShowCreateReport] = useState(false);
   const [incidentTypeId, setIncidentTypeId] = useState(null);
   const [riskSituations, setRiskSituations] = useState([]);
+  const [theIncident, setTheIncident] = useState(null);
   const [isToggling, setIsToggling] = useState(false);
-  const [newAlarmState, setNewAlarmState] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const checkUserInfo = async () => {
     try {
-      const token = await localStorage.getItem('token'); 
-      const id_user = await localStorage.getItem('id'); 
+      const token =  localStorage.getItem('token'); 
+      const id_user = localStorage.getItem('id'); 
 
       //console.log('id en main ', id_user);
       //console.log('token en main ', token);
@@ -55,24 +58,30 @@ export const Main = () => {
 
   const checkInstitutionInfo= async () => {
     try {
-      const token = await localStorage.getItem('token');
+      const token = localStorage.getItem('token');
       const id_institution = 1; 
       if (token && id_institution) {
         const institution = await institutionController.getInstitution(token, id_institution);
         console.log("institution ", institution.data);
-       const institutionIncidentId= institution.data.active_incident
-        console.log("id de el incidente activo: ",institutionIncidentId);
-  /*       if(institutionIncidentId === null){
-          setIsToggling(false);
+       const institutionIncident= institution.data.active_incident
+        console.log("incidente activo: ",institutionIncident);
+        if(institutionIncident === null){
+          setTheIncident(null);
+          setIncidentTypeId(null);
+
         }else{
-          setIsToggling(true);
-        } */
+          setIncidentTypeId(institutionIncident.risk_situation_id);
+          console.log("id del incidente activo: ",institutionIncident.risk_situation_id);
+          localStorage.setItem('id_incident', institutionIncident.id);
+          setTheIncident(institutionIncident);
+        }
         
       }
     } catch (error) {
       console.error("Error al obtener las situaciones de riesgo:", error);
     }
   }
+
   const fetchRiskSituations = async () => {
     try {
       const token = await localStorage.getItem('token');
@@ -88,14 +97,17 @@ export const Main = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     checkUserInfo();
     fetchRiskSituations();
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     checkInstitutionInfo();
+    setIsLoading(false);
   }, [isToggling]);
-
 
 
   const handleCompleteRegisterClose = () => {
@@ -111,11 +123,15 @@ console.log('isToggling ', isToggling);
     setIsToggling(true); // Marcar como en ejecución
     console.log('isToggling ', isToggling);
     setAlarmOn(prevAlarmOn => {
-      setNewAlarmState(!prevAlarmOn);
+      var newAlarmState = !prevAlarmOn;
+      if (theIncident) {
+        newAlarmState = false;
+      }
       console.log('newAlarmState ', newAlarmState);
       
       if (!newAlarmState) {
         setShowCreateReport(true);
+        
       } else {
         setShowCreateReport(false);
         (async () => {
@@ -123,20 +139,21 @@ console.log('isToggling ', isToggling);
             const token = localStorage.getItem('token');
             console.log('token en create incident ', token);
             if (incidentTypeId) { // Verificamos que haya un tipo de incidente seleccionado
-              const incident = await incidentController.createIncident(token, 1, incidentTypeId );
-              console.log(incident.data);
+              if (!theIncident) {
+                
+                const incident = await incidentController.createIncident(token, 1, incidentTypeId );
+                console.log(incident.data);
+                checkInstitutionInfo();
+                /* console.log('response create incidente', incident); */
+              }else{
+                console.log('ya hay un incidente activo');
+              }
               
-              localStorage.setItem('id_incident', incident.data.id);
-              console.log('response create incidente', incident);
             } else {
               console.warn("No se ha seleccionado un tipo de incidente.");
             }
           } catch (error) {
             console.error('Error al crear el incidente:', error);
-          } finally {
-            
-            console.log('isToggling  en funa¿¿¿¿asdufjsdfj', isToggling);
-            
           }
         }
         
@@ -150,6 +167,7 @@ console.log('isToggling ', isToggling);
 
   const handleReportSubmit = () => {
     setShowCreateReport(false); 
+    checkInstitutionInfo();
   };
 
   //seleccionar tipo de incidente
@@ -161,32 +179,39 @@ console.log('isToggling ', isToggling);
     }
   };
   
-  return (
-    <>
+
+  if (isLoading) {
+    return <Spinner />;
+  }else{
+
+    return (
+      <>
     {showCompleteRegister && (
-        <CompleteRegister onClose={handleCompleteRegisterClose} />
+      <CompleteRegister onClose={handleCompleteRegisterClose} />
     )}
     {showCreateReport && <CreateReport onClose={handleReportSubmit} risk={incidentTypeId}/>}
-    {/* <Navbar/> */}
     <div className='mainContainer'>
       <div className='BigButton'>
     <BigEmergencyButton 
     onClick={toggleAlarm}
     disabled={incidentTypeId === null? true: false}
+    running={theIncident? true: false}
     />
       </div>
       <div className='mainTypeEmergencyButton'>
         {riskSituations.map((situation) => (
           <TypeEmergencyButton 
-            key={situation.id} 
-            text={situation.name} 
-            disabled={incidentTypeId === null? false: situation.id ===incidentTypeId ? false : true}
-            onClick={() => handleTypeButtonClick(situation.id)
-            }
+          key={situation.id} 
+          text={situation.name} 
+          disabled={incidentTypeId === null? false: situation.id ===incidentTypeId ? false : true}
+          running={theIncident? true: false}
+          onClick={() => handleTypeButtonClick(situation.id)
+          }
           />
         ))}
       </div>
     </div>
     </>
   )
+}
 }
