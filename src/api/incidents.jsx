@@ -8,7 +8,8 @@ export class Incidents {
     async createIncident(accessToken, id_institution, id_risk_situation) {
         const url = `${BASE_PATH}/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}`;
         console.log('url post createIncident ', url);
-        
+        var count = 0 ;
+        console.log("entrando aquí ", count + 1);
         try {
             const response = await axios.post(url, {}, {
                 headers: {
@@ -27,7 +28,7 @@ export class Incidents {
 
     async updateIncident(accessToken, id_institution, id_risk_situation, description, id_incident) {
         const url = `${BASE_PATH}/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}/${id_incident}`;
-        console.log('url post createIncident ', url);
+        console.log('url put createIncident ', url);
         
         try {
             const response = await axios.put(url, description, {
@@ -64,4 +65,5 @@ export class Incidents {
             throw error;
         }
     }
+
 }
