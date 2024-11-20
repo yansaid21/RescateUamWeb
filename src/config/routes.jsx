@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
       { path: "usersStatistics", element: <UsersStatus /> }, // Corrección aquí
       { path: "protocols-menu", element: <ProtocolsMenu /> }, // Consistencia en nombres
       { path: "risks-menu", element: <RisksMenu /> }, // Consistencia en nombres
-      { path: "/main/structure", component: Structure},
+      { path: "structure", element: <Structure/>},
       {
         path: "risks-menu/create-risk-situation",
         element: <CreateRiskSituation />,

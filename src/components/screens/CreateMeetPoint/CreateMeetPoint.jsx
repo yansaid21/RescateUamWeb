@@ -10,7 +10,6 @@ import { Zones } from '../../../api/zones';
 const meetPointController = new MeetPoints();
 const zonesController = new Zones();
 
-
 export const CreateMeetPoint = ({ onClose, onAddZone }) => {
     useEffect(() => {
         const getZones = async () => {
