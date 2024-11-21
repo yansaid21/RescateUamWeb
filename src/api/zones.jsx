@@ -1,48 +1,37 @@
-import axios from 'axios';
-import { ENV } from '../utils/constants';
+import { axiosInstance } from "../config/axiosInstance";
+import { ENV } from "../utils/constants";
 
-const { BASE_PATH, API_ROUTES } = ENV;
+const { API_ROUTES } = ENV;
 
-export class Zones {
+const ZonesController = {
+  async createZones(id_institution, data) {
+    try {
+      const response = await axiosInstance.post(
+        `/institutions/${id_institution}/${API_ROUTES.ZONES}`,
+        data,
+      );
 
-    async createZones(accessToken, id_institution, data) {
-        const url = `${BASE_PATH}/institutions/${id_institution}/${API_ROUTES.ZONES}`;
-        console.log('url post createZones ', url);
-        console.log('data en createZones', data);
-        
-        try {
-            const response = await axios.post(url, data, {
-                headers: {
-                    "Content-Type": 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            console.log("respuesta despues del post createZones", response.data);
-            return response.data; 
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+      console.log("respuesta despues del post createZones", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
+  },
 
-    async getZones(accessToken, id_institution) {
-        const url = `${BASE_PATH}/institutions/${id_institution}/${API_ROUTES.ZONES}`;
-        console.log('url get getZones ', url);
-        
-        try {
-            const response = await axios.get(url, {
-                headers: {
-                    "Content-Type": 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+  async getZones(id_institution) {
+    try {
+      const response = await axiosInstance.get(
+        `/institutions/${id_institution}/${API_ROUTES.ZONES}`,
+      );
 
-            console.log("respuesta despues del getZones", response.data);
-            return response.data; 
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+      console.log("respuesta despues del getZones", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
-}
+  },
+};
+
+export default ZonesController;

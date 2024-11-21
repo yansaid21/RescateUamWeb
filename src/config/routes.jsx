@@ -4,22 +4,45 @@ import { MeetPointList } from "../components/screens/MeetPointList/MeetPointList
 import { Register } from "../components/screens/register/Register";
 import { ReportList } from "../components/screens/ReportList/ReportList";
 import { Menu } from "../components/screens/Menu/Menu";
-import { AdminLayout, UserLayout } from "../Layouts/LoggedInLayouts/LoggedInLayout";
+import {
+  AdminLayout,
+  UserLayout,
+} from "../Layouts/LoggedInLayouts/LoggedInLayout";
 import { ProtocolsMenu } from "../components/screens/Menu/ProtocolsMenu";
 import { RisksMenu } from "../components/screens/Menu/RisksMenu";
 import { CreateRiskSituation } from "../components/screens/CreateRiskSituation/CreateRiskSituation";
 import UsersStatus from "../components/screens/UsersStatus/UsersStatus";
 import { createBrowserRouter } from "react-router-dom";
-import { adminLoader } from "./ProtectedRoutes";
-
-
+import {
+  AdminProtectedRoute,
+  NotAuthenticatedRoute,
+  UserProtectedRoute,
+} from "./protectedRoutes";
 
 export const router = createBrowserRouter([
-  { path: "/", element: <Login /> },
-  { path: "/register", element: <Register /> },
+  {
+    path: "/",
+    element: (
+      <NotAuthenticatedRoute>
+        <Login />
+      </NotAuthenticatedRoute>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <NotAuthenticatedRoute>
+        <Register />
+      </NotAuthenticatedRoute>
+    ),
+  },
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <AdminProtectedRoute>
+        <AdminLayout />
+      </AdminProtectedRoute>
+    ),
     children: [
       { index: true, element: <Main /> },
       { path: "report", element: <ReportList /> },
@@ -33,11 +56,14 @@ export const router = createBrowserRouter([
         element: <CreateRiskSituation />,
       }, // Consistencia en nombres
     ],
-    adminLoader,
   },
   {
     path: "/user",
-    element: <UserLayout />,
+    element: (
+      <UserProtectedRoute>
+        <UserLayout />
+      </UserProtectedRoute>
+    ),
     children: [
       { index: true, element: <Main /> },
       { path: "report", element: <ReportList /> },
@@ -51,6 +77,5 @@ export const router = createBrowserRouter([
         element: <CreateRiskSituation />,
       }, // Consistencia en nombres
     ],
-    adminLoader,
   },
 ]);

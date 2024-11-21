@@ -1,69 +1,54 @@
-import axios from 'axios';
-import { ENV } from '../utils/constants';
+import { ENV } from "../utils/constants";
+import { axiosInstance } from "../config/axiosInstance";
 
-const { BASE_PATH, API_ROUTES } = ENV;
+const { API_ROUTES } = ENV;
 
-export class Incidents {
+const IncidentsController = {
+  async createIncident(id_institution, id_risk_situation) {
+    const url = `/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}`;
+    try {
+      const response = await axiosInstance.post(url, {});
 
-    async createIncident(accessToken, id_institution, id_risk_situation) {
-        const url = `${BASE_PATH}/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}`;
-        console.log('url post createIncident ', url);
-        var count = 0 ;
-        console.log("entrando aquí ", count + 1);
-        try {
-            const response = await axios.post(url, {}, {
-                headers: {
-                    "Content-Type": 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            console.log("respuesta despues del post createIncident", response.data);
-            return response.data; 
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+      console.log("respuesta despues del post createIncident", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
+  },
 
-    async updateIncident(accessToken, id_institution, id_risk_situation, description, id_incident) {
-        const url = `${BASE_PATH}/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}/${id_incident}`;
-        console.log('url put createIncident ', url);
-        
-        try {
-            const response = await axios.put(url, description, {
-                headers: {
-                    "Content-Type": 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+  async updateIncident(
+    id_institution,
+    id_risk_situation,
+    description,
+    id_incident,
+  ) {
+    const url = `/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}/${id_incident}`;
 
-            console.log("respuesta despues del updateIncident", response.data);
-            return response.data; 
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+    try {
+      const response = await axiosInstance.put(url, description);
+
+      console.log("respuesta despues del updateIncident", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
+  },
 
-    async getIncidents(accessToken, id_institution) {
-        const url = `${BASE_PATH}/institutions/${id_institution}/${API_ROUTES.INCIDENT}`;
-        console.log('url get getIncidents ', url);
-        
-        try {
-            const response = await axios.get(url, {
-                headers: {
-                    "Content-Type": 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+  async getIncidents(id_institution) {
+    const url = `/institutions/${id_institution}/${API_ROUTES.INCIDENT}`;
 
-            console.log("respuesta despues del updateIncident", response.data);
-            return response.data; 
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+    try {
+      const response = await axiosInstance.get(url);
+
+      console.log("respuesta despues del updateIncident", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
+  },
+};
 
-}
+export default IncidentsController;
