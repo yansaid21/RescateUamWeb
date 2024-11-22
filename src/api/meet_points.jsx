@@ -1,48 +1,36 @@
-import axios from 'axios';
-import { ENV } from '../utils/constants';
+import { ENV } from "../utils/constants";
+import { axiosInstance } from "../config/axiosInstance";
 
-const { BASE_PATH, API_ROUTES } = ENV;
+const { API_ROUTES } = ENV;
 
-export class MeetPoints {
+const MeetPointsController = {
+  async createMeetPoint(id_institution, data) {
+    const url = `/institutions/${id_institution}/${API_ROUTES.MEETPOINT}`;
 
-    async createMeetPoint(accessToken, id_institution, data) {
-        const url = `${BASE_PATH}/institutions/${id_institution}/${API_ROUTES.MEETPOINT}`;
-        console.log('url post createMeetPoint ', url);
-        console.log('data en createMeetPoint', data);
-        
-        try {
-            const response = await axios.post(url, data, {
-                headers: {
-                    "Content-Type": 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+    try {
+      const response = await axiosInstance.post(url, data);
 
-            console.log("respuesta despues del post createMeetPoint", response.data);
-            return response.data; 
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+      console.log("respuesta despues del post createMeetPoint", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
+  },
 
-    async getMeetPoints(accessToken, id_institution) {
-        const url = `${BASE_PATH}/institutions/${id_institution}/${API_ROUTES.MEETPOINT}`;
-        console.log('url get getMeetPoints ', url);
-        
-        try {
-            const response = await axios.get(url, {
-                headers: {
-                    "Content-Type": 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+  async getMeetPoints(id_institution) {
+    const url = `/institutions/${id_institution}/${API_ROUTES.MEETPOINT}`;
 
-            console.log("respuesta despues del getMeetPoints", response.data);
-            return response.data; 
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+    try {
+      const response = await axiosInstance.get(url);
+
+      console.log("respuesta despues del getMeetPoints", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
-}
+  },
+};
+
+export default MeetPointsController;

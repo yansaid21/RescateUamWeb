@@ -1,59 +1,44 @@
-import axios from 'axios';
-import { ENV } from '../utils/constants';
+import { axiosInstance } from "../config/axiosInstance";
+import { ENV } from "../utils/constants";
 
-const { BASE_PATH, API_ROUTES } = ENV;
+const { API_ROUTES } = ENV;
 
-export class Auth {
-    baseapi = BASE_PATH;
+const AuthController = {
+  async register(data) {
+    try {
+      const response = await axiosInstance.post(
+        `/${API_ROUTES.REGISTER}`,
+        data,
+      );
 
-    register = async (data) => {
-        const url = `${BASE_PATH}/${API_ROUTES.REGISTER}`;
-        console.log(url);
+      console.log("response desde auth register -> ", response);
 
-        try {
-            const response = await axios.post(url, data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+      return response.data;
+    } catch (error) {
+      console.log("data ", data);
 
-            console.log("response desde auth register -> ", response);
+      if (error.response) {
+        console.error("Error al hacer register", error.response.data);
+      } else {
+        console.error("Error al hacer register", error.message);
+      }
+      throw error;
+    }
+  },
 
-            return response.data;
-        } catch (error) {
-            console.log('data ', data);
-            
-            if (error.response) {
-                console.error('Error al hacer register', error.response.data);
-            } else {
-                console.error('Error al hacer register', error.message);
-            }
-            throw error;
-        }
+  async login(data) {
+    const noActive = {
+      active: false,
     };
+    try {
+      const response = await axiosInstance.post(`/${API_ROUTES.LOGIN}`, data);
+      console.log("retorno el json en auto login", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error al hacer login", error);
+      return noActive;
+    }
+  },
+};
 
-    login = async (data) => {
-        const url = `${BASE_PATH}/${API_ROUTES.LOGIN}`;
-        console.log("url en auth",url);
-        console.log('data de login ', data);
-        
-        const noActive = {
-            active: false
-        };
-
-        try {
-            const response = await axios.post(url, data, {
-                headers: {
-                    'Content-Type':  'application/json',
-                },
-            });
-
-            console.log("retorno el json en auto login", response.data);
-            return response.data;
-        } catch (error) {
-            console.error('Error al hacer login', error);
-            return noActive;
-        }
-    };
-
-}
+export default AuthController;
