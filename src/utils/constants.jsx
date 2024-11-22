@@ -1,5 +1,5 @@
 const SERVER_IP = "localhost:8000";
-const SECURE = true;
+const SECURE = false;
 export const SECRET_KEY =
   "quiñones:yXaNffqVUT2z9v6ESuJ/t8FJNWRAhbQWMNGR9Vcm1u0=";
 // server dns rescueapi.xyz
@@ -9,7 +9,7 @@ export const SECRET_KEY =
 // jean's iphone 172.20.10.14
 
 export const ENV = {
-  BASE_PATH: `${SECURE ? "http" : "https"}://${SERVER_IP}/api`,
+  BASE_PATH: `${SECURE ? "https" : "http"}://${SERVER_IP}/api`,
   ECHO_KEY: "bjvoc9h7uopfewap6d26",
   WS_HOST: "localhost",
   WS_PORT: 8080,
@@ -21,6 +21,7 @@ export const ENV = {
     INCIDENT: "incidents",
     MEETPOINT: "meet_points",
     ZONES: "zones",
+    ROOMS: "rooms",
   },
   INSTITUTION_ID: 1,
 };

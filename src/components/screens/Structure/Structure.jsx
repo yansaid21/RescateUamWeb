@@ -3,14 +3,12 @@ import './Structure.css';
 import { Button, Input, Select, Space, Table } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
-import { Institution } from '../../../api/institution';
-import { Zones } from '../../../api/zones';
+import  InstitutionsController  from '../../../api/institution';
+import  ZonesControllers from '../../../api/zones';
 import { CreateZones } from '../CreateZones/CreateZones';
-import { Rooms } from '../../../api/rooms';
+import  RoomsController from '../../../api/rooms';
+import { ENV } from '../../../utils/constants';
 
-const institutionController = new Institution(); 
-const zonesController = new Zones();
-const roomsController = new Rooms();
 
 const columns = [
     {
@@ -86,34 +84,31 @@ export const Structure = () => {
 
     //obtener info de la institución
     const infoInstitution = async () => {
-        const token = localStorage.getItem('token');
-        const id_institution = 1;
-        if (token && id_institution){
+        
             try{
-                const institution = await institutionController.getInstitution(token, id_institution);
+                const institution = await InstitutionsController.getInstitution(ENV.INSTITUTION_ID);
                 //console.log('institution data structure ', institution.data);
                 setInstitutionName(institution.data.name);
                 setInstitutionDescription(institution.data.description);
             } catch(error) {
                 console.error('Error fetching institution data:', error);
             }
-            
-        }
+         
+        
     }
 
     //obtener las zonas
     const getZonesInstitution = async () => {
-        const token = localStorage.getItem('token');
-        const id_institution = 1;
-        if (token && id_institution){
+        
+        
             try{
-                const zones = await zonesController.getZones(token, id_institution);
+                const zones = await ZonesController.getZones(ENV.INSTITUTION_ID);
                 //console.log('zone data structure ', zones.data);
                 setZones(zones.data);
             } catch(error) {
                 console.error('Error fetching zones data:', error);
             }
-        }
+        
     }
 
     //crear las zonas
@@ -133,8 +128,7 @@ export const Structure = () => {
     const fetchRooms = async (zoneId) => {
         setLoading(true);
         try {
-            const token = await localStorage.getItem('token');
-            const listRooms = await roomsController.getMeetPoints(token, 1, zoneId);
+            const listRooms = await RoomsController.getMeetPoints( ENV.INSTITUTION_ID, zoneId);
             const formattedData = listRooms.data.map((room, index) => ({
                 key: index,
                 nombre: room.name, 
