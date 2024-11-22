@@ -9,7 +9,7 @@ export const Menu = () => {
       <SectionMenu color="#F4D73B" text="Incidentes" href="/admin/report" logo="warning-amber" />
       <SectionMenu color="#C20590" text="Protocolos" href="/admin/risks-menu" logo="warning" />
       <SectionMenu color="#9CD04D" text="Puntos de encuentro" href="/admin/meetpoint" logo="place" />
-      <SectionMenu color="#E36727" text="Estructura" href="#" logo="location-city" />
+      <SectionMenu color="#E36727" text="Estructura" href="/admin/structure" logo="location-city" />
     </div>
   );
 }

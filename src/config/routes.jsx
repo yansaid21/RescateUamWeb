@@ -11,6 +11,7 @@ import { CreateRiskSituation } from "../components/screens/CreateRiskSituation/C
 import UsersStatus from "../components/screens/UsersStatus/UsersStatus";
 import { createBrowserRouter } from "react-router-dom";
 import { adminLoader } from "./ProtectedRoutes";
+import { Structure } from "../components/screens/Structure/Structure";
 
 
 
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
       { path: "usersStatistics", element: <UsersStatus /> }, // Corrección aquí
       { path: "protocols-menu", element: <ProtocolsMenu /> }, // Consistencia en nombres
       { path: "risks-menu", element: <RisksMenu /> }, // Consistencia en nombres
+      { path: "structure", element: <Structure/>},
       {
         path: "risks-menu/create-risk-situation",
         element: <CreateRiskSituation />,

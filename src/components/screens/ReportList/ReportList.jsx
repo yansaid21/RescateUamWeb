@@ -32,6 +32,9 @@ export const ReportList = () => {
     const [yScroll, setYScroll] = useState(false);
     const [incidentsData, setIncidentsData] = useState([]);
     const [loading, setLoading] = useState(false);
+    //filtro
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchText, setSearchText] = useState('');
 
     const fetchIncidents = async () => {
         setLoading(true);
@@ -46,6 +49,7 @@ export const ReportList = () => {
                 hora: `${incident.initial_date.split(' ')[1]} - ${incident.final_date.split(' ')[1]}`, 
             }));
             setIncidentsData(formattedData);
+            setFilteredData(formattedData);
         } catch (error) {
             console.error("Error al obtener los incidentes:", error);
         } finally {
@@ -56,6 +60,15 @@ export const ReportList = () => {
     useEffect(() => {
         fetchIncidents();
     }, []);
+
+    const handleSearch = (value) => {
+        setSearchText(value);
+        const filtered = incidentsData.filter(item => 
+            item.incidente.toLowerCase().includes(value.toLowerCase()) || 
+            item.fecha.includes(value)
+        );
+        setFilteredData(filtered);
+    };
 
     const tableProps = {
         bordered,
@@ -69,15 +82,17 @@ export const ReportList = () => {
                 <h2>Lista de incidentes</h2>
                 <Space direction="vertical">
                     <Search
-                        placeholder=""
-                        onSearch={onSearch}
+                        placeholder="Buscar por situación"
+                        onSearch={handleSearch}
                         className='listreport__search'
+                        onChange={(e) => handleSearch(e.target.value)}
+                        value={searchText}
                     />
                 </Space>
                 <Table
                     {...tableProps}
                     columns={columns}
-                    dataSource={hasData ? incidentsData : []}
+                    dataSource={hasData ? filteredData : []}
                     loading={loading}
                     className='listreport__table'
                 />

@@ -15,6 +15,7 @@ export const ENV = {
         RISK_SITUATION: 'risk_situations',
         INCIDENT: 'incidents',
         MEETPOINT: 'meet_points',
-        ZONES: 'zones'
+        ZONES: 'zones',
+        ROOMS: 'rooms'
     }
 };

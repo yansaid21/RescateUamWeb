@@ -1,0 +1,153 @@
+.structure{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    text-align: center;
+}
+
+.structure .structure__section{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.structure  .structure__input{
+    width: 100%;
+    height: 48px;
+    background: #D9D9D9;
+    border-radius: 20px;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 10px;
+}
+
+.custom-placeholder input::placeholder {
+    color: black;
+}
+
+.input-icon {
+    color: #0090D0;
+    font-size: 25px;
+}
+
+.structure .structure__textarea{
+    width: 100%;
+    background: #D9D9D9;
+    border-radius: 20px;
+    color: black;
+    padding: 18px 30px 18px 18px;
+}
+
+.structure__textarea::placeholder{
+    color: black;
+}
+
+.textarea-container {
+    position: relative;
+    width: 100%; 
+    margin: 10px;
+}
+
+.textarea-icon {
+    position: absolute;
+    right: 10px;
+    top: 130px; 
+    color: #0090D0; 
+    font-size: 25px;
+}
+
+:where(.css-dev-only-do-not-override-ni1kz0).ant-select-outlined:not(.ant-select-customize-input)  .ant-select-selector{
+    background: #D9D9D9; 
+    border-radius: 20px;
+    color: black;
+    padding: 0 10px; /* Ajusta los padding laterales */
+    border: none;
+    width: 100%;
+    margin: 10px 10px 5px;
+    display: flex;
+    align-items: center;
+}
+
+:where(.css-dev-only-do-not-override-ni1kz0).ant-select-outlined .ant-select-arrow {
+    top: 30px; /* Alinea verticalmente el ícono */
+    transform: translateY(-50%); /* Corrige el desplazamiento */
+    right: 5px;
+}
+
+.ant-select-selection-placeholder{
+    color: black;
+}
+
+.rooms__table{
+    width: 100%;
+    margin: 30px 30px 5px;
+}
+
+.rooms__table .ant-table-thead > tr > th {
+    background-color: #D9D9D9; 
+    color: #000; 
+    font-weight: bold; 
+}
+
+.rooms__table .ant-table, 
+.rooms__table .ant-table-thead > tr > th, 
+.rooms__table .ant-table-tbody > tr > td, 
+.rooms__table .ant-table-container, 
+.rooms__table .ant-table-cell {
+    border-color: #000000 !important; 
+}
+
+.rooms__table .ant-table-tbody > tr {
+    border-bottom: 1px solid #000000 ; 
+}
+
+.structure .structure__button{
+    width: 212px;
+    height: 49px;
+    background: #0069A3;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 19px;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin: 5px 20px 15px;
+}
+
+:where(.css-dev-only-do-not-override-ni1kz0).ant-input-outlined:hover {
+    border-color: #D9D9D9;
+    background-color: #D9D9D9;
+    box-shadow: 0 0 5px #D9D9D9;
+}
+
+:where(.css-dev-only-do-not-override-ni1kz0).ant-input-outlined:focus, :where(.css-dev-only-do-not-override-ni1kz0).ant-input-outlined:focus-within {
+    border-color: #D9D9D9;
+    background-color: #D9D9D9;
+    box-shadow: 0 0 5px #D9D9D9;
+}
+
+@media (min-width: 1024px) {
+    .structure{
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 0 50px;
+    }
+    .structure-content{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .title{
+        text-align: center;
+    }
+    .structure .structure__section{
+        width: 100%;
+    }
+}

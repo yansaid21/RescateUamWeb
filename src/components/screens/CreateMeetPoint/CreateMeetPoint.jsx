@@ -10,7 +10,6 @@ import { Zones } from '../../../api/zones';
 const meetPointController = new MeetPoints();
 const zonesController = new Zones();
 
-
 export const CreateMeetPoint = ({ onClose, onAddZone }) => {
     useEffect(() => {
         const getZones = async () => {
@@ -80,7 +79,7 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
 
     const handleAddZone = () => {
         onAddZone();
-        };
+    };
         
         return (
             <div className="meetpoint">
@@ -90,46 +89,46 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
                     className='form'
                     onSubmit={formik.handleSubmit}
                     >
-                <div className='meetpoint__form'>
-                    <Form.Item>
-                        <Input 
-                            placeholder="Nombre" 
-                            className='form__input'
-                            id="name"
-                            name="name"
-                            onChange={formik.handleChange}
-                            value={formik.values.name}
-                            />
-                        {formik.errors.name ? <div className='error__text'>{formik.errors.name}</div> : null}
-                    </Form.Item>
-                    <Form.Item>
-                        <Select
-                            placeholder="Zona"
-                            className='form__input'
-                            id="zone"
-                            name="zone"
-                            onChange={value => {
-                                if (value === "addZone") {
-                                    handleAddZone();
-                                } else {
-                                    formik.setFieldValue('zone', value);
-                                }
-                            }} 
-                            value={formik.values.zone}
-                            >
-                            {zones.map((zone) => (
-                                <Select.Option key={zone.id} value={zone.id}>
-                                    {zone.name}
+                    <div className='meetpoint__form'>
+                        <Form.Item>
+                            <Input 
+                                placeholder="Nombre" 
+                                className='form__input'
+                                id="name"
+                                name="name"
+                                onChange={formik.handleChange}
+                                value={formik.values.name}
+                                />
+                            {formik.errors.name ? <div className='error__text'>{formik.errors.name}</div> : null}
+                        </Form.Item>
+                        <Form.Item>
+                            <Select
+                                placeholder="Zona"
+                                className='form__input'
+                                id="zone"
+                                name="zone"
+                                onChange={value => {
+                                    if (value === "addZone") {
+                                        handleAddZone();
+                                    } else {
+                                        formik.setFieldValue('zone', value);
+                                    }
+                                }} 
+                                value={formik.values.zone}
+                                >
+                                {zones.map((zone) => (
+                                    <Select.Option key={zone.id} value={zone.id}>
+                                        {zone.name}
+                                    </Select.Option>
+                                ))}
+                                <Select.Option value="addZone" style={{ color: '#007BFF', fontWeight: 'bold' }}>
+                                    + Añadir Zona
                                 </Select.Option>
-                            ))}
-                            <Select.Option value="addZone" style={{ color: '#007BFF', fontWeight: 'bold' }}>
-                                + Añadir Zona
-                            </Select.Option>
-                        </Select>
-                        {formik.errors.zone ? <div className='error__text'>{formik.errors.zone}</div> : null}
-                        {showCreateZone && <CreateZones onClose={() => setShowCreateZone(false)}/>}
-                    </Form.Item>
-                </div>
+                            </Select>
+                            {formik.errors.zone ? <div className='error__text'>{formik.errors.zone}</div> : null}
+                            {showCreateZone && <CreateZones onClose={() => setShowCreateZone(false)}/>}
+                        </Form.Item>
+                    </div>
                     <TextArea 
                         className='form__textarea'
                         rows={8} 
@@ -144,6 +143,11 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
                     <div className='btnmeetpoint'>
                         <Button htmlType="submit" className='form__buttonmeetpoint' type="submit">
                             Aceptar
+                        </Button>
+                    </div>
+                    <div className='btnmeetpoint'>
+                        <Button className='form__buttonmeetpoint' onClick={onClose}>
+                            Cancelar
                         </Button>
                     </div>
                 </form>
