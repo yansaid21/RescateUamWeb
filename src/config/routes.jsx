@@ -1,5 +1,7 @@
 import { Login } from "../components/screens/login/Login";
-import { Main } from "../components/screens/main/Main";
+import { Admin } from "../components/screens/Admin/Admin";
+import { Brigadier } from "../components/screens/Brigadier/Brigadier";
+import { User } from "../components/screens/User/User";
 import { MeetPointList } from "../components/screens/MeetPointList/MeetPointList";
 import { Register } from "../components/screens/register/Register";
 import { ReportList } from "../components/screens/ReportList/ReportList";
@@ -17,6 +19,7 @@ import {
   AdminProtectedRoute,
   NotAuthenticatedRoute,
   UserProtectedRoute,
+  BrigadistProtectedRoute,
 } from "./protectedRoutes";
 import { Structure } from "../components/screens/Structure/Structure";
 
@@ -45,19 +48,28 @@ export const router = createBrowserRouter([
       </AdminProtectedRoute>
     ),
     children: [
-      { index: true, element: <Main /> },
+      { index: true, element: <Admin /> },
       { path: "report", element: <ReportList /> },
       { path: "meetpoint", element: <MeetPointList /> },
       { path: "menu", element: <Menu /> },
       { path: "usersStatistics", element: <UsersStatus /> }, // Corrección aquí
       { path: "protocols-menu", element: <ProtocolsMenu /> }, // Consistencia en nombres
       { path: "risks-menu", element: <RisksMenu /> }, // Consistencia en nombres
-      { path: "structure", element: <Structure/>},
+      { path: "structure", element: <Structure /> },
       {
         path: "risks-menu/create-risk-situation",
         element: <CreateRiskSituation />,
       }, // Consistencia en nombres
     ],
+  },
+  {
+    path: "/brigadier",
+    element: (
+      <BrigadistProtectedRoute>
+        <UserLayout />
+      </BrigadistProtectedRoute>
+    ),
+    children: [{ index: true, element: <Brigadier /> }],
   },
   {
     path: "/user",
@@ -66,18 +78,6 @@ export const router = createBrowserRouter([
         <UserLayout />
       </UserProtectedRoute>
     ),
-    children: [
-      { index: true, element: <Main /> },
-      { path: "report", element: <ReportList /> },
-      { path: "meetpoint", element: <MeetPointList /> },
-      { path: "menu", element: <Menu /> },
-      { path: "usersStatistics", element: <UsersStatus /> }, // Corrección aquí
-      { path: "protocols-menu", element: <ProtocolsMenu /> }, // Consistencia en nombres
-      { path: "risks-menu", element: <RisksMenu /> }, // Consistencia en nombres
-      {
-        path: "risks-menu/create-risk-situation",
-        element: <CreateRiskSituation />,
-      }, // Consistencia en nombres
-    ],
+    children: [{ index: true, element: <User /> }],
   },
 ]);

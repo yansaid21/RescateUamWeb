@@ -15,7 +15,7 @@ import { institutionStore } from "./store/institution";
 function App() {
   const { verifyToken } = userStore();
   const { initEcho } = echoStore();
-  const { setInstitution } = institutionStore();
+  const { setInstitution, setIncident } = institutionStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -26,19 +26,27 @@ function App() {
         return;
       }
       sessionToken = CryptoJS.AES.decrypt(sessionToken, SECRET_KEY).toString(
-        CryptoJS.enc.Utf8,
+        CryptoJS.enc.Utf8
       );
 
-      const verified = await verifyToken(sessionToken);
-      if (verified) {
-        axiosInstance.defaults.headers.common.Authorization = `Bearer ${sessionToken}`;
-        initEcho(sessionToken);
-        const institution = await InstitutionsController.getInstitution(
-          ENV.INSTITUTION_ID,
-        );
-        setInstitution(institution.data);
+      try {
+        const verified = await verifyToken(sessionToken);
+        if (verified) {
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${sessionToken}`;
+          initEcho(sessionToken);
+          const institution = await InstitutionsController.getInstitution(
+            ENV.INSTITUTION_ID
+          );
+          setInstitution(institution.data);
+          setIncident(institution.data.active_incident);
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem("google");
+        }
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     }
     loadSession();
   }, []);

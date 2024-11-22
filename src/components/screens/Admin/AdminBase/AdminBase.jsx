@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { BigEmergencyButton } from "../../atoms/BigEmergencyButton/BigEmergencyButton";
-import "./Main.css";
-import TypeEmergencyButton from "../../atoms/TypeEmergencyButton/TypeEmergencyButton";
-import CompleteRegister from "../../screens/completeRegister/CompleteRegister";
-import { CreateReport } from "../CreateReport/CreateReport";
-import IncidentsController from "../../../api/incidents";
-import RiskSituationsController from "../../../api/risk_situations";
-import InstitutionsController from "../../../api/institution";
-import { Spinner } from "../../atoms/Spinner/Spinner";
-import { userStore } from "../../../store/user";
-import UserController from "../../../api/user";
-import { ENV } from "../../../utils/constants";
-import { institutionStore } from "../../../store/institution";
+import { useEffect, useState } from "react";
+import { BigEmergencyButton } from "../../../atoms/BigEmergencyButton/BigEmergencyButton";
+import "./AdminBase.css";
+import TypeEmergencyButton from "../../../atoms/TypeEmergencyButton/TypeEmergencyButton";
+import CompleteRegister from "../../../screens/completeRegister/CompleteRegister";
+import { CreateReport } from "../../CreateReport/CreateReport";
+import IncidentsController from "../../../../api/incidents";
+import RiskSituationsController from "../../../../api/risk_situations";
+import InstitutionsController from "../../../../api/institution";
+import { Spinner } from "../../../atoms/Spinner/Spinner";
+import { userStore } from "../../../../store/user";
+import UserController from "../../../../api/user";
+import { ENV } from "../../../../utils/constants";
+import { institutionStore } from "../../../../store/institution";
 
-export const Main = () => {
+export const AdminBase = () => {
   const { setIncident } = institutionStore();
   const { user } = userStore();
   const [userData, setUserData] = useState(null);
@@ -51,7 +51,7 @@ export const Main = () => {
   const checkInstitutionInfo = async () => {
     try {
       const institution = await InstitutionsController.getInstitution(
-        ENV.INSTITUTION_ID,
+        ENV.INSTITUTION_ID
       );
       const institutionIncident = institution.data.active_incident;
       if (institutionIncident === null) {
@@ -61,7 +61,7 @@ export const Main = () => {
         setIncidentTypeId(institutionIncident.risk_situation_id);
         console.log(
           "id del incidente activo: ",
-          institutionIncident.risk_situation_id,
+          institutionIncident.risk_situation_id
         );
         localStorage.setItem("id_incident", institutionIncident.id);
         setIncident(institutionIncident);
@@ -75,7 +75,7 @@ export const Main = () => {
   const fetchRiskSituations = async () => {
     try {
       const riskData = await RiskSituationsController.getRiskSituation(
-        ENV.INSTITUTION_ID,
+        ENV.INSTITUTION_ID
       );
       console.log("riskData en main ", riskData.data);
       setRiskSituations(riskData.data);
@@ -127,7 +127,7 @@ export const Main = () => {
               if (!theIncident) {
                 const incident = await IncidentsController.createIncident(
                   ENV.INSTITUTION_ID,
-                  incidentTypeId,
+                  incidentTypeId
                 );
                 console.log(incident.data);
                 checkInstitutionInfo();
@@ -192,8 +192,8 @@ export const Main = () => {
                   incidentTypeId === null
                     ? false
                     : situation.id === incidentTypeId
-                      ? false
-                      : true
+                    ? false
+                    : true
                 }
                 running={theIncident ? true : false}
                 onClick={() => handleTypeButtonClick(situation.id)}

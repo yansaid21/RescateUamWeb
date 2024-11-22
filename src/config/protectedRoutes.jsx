@@ -41,7 +41,7 @@ export function AdminProtectedRoute({ children }) {
 export function BrigadistProtectedRoute({ children }) {
   const role = userStore((state) => state.role);
   console.log("role en BrigadistProtected", role);
-  if (role === 2 || role === 1) {
+  if (role === 2) {
     return children;
   }
   if (routeFromRole.has(role)) {
