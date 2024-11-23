@@ -22,6 +22,7 @@ import {
   BrigadistProtectedRoute,
 } from "./protectedRoutes";
 import { Structure } from "../components/screens/Structure/Structure";
+import Testing from "../components/screens/Testing/Testing";
 
 export const router = createBrowserRouter([
   {
@@ -79,5 +80,9 @@ export const router = createBrowserRouter([
       </UserProtectedRoute>
     ),
     children: [{ index: true, element: <User /> }],
+  },
+  {
+    path: "/testing",
+    element: <Testing />,
   },
 ]);
