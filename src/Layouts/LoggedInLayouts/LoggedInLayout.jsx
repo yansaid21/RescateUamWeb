@@ -1,14 +1,14 @@
-import React from 'react';
-import AdminNavbar from '../../components/molecules/Navbar/AdminNavbar';
-import UserNavbar from '../../components/molecules/Navbar/UserNavbar';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import AdminNavbar from "../../components/molecules/Navbar/AdminNavbar";
+import UserNavbar from "../../components/molecules/Navbar/UserNavbar";
+import AnimatedOutlet from "./AnimatedOutlet";
 
 export const AdminLayout = () => {
   return (
     <>
       <AdminNavbar />
       <main>
-        <Outlet /> {/* Asegúrate de incluir Outlet aquí */}
+        <AnimatedOutlet /> {/* Asegúrate de incluir Outlet aquí */}
       </main>
     </>
   );
@@ -19,7 +19,7 @@ export const UserLayout = () => {
     <>
       <UserNavbar />
       <main>
-        <Outlet /> {/* Asegúrate de incluir Outlet aquí */}
+        <AnimatedOutlet /> {/* Asegúrate de incluir Outlet aquí */}
       </main>
     </>
   );

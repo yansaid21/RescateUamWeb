@@ -11,6 +11,7 @@ import CryptoJS from "crypto-js";
 import { axiosInstance } from "./config/axiosInstance";
 import InstitutionsController from "./api/institution";
 import { institutionStore } from "./store/institution";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const { verifyToken } = userStore();
@@ -26,7 +27,7 @@ function App() {
         return;
       }
       sessionToken = CryptoJS.AES.decrypt(sessionToken, SECRET_KEY).toString(
-        CryptoJS.enc.Utf8
+        CryptoJS.enc.Utf8,
       );
 
       try {
@@ -35,7 +36,7 @@ function App() {
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${sessionToken}`;
           initEcho(sessionToken);
           const institution = await InstitutionsController.getInstitution(
-            ENV.INSTITUTION_ID
+            ENV.INSTITUTION_ID,
           );
           setInstitution(institution.data);
           setIncident(institution.data.active_incident);
@@ -53,11 +54,13 @@ function App() {
 
   return (
     <>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <RouterProvider router={router} fallbackElement={Spinner} />
-      )}
+      <AnimatePresence>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <RouterProvider router={router} fallbackElement={Spinner} />
+        )}
+      </AnimatePresence>
     </>
   );
 }
