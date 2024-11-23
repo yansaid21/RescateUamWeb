@@ -1,0 +1,8 @@
+.admin-incident {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  align-items: center;
+  justify-items: center;
+  padding: 2rem;
+  gap: 2rem;
+}

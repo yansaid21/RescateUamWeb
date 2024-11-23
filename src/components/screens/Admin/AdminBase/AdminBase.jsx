@@ -12,7 +12,6 @@ import { userStore } from "../../../../store/user";
 import UserController from "../../../../api/user";
 import { ENV } from "../../../../utils/constants";
 import { institutionStore } from "../../../../store/institution";
-
 export const AdminBase = () => {
   const { setIncident } = institutionStore();
   const { user } = userStore();
