@@ -1,0 +1,17 @@
+.roundedButton {
+  border-radius: 100%;
+  padding: 10px 20px;
+  width: 18rem;
+  height: 18rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+.roundedButtonDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
