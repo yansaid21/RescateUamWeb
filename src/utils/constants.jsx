@@ -22,6 +22,7 @@ export const ENV = {
     MEETPOINT: "meet_points",
     ZONES: "zones",
     ROOMS: "rooms",
+    INSTITUTIONS: "institutions",
   },
   INSTITUTION_ID: 1,
 };
