@@ -1,37 +1,26 @@
-import React from 'react';
-import { BellOutlined, BarChartOutlined,MenuOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import './Navbar.css';
-import { FaUserCircle } from 'react-icons/fa';
+import { BellOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
+import { FaUserCircle } from "react-icons/fa";
 
 const UserNavbar = () => {
-
   return (
     <div className="navbar">
       <div className="icons-container">
         <button className="icon-button">
           <Link to="/user">
-            <div className='icon'>
-            <BellOutlined/>
-            </div>
-          </Link>
-        </button>
-
-        <button className="icon-button">
-          <Link to="/user/menu">
             <div className="icon">
-            <MenuOutlined />
+              <BellOutlined />
             </div>
           </Link>
         </button>
         <button className="icon-button">
           <Link to="/user/gestion">
             <div className="icon">
-            <FaUserCircle />
+              <FaUserCircle />
             </div>
           </Link>
         </button>
-        
       </div>
     </div>
   );
