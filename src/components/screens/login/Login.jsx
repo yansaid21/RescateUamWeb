@@ -63,28 +63,22 @@ export const Login = () => {
 
         console.log("response en login ", response);
         console.log("response.user en login ", response.user);
-        const rawRole = await UserController.getProfile(
-          response.token,
-          ENV.INSTITUTION_ID
-        );
-        const role = rawRole.data.role.id;
+        console.log("role en login ", response.user.role.id);
 
-        console.log("role en login ", role);
-
-        handleSetUser(response.user, role);
+        handleSetUser(response.user, response.user.role.id);
         console.log("user seteado en login");
 
         if (response.token) {
           console.log("Login exitoso", response);
           localStorage.setItem(
             "google",
-            CryptoJS.AES.encrypt(response.token, SECRET_KEY).toString()
+            CryptoJS.AES.encrypt(response.token, SECRET_KEY).toString(),
           );
           // set axios instance headers
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.token}`;
           initEcho(response.token);
           const institution = await InstitutionsController.getInstitution(
-            ENV.INSTITUTION_ID
+            ENV.INSTITUTION_ID,
           );
           setInstitution(institution.data);
           if (routeFromRole.has(role)) {
@@ -100,7 +94,7 @@ export const Login = () => {
             alert("Contraseña incorrecta. Inténtalo de nuevo.");
           } else {
             alert(
-              "Error durante el inicio de sesión. Por favor, intenta más tarde."
+              "Error durante el inicio de sesión. Por favor, intenta más tarde.",
             );
           }
         }

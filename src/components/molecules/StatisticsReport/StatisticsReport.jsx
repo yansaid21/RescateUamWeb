@@ -10,16 +10,16 @@ StatisticsReport.propTypes = {
   statistics: PropTypes.array.isRequired,
 };
 
-export default function StatisticsReport({ statistics }) {
+export default function StatisticsReport({ className, statistics }) {
   const statisticsNumber = statistics.filter(
-    (statistic) => statistic.type === "number"
+    (statistic) => statistic.type === "number",
   );
   const statisticsProgress = statistics.filter(
-    (statistic) => statistic.type === "progress"
+    (statistic) => statistic.type === "progress",
   );
 
   return (
-    <section className="statistics-report">
+    <section className={`statistics-report ${className}`}>
       <Row
         gutter={{
           xs: 8,

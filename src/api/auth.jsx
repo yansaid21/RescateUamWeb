@@ -27,6 +27,7 @@ const AuthController = {
   },
 
   async login(data) {
+    data.institution = ENV.INSTITUTION_ID;
     const noActive = {
       active: false,
     };

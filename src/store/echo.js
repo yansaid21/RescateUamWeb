@@ -2,6 +2,9 @@ import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import { create } from "zustand";
 import { ENV } from "../utils/constants";
+import InstitutionController from "../api/institution";
+import { institutionStore } from "../store/institution";
+const { setInstitution, setIncident, setFlag } = institutionStore.getState();
 
 export const echoStore = create((set) => ({
   echo: null,
@@ -22,10 +25,23 @@ export const echoStore = create((set) => ({
       },
       Pusher,
     });
-    // echo.private(`privileged-channel.1`).listen(".userReportChange", (e) => {
-    //   alert("General");
-    //   console.log(e);
-    // });
+    echo
+      .private(`public-channel.${ENV.INSTITUTION_ID}`)
+      .listen(".incidentCreation", async (data) => {
+        const { data: institution } =
+          await InstitutionController.getInstitution(ENV.INSTITUTION_ID);
+        setInstitution(institution);
+        setIncident(institution.active_incident);
+        setFlag(true);
+      });
+    echo
+      .private(`public-channel.${ENV.INSTITUTION_ID}`)
+      .listen(".incidentFinalization", (data) => {
+        console.log("incidentFinalization", data);
+        setIncident(null);
+        setFlag(false);
+      });
+
     set({ echo });
   },
 }));
