@@ -1,0 +1,24 @@
+.brigadier-incident {
+  height: 80dvh;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 2rem;
+  gap: 2rem;
+
+  .alarm {
+    grid-column: 1;
+  }
+
+  .statistics {
+    grid-column: span 3;
+  }
+
+  .user-reports {
+    grid-column: span 4;
+  }
+
+  .wide-table {
+    width: 95%;
+  }
+}

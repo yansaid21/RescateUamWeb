@@ -49,6 +49,19 @@ const IncidentsController = {
       throw error;
     }
   },
+
+  async getStatistics(id_institution, id_risk_situation, id_incident) {
+    const url = `/institutions/${id_institution}/${API_ROUTES.RISK_SITUATION}/${id_risk_situation}/${API_ROUTES.INCIDENT}/${id_incident}/statistics`;
+
+    try {
+      const response = await axiosInstance.get(url);
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
 
 export default IncidentsController;

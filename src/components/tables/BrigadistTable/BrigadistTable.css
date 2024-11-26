@@ -1,0 +1,9 @@
+.table-container {
+  width: 100%;
+}
+
+.table-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}

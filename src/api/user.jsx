@@ -64,11 +64,9 @@ const UserController = {
     }
   },
 
-  async getProfile(institutionId) {
+  async getProfile() {
     try {
-      const response = await axiosInstance.get(
-        `/profile?institution=${institutionId}`,
-      );
+      const response = await axiosInstance.get(`/profile`);
 
       console.log("respuesta despues del getProfile", response.data);
       return response.data;
@@ -79,16 +77,13 @@ const UserController = {
   },
 
   // Overload
-  async getProfile(sessionToken, institutionId) {
+  async getProfile(sessionToken) {
     try {
-      const response = await axiosInstance.get(
-        `/profile?institution=${institutionId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${sessionToken}`,
-          },
+      const response = await axiosInstance.get(`/profile`, {
+        headers: {
+          Authorization: `Bearer ${sessionToken}`,
         },
-      );
+      });
 
       console.log("respuesta despues del getProfile", response.data);
       return response.data;

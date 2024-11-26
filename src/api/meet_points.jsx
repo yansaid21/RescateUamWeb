@@ -31,6 +31,19 @@ const MeetPointsController = {
       throw error;
     }
   },
+
+  async assignMeetPoint(id_institution, meetpoint_id) {
+    const url = `/institutions/${id_institution}/${API_ROUTES.MEETPOINT}/${meetpoint_id}/assign`;
+
+    try {
+      const response = await axiosInstance.post(url);
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
 
 export default MeetPointsController;

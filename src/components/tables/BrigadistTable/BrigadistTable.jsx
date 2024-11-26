@@ -2,11 +2,12 @@ import { ENV } from "../../../utils/constants";
 import TableWithSocket from "../../molecules/TableWithSocket/TableWithSocket";
 import BrigadistsController from "../../../api/brigadists";
 import { institutionStore } from "../../../store/institution";
+import "./BrigadistTable.css";
 
 // This list describe the columns that the table will have.
 const brigadistColumns = [
   {
-    title: "Name",
+    title: "Nombre",
     dataIndex: "name",
     key: "name",
     sorter: true,
@@ -17,18 +18,18 @@ const brigadistColumns = [
     key: "email",
   },
   {
-    title: "Phone Number",
+    title: "Número de teléfono",
     dataIndex: "phone",
     key: "phone",
   },
   {
-    title: "Meet Point",
+    title: "Punto de encuentro",
     dataIndex: "meetPoint",
     key: "meetPoint",
   },
 ];
 
-const BrigadistsTable = () => {
+const BrigadistsTable = ({ className, size }) => {
   const { incident } = institutionStore();
   async function syncBrigadists(tableParams) {
     try {
@@ -70,15 +71,19 @@ const BrigadistsTable = () => {
   }
 
   return incident ? (
-    <TableWithSocket
-      channel={`public-channel.${ENV.INSTITUTION_ID}`}
-      event={`.brigadierAssignment`}
-      columns={brigadistColumns}
-      syncDataSource={syncBrigadists}
-      initialPage={1}
-      pageSize={15}
-      emptyText="No hay brigadistas asignados a un punto de encuentro"
-    />
+    <section className={className}>
+      <h1 className="table-title">Brigadistas activos</h1>
+      <TableWithSocket
+        size={size}
+        channel={`public-channel.${ENV.INSTITUTION_ID}`}
+        event={`.brigadierAssignment`}
+        columns={brigadistColumns}
+        syncDataSource={syncBrigadists}
+        initialPage={1}
+        pageSize={15}
+        emptyText="No hay brigadistas asignados a un punto de encuentro"
+      />
+    </section>
   ) : (
     <h1>NO ACTIVE INCIDENT</h1>
   );

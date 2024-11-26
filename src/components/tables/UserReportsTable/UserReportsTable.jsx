@@ -2,11 +2,12 @@ import { ENV } from "../../../utils/constants";
 import TableWithSocket from "../../molecules/TableWithSocket/TableWithSocket";
 import UserReportsController from "../../../api/userReports";
 import { institutionStore } from "../../../store/institution";
+import "./UserReportsTable.css";
 
 // This list describe the columns that the table will have.
 const userReportColumns = [
   {
-    title: "Name",
+    title: "Nombre",
     dataIndex: "name",
     key: "name",
     sorter: true,
@@ -17,12 +18,12 @@ const userReportColumns = [
     key: "email",
   },
   {
-    title: "Phone Number",
+    title: "Número de telefono",
     dataIndex: "phone",
     key: "phone",
   },
   {
-    title: "State",
+    title: "Estado",
     dataIndex: "state",
     key: "state",
     filters: [
@@ -42,7 +43,7 @@ const userReportColumns = [
   },
 ];
 
-const UserReportsTable = () => {
+const UserReportsTable = ({ className, size }) => {
   const { incident } = institutionStore();
   async function syncUserReports(tableParams) {
     try {
@@ -84,15 +85,19 @@ const UserReportsTable = () => {
   }
 
   return incident ? (
-    <TableWithSocket
-      channel={`privileged-channel.${ENV.INSTITUTION_ID}`}
-      event={`.userReportChange`}
-      columns={userReportColumns}
-      syncDataSource={syncUserReports}
-      initialPage={1}
-      pageSize={15}
-      emptyText="No hay Reportes de usuario"
-    />
+    <section className={className}>
+      <h1 className="table-title">Reportes de usuario</h1>
+      <TableWithSocket
+        size={size}
+        channel={`privileged-channel.${ENV.INSTITUTION_ID}`}
+        event={`.userReportChange`}
+        columns={userReportColumns}
+        syncDataSource={syncUserReports}
+        initialPage={1}
+        pageSize={15}
+        emptyText="No hay Reportes de usuario"
+      />
+    </section>
   ) : (
     <h1>NO ACTIVE INCIDENT</h1>
   );

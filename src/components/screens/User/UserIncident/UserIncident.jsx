@@ -44,7 +44,7 @@ export const UserIncident = () => {
             incident.risk_situation_id,
             incident.id,
             userReport.id,
-            updatedFields
+            updatedFields,
           ).then((data) => {
             setMeetPoints(data.data.zone?.meet_points);
             setUserReport(data.data);
@@ -63,7 +63,7 @@ export const UserIncident = () => {
           state,
           zone_id: location,
           description,
-        }
+        },
       ).then((data) => {
         setUserReport(data.data);
         setMeetPoints(data.data.zone?.meet_points);
@@ -86,7 +86,7 @@ export const UserIncident = () => {
         {
           state: "safe",
           description: description,
-        }
+        },
       ).then((data) => {
         setUserReport(data.data);
         setShowModal(false);
@@ -104,7 +104,7 @@ export const UserIncident = () => {
               value: zone.id,
               label: zone.name,
             };
-          })
+          }),
         );
       } catch (error) {
         console.log(error);
@@ -115,7 +115,7 @@ export const UserIncident = () => {
       try {
         const userReport =
           await UserReportsController.getUserReportInActiveIncident(
-            institution.id
+            institution.id,
           );
         setUserReport(userReport.data);
         console.log(userReport.data);

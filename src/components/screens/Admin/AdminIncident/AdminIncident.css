@@ -1,8 +1,28 @@
 .admin-incident {
+  height: 80dvh;
   display: grid;
-  grid-template-columns: 30% 70%;
-  align-items: center;
+  grid-template-columns: repeat(4, 1fr);
   justify-items: center;
   padding: 2rem;
   gap: 2rem;
+
+  .alarm {
+    grid-column: 1;
+  }
+
+  .statistics {
+    grid-column: span 3;
+  }
+
+  .user-reports {
+    grid-column: span 2;
+  }
+
+  .brigadiers {
+    grid-column: span 2;
+  }
+
+  .wide-table {
+    width: 95%;
+  }
 }

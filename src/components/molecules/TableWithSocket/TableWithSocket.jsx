@@ -12,6 +12,8 @@ const defaultListener = async () => {
 };
 
 const TableWithSocket = ({
+  className,
+  size,
   title,
   channel,
   event,
@@ -95,6 +97,8 @@ const TableWithSocket = ({
 
   return (
     <Table
+      className={className}
+      size={size}
       title={title}
       rowSelection={{ type: "checkbox" }}
       dataSource={dataSource}

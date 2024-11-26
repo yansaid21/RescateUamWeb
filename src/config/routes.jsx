@@ -64,7 +64,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/brigadier",
+    path: "/brigadist",
     element: (
       <BrigadistProtectedRoute>
         <UserLayout />
