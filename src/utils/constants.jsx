@@ -1,5 +1,5 @@
-const SERVER_IP = "localhost:8000";
-const SECURE = false;
+const SERVER_IP = "rescueapi.xyz";
+const SECURE = true;
 export const SECRET_KEY =
   "quiñones:yXaNffqVUT2z9v6ESuJ/t8FJNWRAhbQWMNGR9Vcm1u0=";
 // server dns rescueapi.xyz
