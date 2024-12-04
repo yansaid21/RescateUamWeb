@@ -7,11 +7,13 @@ import { Button, Modal, Select, Input, Tooltip } from "antd";
 import RoundedButton from "../../../atoms/RoundedButton/RoundedButton";
 import { Spinner } from "../../../atoms/Spinner/Spinner";
 import BrigadistTable from "../../../tables/BrigadistTable/BrigadistTable";
+import { userStore } from "../../../../store/user";
 
 const { TextArea } = Input;
 
 export const UserIncident = () => {
   const { institution, incident } = institutionStore();
+  const { user, setUser } = userStore();
   const [userReport, setUserReport] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [stateOptions, setStateOptions] = useState([]);
@@ -48,6 +50,7 @@ export const UserIncident = () => {
           ).then((data) => {
             setMeetPoints(data.data.zone?.meet_points);
             setUserReport(data.data);
+            setUser({ ...user, incident_reported: data.data });
             setShowModal(false);
           });
         } else {
@@ -67,6 +70,7 @@ export const UserIncident = () => {
       ).then((data) => {
         setUserReport(data.data);
         setMeetPoints(data.data.zone?.meet_points);
+        setUser({ ...user, incident_reported: data.data });
         setShowModal(false);
       });
     }
