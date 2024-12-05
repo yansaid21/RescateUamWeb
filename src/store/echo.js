@@ -44,4 +44,8 @@ export const echoStore = create((set) => ({
 
     set({ echo });
   },
+  cleanEcho: () => {
+    echoStore.getState().echo?.disconnect();
+    setEcho(null);
+  },
 }));
