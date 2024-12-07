@@ -6,16 +6,16 @@ const {API_ROUTES } = ENV;
 
     // /institutions/{institution}/zones/{zone}/rooms
     
-const RoomsController ={
+const LevelsController ={
 
-    async getRooms(id_institution, id_zone) {
-            const url = `/institutions/${id_institution}/${API_ROUTES.ZONES}/${id_zone}/${API_ROUTES.ROOMS}`;
-            /* console.log('url get getRooms ', url); */
+    async getLevels(id_institution) {
+            const url = `/institutions/${id_institution}/${API_ROUTES.LEVELS}`;
+            /* console.log('url get getLevels ', url); */
         
         try {
             const response = await axiosInstance.get(url)
             
-/*             console.log("respuesta despues del getRooms", response.data); */
+/*             console.log("respuesta despues del getLevels", response.data); */
             return response.data; 
         } catch (error) {
             console.log(error);
@@ -23,15 +23,15 @@ const RoomsController ={
         }
     },
     // /institutions/{institution}/zones/{zone}/rooms
-    async createRooms( id_institution, id_zone, data) {
-        const url = `/institutions/${id_institution}/${API_ROUTES.ZONES}/${id_zone}/${API_ROUTES.ROOMS}`;
-      console.log('url post createRooms ', url);
-        console.log('data en createRooms', data);
+    async createLevels( id_institution, data) {
+        const url = `/institutions/${id_institution}/${API_ROUTES.LEVELS}`;
+    /*   console.log('url post createLevels ', url);
+        console.log('data en createLevels', data); */
         
         try {
             const response = await axiosInstance.post(url, data);
             
-/*             console.log("respuesta despues del post createRooms", response.data); */
+/*             console.log("respuesta despues del post createLevels", response.data); */
             return response.data; 
         } catch (error) {
             console.log(error);
@@ -40,4 +40,5 @@ const RoomsController ={
     }
     
 }
-export default RoomsController;
+
+export default LevelsController;
