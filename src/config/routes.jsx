@@ -23,6 +23,7 @@ import {
 } from "./protectedRoutes";
 import { Structure } from "../components/screens/Structure/Structure";
 import Testing from "../components/screens/Testing/Testing";
+import { CreateProtocol } from "../components/screens/CreateProtocol/CreateProtocol";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
       {
         path: "risks-menu/create-risk-situation",
         element: <CreateRiskSituation />,
+      }, // Consistencia en nombres
+      {
+        path: "risks-menu/protocols-menu/create-protocol",
+        element: <CreateProtocol />,
       }, // Consistencia en nombres
     ],
   },

@@ -55,43 +55,43 @@ export const CreateLevel = ({onClose}) => {
             <div className="level__content">
                 <h2 className="level__title">¡Añadir Nivel!</h2>
                 <form className="form" onSubmit={formik.handleSubmit}>
-                <div className="level__form">
-                    <Form.Item>
-                    <Input
-                        placeholder="Nombre"
-                        className="form__input"
-                        id="name"
-                        name="name"
+                    <div className="level__form">
+                        <Form.Item>
+                        <Input
+                            placeholder="Nombre"
+                            className="form__input"
+                            id="name"
+                            name="name"
+                            onChange={formik.handleChange}
+                            value={formik.values.name}
+                        />
+                        {formik.errors.name ? (
+                            <div className="error__text">{formik.errors.name}</div>
+                        ) : null}
+                        </Form.Item>
+                    </div>
+                    <TextArea
+                        className="form__textarea"
+                        rows={8}
+                        placeholder="Descripción del nivel"
+                        maxLength={5000}
+                        name="description"
+                        id="description"
                         onChange={formik.handleChange}
-                        value={formik.values.name}
+                        value={formik.values.description}
                     />
-                    {formik.errors.name ? (
-                        <div className="error__text">{formik.errors.name}</div>
+                    {formik.errors.description ? (
+                        <div className="error__text">{formik.errors.description}</div>
                     ) : null}
-                    </Form.Item>
-                </div>
-                <TextArea
-                    className="form__textarea"
-                    rows={8}
-                    placeholder="Descripción del nivel"
-                    maxLength={5000}
-                    name="description"
-                    id="description"
-                    onChange={formik.handleChange}
-                    value={formik.values.description}
-                />
-                {formik.errors.description ? (
-                    <div className="error__text">{formik.errors.description}</div>
-                ) : null}
-                <div className="btnlevel">
-                    <Button
-                    htmlType="submit"
-                    className="form__buttonlevel"
-                    type="submit"
-                    >
-                    Aceptar
-                    </Button>
-                </div>
+                    <div className="btnlevel">
+                        <Button
+                        htmlType="submit"
+                        className="form__buttonlevel"
+                        type="submit"
+                        >
+                        Aceptar
+                        </Button>
+                    </div>
                 </form>
             </div>
         </div>

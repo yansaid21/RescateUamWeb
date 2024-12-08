@@ -126,6 +126,8 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
 
     //añadir niveles
     const handleAddLevel = () => {
+        console.log('abrir nivel');
+        
         onAddLevel();
     };
 

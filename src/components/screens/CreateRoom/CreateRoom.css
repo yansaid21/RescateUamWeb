@@ -134,8 +134,6 @@
     }
     .room .room__form{
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
         flex-wrap: nowrap;
     }
     .form{

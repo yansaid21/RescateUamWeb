@@ -10,6 +10,7 @@ import  RoomsController from '../../../api/rooms';
 import { ENV } from '../../../utils/constants';
 import { CreateRoom } from '../CreateRoom/CreateRoom';
 import ZonesController from '../../../api/zones';
+import { CreateLevel } from '../CreateLevel/CreateLevel';
 
 
 const columns = [
@@ -53,7 +54,7 @@ export const Structure = () => {
     const [showCreateRoom, setShowCreateRoom] = useState(null);
 
     //levels props
-    const [showCreateLevels, setShowCreateLevels] = useState([]);
+    const [showCreateLevels, setShowCreateLevels] = useState(false);
 
     const tableProps = {
         bordered,
@@ -159,6 +160,8 @@ export const Structure = () => {
                     <CreateZones
                         onClose={() => setShowCreateZones(false)} 
                     />
+                ) : showCreateLevels ? (
+                    <CreateLevel onClose={() => setShowCreateLevels(false)} />
                 ) : (
                     <>
                     <div className='structure__section'>
@@ -205,7 +208,7 @@ export const Structure = () => {
                         locale={{
                             emptyText: selectedZone ? 'No hay salones disponibles' : 'Por favor seleccione una zona',
                         }}
-                    />;
+                    />
                         <Button className='structure__button' onClick={handleAddRooms}>
                             Añadir salón
                         </Button>
