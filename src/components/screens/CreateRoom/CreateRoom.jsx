@@ -126,8 +126,6 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
 
     //añadir niveles
     const handleAddLevel = () => {
-        console.log('abrir nivel');
-        
         onAddLevel();
     };
 
@@ -137,101 +135,104 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                 <h2 className="room__title">¡Añadir salón!</h2>
                 <form className="form" onSubmit={formik.handleSubmit}>
                 <div className="room__form">
-                    <Form.Item>
-                    <Input
-                        placeholder="Nombre"
-                        className="form-inputRoom"
-                        id="name"
-                        name="name"
-                        onChange={formik.handleChange}
-                        value={formik.values.name}
-                    />
-                    {formik.errors.name ? (
-                        <div className="error__text">{formik.errors.name}</div>
-                    ) : null}
-                    </Form.Item>
-                    <Form.Item>
-                    <Input
-                        placeholder="Código"
-                        className="form-inputRoom"
-                        id="code"
-                        name="code"
-                        onChange={formik.handleChange}
-                        value={formik.values.code}
-                    />
-                    {formik.errors.code ? (
-                        <div className="error__text">{formik.errors.code}</div>
-                    ) : null}
-                    </Form.Item>
-                    <Form.Item>
-                    <Select
-                        placeholder="Zona"
-                        className="select"
-                        id="zone"
-                        name="zone"
-                        onChange={(value) => {
-                        if (value === "addZone") {
-                            handleAddZone();
-                        } else {
-                            formik.setFieldValue("zone", value);
-                        }
-                        }}
-                        value={formik.values.zone}
-                    >
-                        {zones.map((zone) => (
-                        <Select.Option key={zone.id} value={zone.id}>
-                            {zone.name}
-                        </Select.Option>
-                        ))}
-                        <Select.Option
-                        value="addZone"
-                        style={{ color: "#007BFF", fontWeight: "bold" }}
-                        >
-                        + Añadir Zona
-                        </Select.Option>
-                    </Select>
-                    {formik.errors.zone ? (
-                        <div className="error__text">{formik.errors.zone}</div>
-                    ) : null}
-                    {showCreateZone && (
-                        <CreateZones onClose={() => setShowCreateZone(false)} />
-                    )}
-                    </Form.Item>
-                    <Form.Item>
-                    <Select
-                        placeholder="Nivel"
-                        className="select"
-                        id="level"
-                        name="level"
-                        onChange={(value) => {
-                        if (value === "addLevel") {
-                            handleAddLevel();
-                        } else {
-                            formik.setFieldValue("level", value);
-                        }
-                        }}
-                        value={formik.values.level}
-                    >
-                        {levels.map((level) => (
-                        <Select.Option key={level.id} value={level.id}>
-                            {level.name}
-                        </Select.Option>
-                        ))}
-                        <Select.Option
-                        value="addLevel"
-                        style={{ color: "#007BFF", fontWeight: "bold" }}
-                        >
-                        + Añadir Nivel
-                        </Select.Option>
-                    </Select>
-                    {formik.errors.level ? (
-                        <div className="error__text">{formik.errors.level}</div>
-                    ) : null}
-                    {showCreateLevel && (
-                        <CreateLevel onClose={() => setShowCreateLevel(false)} />
-                    )}
-                    </Form.Item>
-                </div>
+                    <div className='section1'>
+                        <Form.Item>
+                            <Input
+                                placeholder="Nombre"
+                                className="form-inputRoom"
+                                id="name"
+                                name="name"
+                                onChange={formik.handleChange}
+                                value={formik.values.name}
+                            />
+                            {formik.errors.name ? (
+                                <div className="error__text">{formik.errors.name}</div>
+                            ) : null}
+                        </Form.Item>
+                        <Form.Item>
+                            <Input
+                                placeholder="Código"
+                                className="form-inputRoom"
+                                id="code"
+                                name="code"
+                                onChange={formik.handleChange}
+                                value={formik.values.code}
+                            />
+                            {formik.errors.code ? (
+                                <div className="error__text">{formik.errors.code}</div>
+                            ) : null}
+                        </Form.Item>
+                    </div>
+                    <div className='section1'>
+                        <Form.Item>
+                            <Select
+                                placeholder="Zona"
+                                className="select"
+                                id="zone"
+                                name="zone"
+                                onChange={(value) => {
+                                if (value === "addZone") {
+                                    handleAddZone();
+                                } else {
+                                    formik.setFieldValue("zone", value);
+                                }
+                                }}
+                                value={formik.values.zone}
+                            >
+                                {zones.map((zone) => (
+                                <Select.Option key={zone.id} value={zone.id}>
+                                    {zone.name}
+                                </Select.Option>
+                                ))}
+                                <Select.Option
+                                value="addZone"
+                                style={{ color: "#007BFF", fontWeight: "bold" }}
+                                >
+                                + Añadir Zona
+                                </Select.Option>
+                            </Select>
+                            {formik.errors.zone ? (
+                                <div className="error__text">{formik.errors.zone}</div>
+                            ) : null}
+                            {showCreateZone && (
+                                <CreateZones onClose={() => setShowCreateZone(false)} />
+                            )}
+                        </Form.Item>
+                        <Form.Item>
+                            <Select
+                                placeholder="Nivel"
+                                className="select"
+                                id="level"
+                                name="level"
+                                onChange={(value) => {
+                                if (value === "addLevel") {
+                                    handleAddLevel();
+                                } else {
+                                    formik.setFieldValue("level", value);
+                                }
+                                }}
+                                value={formik.values.level}
+                            >
+                                {levels.map((level) => (
+                                <Select.Option key={level.id} value={level.id}>
+                                    {level.name}
+                                </Select.Option>
+                                ))}
+                                <Select.Option
+                                value="addLevel"
+                                style={{ color: "#007BFF", fontWeight: "bold" }}
+                                >
+                                + Añadir Nivel
+                                </Select.Option>
+                            </Select>
+                            {formik.errors.level ? (
+                                <div className="error__text">{formik.errors.level}</div>
+                            ) : null}
+                            {showCreateLevel && (
+                                <CreateLevel onClose={() => setShowCreateLevel(false)} />
+                            )}
+                        </Form.Item>
+                    </div>
                 <TextArea
                     className="form__textarea"
                     rows={8}
@@ -245,6 +246,7 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                 {formik.errors.description ? (
                     <div className="error__text">{formik.errors.description}</div>
                 ) : null}
+                </div>
                 <div className="btnroom">
                     <Button
                     htmlType="submit"
