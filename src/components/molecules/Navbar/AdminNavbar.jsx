@@ -31,7 +31,7 @@ const AdminNavbar = () => {
           </Link>
         </button>
         <button className="icon-button">
-          <Link to="/admin/gestion">
+          <Link to="/admin/profile">
             <div className="icon">
             <FaUserCircle />
             </div>

@@ -24,6 +24,7 @@ import {
 import { Structure } from "../components/screens/Structure/Structure";
 import Testing from "../components/screens/Testing/Testing";
 import { CreateProtocol } from "../components/screens/CreateProtocol/CreateProtocol";
+import { Profile } from "../components/screens/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
         path: "risks-menu/protocols-menu/create-protocol",
         element: <CreateProtocol />,
       }, // Consistencia en nombres
+      {
+        path: "profile",
+        element: <Profile />,
+      }, // Consistencia en nombres
     ],
   },
   {
@@ -84,7 +89,12 @@ export const router = createBrowserRouter([
         <UserLayout />
       </UserProtectedRoute>
     ),
-    children: [{ index: true, element: <User /> }],
+    children: [{ index: true, element: <User /> },
+      {
+        path: "profile",
+        element: <Profile />,
+      }, // Consistencia en nombres
+    ],
   },
   {
     path: "/testing",

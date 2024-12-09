@@ -68,6 +68,8 @@ export const Login = () => {
         handleSetUser(response.user, response.user.role.id);
         console.log("user seteado en login");
 
+        localStorage.setItem('id', response.id);
+
         if (response.token) {
           console.log("Login exitoso", response);
           localStorage.setItem(

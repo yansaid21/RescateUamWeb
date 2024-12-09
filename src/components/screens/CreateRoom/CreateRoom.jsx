@@ -233,10 +233,14 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                             )}
                         </Form.Item>
                     </div>
+                </div>
+                <div className='section1'>
+
+                </div>
                 <TextArea
-                    className="form__textarea"
+                    className="form__textarearoom"
                     rows={8}
-                    placeholder="Descripción del incidente"
+                    placeholder="Descripción del salón"
                     maxLength={5000}
                     name="description"
                     id="description"
@@ -246,7 +250,6 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                 {formik.errors.description ? (
                     <div className="error__text">{formik.errors.description}</div>
                 ) : null}
-                </div>
                 <div className="btnroom">
                     <Button
                     htmlType="submit"

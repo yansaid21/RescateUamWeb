@@ -15,7 +15,7 @@ const UserNavbar = () => {
           </Link>
         </button>
         <button className="icon-button">
-          <Link to="/user/gestion">
+          <Link to="/user/profile">
             <div className="icon">
               <FaUserCircle />
             </div>
