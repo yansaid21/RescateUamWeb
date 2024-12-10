@@ -31,6 +31,20 @@ const RiskSituationsController = {
       throw error;
     }
   },
+
+  async getRisk(id_institution, id_risk) {
+    const url = `/institutions/${id_institution}/${API_ROUTES.RISK_SITUATION}/${id_risk}`;
+
+    try {
+      const response = await axiosInstance.get(url);
+
+      console.log("respuesta despues del getRisk", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
 
 export default RiskSituationsController;

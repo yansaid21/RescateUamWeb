@@ -18,6 +18,11 @@ export const BrigadierBase = () => {
     getRisks();
   }, [])
 
+  //obtener id del riesgo
+  const handleClickRisk = (id_risk) => {
+    localStorage.setItem('id_risk', id_risk);
+  }
+
   return (
     <div className="menu-container">
       <SectionMenu color="#000000" text="Brigadistas" href="#" logo="person" />
@@ -26,8 +31,9 @@ export const BrigadierBase = () => {
             key={risk.id}
             text={`Protocolos de ${risk.name}`}
             color="#0090D0"
-            href="/admin/protocols-menu"
+            href="/user/risk/protocols-menu"
             logo="warning-amber"
+            onClick={() => handleClickRisk(risk.id)}
           />
         ))}
     </div>
