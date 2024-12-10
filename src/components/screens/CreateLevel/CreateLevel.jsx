@@ -1,6 +1,6 @@
 import React from 'react';
 import './CreateLevel.css';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useFormik } from 'formik';
 import { ENV } from '../../../utils/constants';
@@ -43,9 +43,11 @@ export const CreateLevel = ({onClose}) => {
                 levelsData,
                 );
                 console.log("theLevels createLevels ", theLevels);
+                message.success('Nivel/piso creado correctamente');
                 onClose();
             } catch (error) {
                 console.log(error);
+                message.success('Ha ocurrido un error');
             }
         },
     });

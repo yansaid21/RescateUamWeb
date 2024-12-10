@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./CreateMeetPoint.css";
 import TextArea from "antd/es/input/TextArea";
 import { useFormik } from "formik";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, message, Select } from "antd";
 import MeetPointsController from "../../../api/meet_points";
 import { CreateZones } from "../CreateZones/CreateZones";
 import ZonesController from "../../../api/zones";
@@ -66,9 +66,11 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
           meetPointData,
         );
         console.log("meet_point createMeetPoint ", meet_point);
+        message.success('Punto de encuentro creado correctamente');
         onClose();
       } catch (error) {
         console.log(error);
+        message.success('Ha ocurrido un error');
       }
     },
   });

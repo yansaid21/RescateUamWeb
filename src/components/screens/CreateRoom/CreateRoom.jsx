@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './CreateRoom.css';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, message, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useFormik } from 'formik';
 import RoomsController from '../../../api/rooms';
@@ -112,9 +112,11 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                     roomData,
                 );
                 console.log("room createRooms ", room);
+                message.success('Salón creado correctamente');
                 onClose();
             } catch (error) {
                 console.log(error);
+                message.success('Ha ocurrido un error');
             }
         },
     });

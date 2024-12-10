@@ -25,7 +25,7 @@ export const BrigadierBase = () => {
 
   return (
     <div className="menu-container">
-      <SectionMenu color="#000000" text="Brigadistas" href="#" logo="person" />
+      <SectionMenu color="#000000" text="Brigadistas" href="/brigadist/brigadiers" logo="person" />
       {risks.map((risk) => (
           <SectionMenu
             key={risk.id}

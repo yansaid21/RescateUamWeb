@@ -15,6 +15,18 @@ const UserController = {
     }
   },
 
+  async getUsers(institutionId) {
+    try {
+      const response = await axiosInstance.get(
+        `/institutions/${institutionId}/users`,
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
   async updateUser(id, userData) {
     console.log('userData en updateUser ', userData);
     

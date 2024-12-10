@@ -26,6 +26,7 @@ import Testing from "../components/screens/Testing/Testing";
 import { CreateProtocol } from "../components/screens/CreateProtocol/CreateProtocol";
 import { Profile } from "../components/screens/Profile/Profile";
 import { ProtocolsMenuUser } from "../components/screens/Menu/ProtocolsMenuUser";
+import { BrigadierList } from "../components/screens/BrigadireList/BrigadierList";
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +88,10 @@ export const router = createBrowserRouter([
                   path: "risk/protocols-menu",
                   element: <ProtocolsMenuUser />,
                 }, // Consistencia en nombres
+                {
+                  path: "brigadiers",
+                  element: <BrigadierList />,
+                },
     ],
   },
   {
@@ -104,6 +109,10 @@ export const router = createBrowserRouter([
       {
         path: "risk/protocols-menu",
         element: <ProtocolsMenuUser />,
+      }, // Consistencia en nombres
+      {
+        path: "brigadiers",
+        element: <BrigadierList />,
       }, // Consistencia en nombres
     ],
   },
