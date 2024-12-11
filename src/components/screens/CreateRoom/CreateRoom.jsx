@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './CreateRoom.css';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, message, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useFormik } from 'formik';
 import RoomsController from '../../../api/rooms';
@@ -112,9 +112,11 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                     roomData,
                 );
                 console.log("room createRooms ", room);
+                message.success('Salón creado correctamente');
                 onClose();
             } catch (error) {
                 console.log(error);
+                message.success('Ha ocurrido un error');
             }
         },
     });
@@ -233,10 +235,14 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                             )}
                         </Form.Item>
                     </div>
+                </div>
+                <div className='section1'>
+
+                </div>
                 <TextArea
-                    className="form__textarea"
+                    className="form__textarearoom"
                     rows={8}
-                    placeholder="Descripción del incidente"
+                    placeholder="Descripción del salón"
                     maxLength={5000}
                     name="description"
                     id="description"
@@ -246,7 +252,6 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                 {formik.errors.description ? (
                     <div className="error__text">{formik.errors.description}</div>
                 ) : null}
-                </div>
                 <div className="btnroom">
                     <Button
                     htmlType="submit"

@@ -77,15 +77,19 @@
     opacity: 1; /* Asegura que el color del placeholder sea completamente visible */
 }
 
-.form .form__input .ant-select-selector {
-    background: #D9D9D9 !important;
-    border-radius: 20px !important;
-    color: black !important;
-    padding: 10px !important; /* Ajusta el padding para igualarlo al Input */
-    border: none !important;
+.form__inputMeet::placeholder{
+    color: black;
 }
 
-.form .form__input {
+.form .form__input-select .ant-select-selector {
+    background: #D9D9D9;
+    border-radius: 20px;
+    color: black;
+    padding: 10px; /* Ajusta el padding para igualarlo al Input */
+    border: none;
+}
+
+.form .form__inputMeet {
     width: 300px;
     margin: 3px;
     max-width: 600px;
@@ -96,7 +100,16 @@
     box-sizing: border-box;
 }
 
-.form .form__input .ant-select-selection-placeholder {
+.select-meet{
+    width: 100%;
+    margin: 0 3px;
+    height: 48px;
+    align-items: center;
+    box-sizing: border-box;
+    right: 10px;
+}
+
+.form .form__input-select .ant-select-selection-placeholder {
     color: black;
     opacity: 1;
 }
@@ -125,6 +138,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        width: 100%;
     }
     .form{
         width: 100%;
@@ -132,8 +146,11 @@
     .form .form__textarea{
         margin: 10px;
     }
-    .form .form__input {
-        width: 250px;
+    .form .form__inputMeet {
+        width: 350px;
+    }
+    .select-meet{
+        bottom: 7px;
     }
 }
 
@@ -142,7 +159,7 @@
         width: 674px;
         padding: 1rem;
     }
-    .form .form__input {
-        width: 320px;
+    .form .form__inputMeet {
+        width: 470px;
     }
 }

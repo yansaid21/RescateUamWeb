@@ -37,7 +37,6 @@ export const ReportList = () => {
   const fetchIncidents = async () => {
     setLoading(true);
     try {
-      const token = await localStorage.getItem("token");
       const response = await IncidentsController.getIncidents(1);
       console.log("Incidents fetched:", response);
       const formattedData = response.data.map((incident, index) => ({

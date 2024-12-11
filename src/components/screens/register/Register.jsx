@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../../assets/UAM/Logos_UAM-07.png";
-import { Button, Checkbox, Col, Form, Input, Row } from "antd";
+import { Button, Checkbox, Col, Form, Input, Row, message } from "antd";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -81,14 +81,20 @@ export const Register = () => {
         institution_id: 1,
         code: "XYZ123",
       };
-      const response = await AuthController.register(data);
-      console.log("response ", response);
 
-      if (response.data.is_active) {
-        console.log("register exitoso", response);
-        navigate("/");
-      } else {
-        console.log("Error de register", response);
+      try {
+        const response = await AuthController.register(data);
+        console.log("response ", response);
+        
+        if (response.data.is_active) {
+          console.log("register exitoso", response);
+          message.success('Registro exitoso');
+          navigate("/");
+        } 
+      } catch (error){
+        if (error.status === 400) {
+          message.error('Este usuario ya existe. Inicia sesión');
+        } 
       }
     },
   });

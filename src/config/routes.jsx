@@ -24,6 +24,9 @@ import {
 import { Structure } from "../components/screens/Structure/Structure";
 import Testing from "../components/screens/Testing/Testing";
 import { CreateProtocol } from "../components/screens/CreateProtocol/CreateProtocol";
+import { Profile } from "../components/screens/Profile/Profile";
+import { ProtocolsMenuUser } from "../components/screens/Menu/ProtocolsMenuUser";
+import { BrigadierList } from "../components/screens/BrigadireList/BrigadierList";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +69,10 @@ export const router = createBrowserRouter([
         path: "risks-menu/protocols-menu/create-protocol",
         element: <CreateProtocol />,
       }, // Consistencia en nombres
+      {
+        path: "profile",
+        element: <Profile />,
+      }, // Consistencia en nombres
     ],
   },
   {
@@ -75,7 +82,17 @@ export const router = createBrowserRouter([
         <UserLayout />
       </BrigadistProtectedRoute>
     ),
-    children: [{ index: true, element: <Brigadier /> }],
+    children: [{ index: true, element: <Brigadier /> },
+                {path: "profile",element: <Profile />}, 
+                {
+                  path: "risk/protocols-menu",
+                  element: <ProtocolsMenuUser />,
+                }, // Consistencia en nombres
+                {
+                  path: "brigadiers",
+                  element: <BrigadierList />,
+                },
+    ],
   },
   {
     path: "/user",
@@ -84,7 +101,20 @@ export const router = createBrowserRouter([
         <UserLayout />
       </UserProtectedRoute>
     ),
-    children: [{ index: true, element: <User /> }],
+    children: [{ index: true, element: <User /> },
+      {
+        path: "profile",
+        element: <Profile />,
+      }, // Consistencia en nombres
+      {
+        path: "risk/protocols-menu",
+        element: <ProtocolsMenuUser />,
+      }, // Consistencia en nombres
+      {
+        path: "brigadiers",
+        element: <BrigadierList />,
+      }, // Consistencia en nombres
+    ],
   },
   {
     path: "/testing",
