@@ -26,7 +26,7 @@ export const Login = () => {
     console.log("entrando al handlesetUser en login");
     setUser(newUser);
     setRole(role);
-    console.log("user seteado en login");
+    /* console.log("user seteado en login"); */
   };
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();

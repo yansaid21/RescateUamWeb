@@ -27,7 +27,7 @@ import { CreateProtocol } from "../components/screens/CreateProtocol/CreateProto
 import { Profile } from "../components/screens/Profile/Profile";
 import { ProtocolsMenuUser } from "../components/screens/Menu/ProtocolsMenuUser";
 import { BrigadierList } from "../components/screens/BrigadireList/BrigadierList";
-
+import UsersList from "../components/screens/UsersList/UsersList";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -73,6 +73,9 @@ export const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       }, // Consistencia en nombres
+      {
+        path: "users-list", element: <UsersList />,
+      }
     ],
   },
   {
