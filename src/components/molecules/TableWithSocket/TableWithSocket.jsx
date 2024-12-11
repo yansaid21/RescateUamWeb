@@ -70,7 +70,7 @@ const TableWithSocket = ({
       }
     });
     return () => {
-      echo.leave(channel);
+      echo.leaveChannel(channel);
     };
   }, []);
 
@@ -100,7 +100,6 @@ const TableWithSocket = ({
       className={className}
       size={size}
       title={title}
-      rowSelection={{ type: "checkbox" }}
       dataSource={dataSource}
       columns={columns}
       pagination={tableParams.pagination}

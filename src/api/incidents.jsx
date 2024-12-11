@@ -26,7 +26,7 @@ const IncidentsController = {
     const url = `/institutions/${id_institution}/risk_situations/${id_risk_situation}/${API_ROUTES.INCIDENT}/${id_incident}`;
 
     try {
-      const response = await axiosInstance.put(url, description);
+      const response = await axiosInstance.put(url, { description });
 
       console.log("respuesta despues del updateIncident", response.data);
       return response.data;

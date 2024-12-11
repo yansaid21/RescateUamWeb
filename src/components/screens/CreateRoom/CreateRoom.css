@@ -1,4 +1,4 @@
-.meetpoint {
+.room {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +12,7 @@
     overflow-y: auto;
 }
 
-.meetpoint .meetpoint__content {
+.room .room__content {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -27,7 +27,7 @@
     flex-wrap: nowrap;
 }
 
-.meetpoint .meetpoint__title {
+.room .room__title {
     width: 100%;
     font-size: 33px;
     line-height: 1.4;
@@ -43,9 +43,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 10px;
 }
 
-.form .form__textarea{
+.form .form__textarearoom{
     width: 100%;
     margin: 5px;
     background: #D9D9D9;
@@ -54,11 +55,11 @@
     padding: 18px;
 }
 
-.btnmeetpoint{
+.btnroom{
     margin: 5px;
 }
 
-.form .form__buttonmeetpoint{
+.form .form__buttonroom{
     width: 150px;
     height: 49px;
     background: #0069A3;
@@ -72,24 +73,19 @@
     margin: 5px 20px 15px;
 }
 
-.form__textarea::placeholder {
+.form__textarearoom::placeholder {
     color: black;
     opacity: 1; /* Asegura que el color del placeholder sea completamente visible */
 }
 
-.form__inputMeet::placeholder{
-    color: black;
+.select{
+    width: 100%;
+    height: 48px;
+    margin: 3px;
+    right: 12px;
 }
 
-.form .form__input-select .ant-select-selector {
-    background: #D9D9D9;
-    border-radius: 20px;
-    color: black;
-    padding: 10px; /* Ajusta el padding para igualarlo al Input */
-    border: none;
-}
-
-.form .form__inputMeet {
+.form-inputRoom {
     width: 300px;
     margin: 3px;
     max-width: 600px;
@@ -98,18 +94,14 @@
     border-radius: 20px;
     align-items: center;
     box-sizing: border-box;
+    display: flex;
 }
 
-.select-meet{
-    width: 100%;
-    margin: 0 3px;
-    height: 48px;
-    align-items: center;
-    box-sizing: border-box;
-    right: 10px;
+.form-inputRoom::placeholder{
+    color: black;
 }
 
-.form .form__input-select .ant-select-selection-placeholder {
+.form-inputRoom .ant-select-selection-placeholder {
     color: black;
     opacity: 1;
 }
@@ -127,39 +119,60 @@
 }
 
 @media (min-width: 768px) {
-    .meetpoint .meetpoint__content {
+    .room .room__content {
         width: 550px;
         padding: 1rem;
     }
-    .meetpoint .meetpoint__title {
+    .room .room__title {
         font-size: 36px;
     }
-    .meetpoint .meetpoint__form{
+    .room .room__form{
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
+        flex-wrap: nowrap;
     }
     .form{
         width: 100%;
     }
-    .form .form__textarea{
+    .form .form__textarearoom{
         margin: 10px;
     }
-    .form .form__inputMeet {
-        width: 350px;
+    .room__form{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        gap: 1rem;
     }
-    .select-meet{
-        bottom: 7px;
+    .form-inputRoom {
+        width: 100%;
+    }
+    .select{
+        bottom: 10px;
+        margin: 3px;
+    }
+    .section1{
+        width: 100%;
     }
 }
 
 @media (min-width: 1024px) {
-    .meetpoint .meetpoint__content {
+    .room .room__content {
         width: 674px;
         padding: 1rem;
     }
-    .form .form__inputMeet {
-        width: 470px;
+    .room__form{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .section1{
+        width: 100%;
+    }
+    .form-inputRoom {
+        width: 100%;
+    }
+    .select{
+        bottom: 10px;
+        margin: 3px;
     }
 }

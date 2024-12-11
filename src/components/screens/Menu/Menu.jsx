@@ -7,7 +7,7 @@ export const Menu = () => {
     <div className="menu-container">
       <SectionMenu color="#000000" text="Administradores/Brigadistas" href="/admin/users-list" logo="person" />
       <SectionMenu color="#F4D73B" text="Incidentes" href="/admin/report" logo="warning-amber" />
-      <SectionMenu color="#C20590" text="Protocolos" href="/admin/risks-menu" logo="warning" />
+      <SectionMenu color="#C20590" text="Riesgos" href="/admin/risks-menu" logo="warning" />
       <SectionMenu color="#9CD04D" text="Puntos de encuentro" href="/admin/meetpoint" logo="place" />
       <SectionMenu color="#E36727" text="Estructura" href="/admin/structure" logo="location-city" />
     </div>

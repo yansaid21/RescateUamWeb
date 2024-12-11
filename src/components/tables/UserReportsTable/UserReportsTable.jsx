@@ -3,6 +3,8 @@ import TableWithSocket from "../../molecules/TableWithSocket/TableWithSocket";
 import UserReportsController from "../../../api/userReports";
 import { institutionStore } from "../../../store/institution";
 import "./UserReportsTable.css";
+import { Button, Tooltip } from "antd";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 // This list describe the columns that the table will have.
 const userReportColumns = [
@@ -41,6 +43,25 @@ const userReportColumns = [
       },
     ],
   },
+  {
+    title: "Resolución",
+    dataIndex: "resolution",
+    key: "resolution",
+    filter: true,
+  },
+  {
+    title: "Acciones",
+    dataIndex: "actions",
+    key: "actions",
+    align: "center",
+    render: () => {
+      return (
+        <Tooltip title="Cerrar reporte">
+          <Button icon={<CloseCircleOutlined />}></Button>
+        </Tooltip>
+      );
+    },
+  },
 ];
 
 const UserReportsTable = ({ className, size }) => {
@@ -65,6 +86,7 @@ const UserReportsTable = ({ className, size }) => {
           email: userReport.user.email,
           phone: userReport.user.phone_number,
           state: userReport.state,
+          resolution: userReport.resolution.state,
         };
       });
 

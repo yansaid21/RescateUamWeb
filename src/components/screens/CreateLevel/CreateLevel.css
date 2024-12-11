@@ -1,4 +1,4 @@
-.meetpoint {
+.level {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +12,7 @@
     overflow-y: auto;
 }
 
-.meetpoint .meetpoint__content {
+.level .level__content {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -27,7 +27,7 @@
     flex-wrap: nowrap;
 }
 
-.meetpoint .meetpoint__title {
+.level .level__title {
     width: 100%;
     font-size: 33px;
     line-height: 1.4;
@@ -54,12 +54,12 @@
     padding: 18px;
 }
 
-.btnmeetpoint{
-    margin: 5px;
+.btnlevel{
+    margin: 10px;
 }
 
-.form .form__buttonmeetpoint{
-    width: 150px;
+.form .form__buttonlevel{
+    width: 212px;
     height: 49px;
     background: #0069A3;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -77,19 +77,15 @@
     opacity: 1; /* Asegura que el color del placeholder sea completamente visible */
 }
 
-.form__inputMeet::placeholder{
-    color: black;
+.form .form__input .ant-select-selector {
+    background: #D9D9D9 !important;
+    border-radius: 20px !important;
+    color: black !important;
+    padding: 10px !important; /* Ajusta el padding para igualarlo al Input */
+    border: none !important;
 }
 
-.form .form__input-select .ant-select-selector {
-    background: #D9D9D9;
-    border-radius: 20px;
-    color: black;
-    padding: 10px; /* Ajusta el padding para igualarlo al Input */
-    border: none;
-}
-
-.form .form__inputMeet {
+.form .form__input {
     width: 300px;
     margin: 3px;
     max-width: 600px;
@@ -100,16 +96,7 @@
     box-sizing: border-box;
 }
 
-.select-meet{
-    width: 100%;
-    margin: 0 3px;
-    height: 48px;
-    align-items: center;
-    box-sizing: border-box;
-    right: 10px;
-}
-
-.form .form__input-select .ant-select-selection-placeholder {
+.form .form__input .ant-select-selection-placeholder {
     color: black;
     opacity: 1;
 }
@@ -127,18 +114,17 @@
 }
 
 @media (min-width: 768px) {
-    .meetpoint .meetpoint__content {
+    .level .level__content {
         width: 550px;
         padding: 1rem;
     }
-    .meetpoint .meetpoint__title {
+    .level .level__title {
         font-size: 36px;
     }
-    .meetpoint .meetpoint__form{
+    .level .level__form{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        width: 100%;
     }
     .form{
         width: 100%;
@@ -146,20 +132,17 @@
     .form .form__textarea{
         margin: 10px;
     }
-    .form .form__inputMeet {
-        width: 350px;
-    }
-    .select-meet{
-        bottom: 7px;
+    .form .form__input {
+        width: 250px;
     }
 }
 
 @media (min-width: 1024px) {
-    .meetpoint .meetpoint__content {
+    .level .level__content {
         width: 674px;
         padding: 1rem;
     }
-    .form .form__inputMeet {
-        width: 470px;
+    .form .form__input {
+        width: 320px;
     }
 }
