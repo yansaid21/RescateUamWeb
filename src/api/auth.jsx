@@ -22,7 +22,7 @@ const AuthController = {
       } else {
         console.error("Error al hacer register", error.message);
       }
-      throw error;
+      throw error.response ? error.response : error;
     }
   },
 
@@ -37,7 +37,7 @@ const AuthController = {
       return response.data;
     } catch (error) {
       console.error("Error al hacer login", error);
-      return noActive;
+      throw error.response ? error.response : error;
     }
   },
 };

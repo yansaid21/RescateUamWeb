@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./CompleteRegister.css";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, message, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useFormik } from "formik";
 import UserController from "../../../api/user";
@@ -67,10 +67,12 @@ const CompleteRegister = ({ onClose }) => {
           userData,
         );
         console.log("Datos actualizados correctamente", response);
+        message.success('Datos actualizados correctamente');
         onClose();
         navigate("/admin");
       } catch (error) {
         console.error("Error al actualizar los datos:", error);
+        message.error('Error al actualizar los datos');
       }
     },
   });

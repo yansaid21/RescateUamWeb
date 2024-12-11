@@ -1,6 +1,6 @@
 import React from "react";
 import "./CreateRiskSituation.css";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useFormik } from "formik";
 import RiskSituationsController from "../../../api/risk_situations";
@@ -46,9 +46,11 @@ export const CreateRiskSituation = ({ onClose }) => {
           1,
         );
         console.log("risk ", risk);
+        message.success('Riesgo creado correctamente');
         onClose();
       } catch (error) {
         console.log(error);
+        message.success('Ha ocurrido un error');
       }
     },
   });

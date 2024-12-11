@@ -26,16 +26,6 @@
     margin: 10px;
 }
 
-.custom-placeholder input::placeholder {
-    color: black;
-}
-
-.input-icon {
-    color: #0090D0;
-    font-size: 25px;
-    cursor: pointer;
-}
-
 .structure .structure__textarea{
     width: 100%;
     background: #D9D9D9;
@@ -44,23 +34,10 @@
     padding: 18px 30px 18px 18px;
 }
 
-.structure__textarea::placeholder{
-    color: black;
-}
-
 .textarea-container {
     position: relative;
     width: 100%; 
     margin: 10px;
-}
-
-.textarea-icon {
-    position: absolute;
-    right: 10px;
-    top: 130px; 
-    color: #0090D0; 
-    font-size: 25px;
-    cursor: pointer;
 }
 
 :where(.css-dev-only-do-not-override-ni1kz0).ant-select-outlined:not(.ant-select-customize-input)  .ant-select-selector{
@@ -119,7 +96,7 @@
     text-align: center;
     color: #FFFFFF;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin: 5px 20px 15px;
+    margin: 15px 20px;
 }
 
 :where(.css-dev-only-do-not-override-ni1kz0).ant-input-outlined:hover {
@@ -151,5 +128,8 @@
     }
     .structure .structure__section{
         width: 100%;
+    }
+    .structure .structure__select{
+        width: 400px;
     }
 }

@@ -15,12 +15,32 @@ const UserController = {
     }
   },
 
+  async getUsers(institutionId) {
+    try {
+      const response = await axiosInstance.get(
+        `/institutions/${institutionId}/users`,
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
   async updateUser(id, userData) {
+    console.log('userData en updateUser ', userData);
+    
     const formData = new FormData();
     formData.append("_method", "PUT");
     formData.append("name", userData.name);
     formData.append("last_name", userData.last_name);
-    formData.append("id_card", userData.id_card);
+    if (userData.id_card) {
+      const idCard = parseInt(userData.id_card, 10);
+      if (isNaN(idCard)) {
+          throw new Error("El campo cédula debe ser un número entero válido.");
+      }
+      formData.append("id_card", idCard);
+    }
 
     if (userData.rhgb) formData.append("rhgb", userData.rhgb);
     if (userData.phone_number)
@@ -50,6 +70,7 @@ const UserController = {
       throw error;
     }
   },
+
   async getRole(institutionId, userId) {
     try {
       const response = await axiosInstance.get(

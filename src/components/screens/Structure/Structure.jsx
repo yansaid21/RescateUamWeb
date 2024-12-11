@@ -39,6 +39,7 @@ export const Structure = () => {
     const [hasData, setHasData] = useState(true); //datos de la tabla
     const [yScroll, setYScroll] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [bottom, setBottom] = useState("bottomRight");
 
     //institutions props
     const [institutionName, setInstitutionName] = useState('');
@@ -58,7 +59,11 @@ export const Structure = () => {
 
     const tableProps = {
         bordered,
-        //pagination: incidentsData.length > 5 ? { pageSize: 5, position: [top, bottom] } : false,
+        //paginación en caso de haber muchos salones de una zona
+        pagination:
+        rooms.length > 5
+            ? { pageSize: 5, position: [top, bottom] }
+            : false,
         scroll: yScroll ? { y: 240 } : undefined,
     };
 
@@ -73,8 +78,6 @@ export const Structure = () => {
             } catch(error) {
                 console.error('Error fetching institution data:', error);
             }
-         
-        
     }
 
     //obtener las zonas
@@ -167,8 +170,9 @@ export const Structure = () => {
                     <div className='structure__section'>
                         <Input 
                             placeholder={institutionName} 
-                            suffix={<EditOutlined className='input-icon'/>} 
+                            suffix={null} 
                             className='structure__input custom-placeholder'
+                            disabled 
                         />
                         <div className="textarea-container">
                             <TextArea
@@ -176,13 +180,13 @@ export const Structure = () => {
                                 placeholder={institutionDescription}
                                 maxLength={100}
                                 className="structure__textarea"
+                                disabled 
                             />
-                            <EditOutlined className="textarea-icon" />
                         </div>
                         <Space wrap>
                             <Select
-                                placeholder="Zona"
-                                className='structure__select'
+                                placeholder={<span style={{ color: 'black' }}>Zona</span>}
+                                className='structure__select full-width'
                                 id="zone"
                                 name="zone"
                                 onChange={handleZoneChange} 

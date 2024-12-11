@@ -2,20 +2,18 @@ import React, { useEffect, useState } from "react";
 import "./CreateMeetPoint.css";
 import TextArea from "antd/es/input/TextArea";
 import { useFormik } from "formik";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, message, Select } from "antd";
 import MeetPointsController from "../../../api/meet_points";
 import { CreateZones } from "../CreateZones/CreateZones";
 import ZonesController from "../../../api/zones";
 import { ENV } from "../../../utils/constants";
 
 export const CreateMeetPoint = ({ onClose, onAddZone }) => {
+  const [zones, setZones] = useState([{ id: 1, name: "Zona 1" }]);
   useEffect(() => {
     const getZones = async () => {
       try {
-        const token = await localStorage.getItem("token");
-        console.log("token ", token);
-
-        const rawZones = await ZonesController.getZones(token, 1);
+        const rawZones = await ZonesController.getZones(1);
         const zones = rawZones.data;
         console.log("zones ", zones);
         setZones(zones);
@@ -25,7 +23,6 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
     };
     getZones();
   }, []);
-  const [zones, setZones] = useState([{ id: 1, name: "Zona 1" }]);
   const [showCreateZone, setShowCreateZone] = useState(false);
 
   const validate = (values) => {
@@ -33,7 +30,7 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
 
     if (!values.name) {
       errors.name = "Este campo es requerido";
-    } else if (!/^[a-zA-Z0-9\s]+$/.test(values.name)) {
+    } else if (!/^[a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ\s]+$/.test(values.name)) {
       errors.name = "No acepta caracteres especiales";
     }
 
@@ -59,7 +56,6 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
     onSubmit: async (values) => {
       console.log("values ", values);
       try {
-        const token = await localStorage.getItem("token");
         const meetPointData = {
           name: values.name,
           description: values.description,
@@ -70,9 +66,11 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
           meetPointData,
         );
         console.log("meet_point createMeetPoint ", meet_point);
+        message.success('Punto de encuentro creado correctamente');
         onClose();
       } catch (error) {
         console.log(error);
+        message.success('Ha ocurrido un error');
       }
     },
   });
@@ -90,7 +88,7 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
             <Form.Item>
               <Input
                 placeholder="Nombre"
-                className="form__input"
+                className="form__inputMeet"
                 id="name"
                 name="name"
                 onChange={formik.handleChange}
@@ -103,7 +101,7 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
             <Form.Item>
               <Select
                 placeholder="Zona"
-                className="form__input"
+                className="select-meet"
                 id="zone"
                 name="zone"
                 onChange={(value) => {
@@ -155,6 +153,13 @@ export const CreateMeetPoint = ({ onClose, onAddZone }) => {
               type="submit"
             >
               Aceptar
+            </Button>
+            <Button
+                className="form__buttonmeetpoint"
+                type="button"
+                onClick={onClose}
+            >
+                Cancelar
             </Button>
           </div>
         </form>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Logo from "../../../assets/UAM/Logos_UAM-07.png";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import UserController from "../../../api/user";
@@ -84,20 +84,13 @@ export const Login = () => {
           if (routeFromRole.has(role)) {
             navigate(routeFromRole.get(role));
           }
-        } else if (response.status === 422) {
-          console.log("Error de login", response);
-          alert("Contraseña incorrecta. Inténtalo de nuevo.");
-        }
+        } 
       } catch (error) {
-        if (error.response) {
-          if (error.response.status === 422) {
-            alert("Contraseña incorrecta. Inténtalo de nuevo.");
-          } else {
-            alert(
-              "Error durante el inicio de sesión. Por favor, intenta más tarde.",
-            );
-          }
-        }
+        console.log('error en logiiin ', error.status);
+        if (error.status === 422) {
+          message.error('Contraseña o correo incorrectos. Inténtalo de nuevo.');
+        } 
+        
       } finally {
         setIsLoading(false);
       }

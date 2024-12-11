@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./CreateZones.css";
 import TextArea from "antd/es/input/TextArea";
 import { useFormik } from "formik";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { ENV } from "../../../utils/constants";
 import ZonesController from "../../../api/zones";
 
@@ -47,9 +47,11 @@ export const CreateZones = ({ onClose }) => {
           zonesData,
         );
         console.log("theZones createZones ", theZones);
+        message.success('Zona creada correctamente');
         onClose();
       } catch (error) {
         console.log(error);
+        message.success('Ha ocurrido un error');
       }
     },
   });
