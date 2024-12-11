@@ -16,13 +16,13 @@ const AdminNavbar = () => {
             </div>
           </Link>
         </button>
-        <button className="icon-button">
+        {/* <button className="icon-button">
           <Link to="/admin/usersStadistics">
             <div className="icon" >
             <BarChartOutlined />
             </div>
           </Link>
-        </button>
+        </button> */}
         <button className="icon-button">
           <Link to="/admin/menu">
             <div className="icon">

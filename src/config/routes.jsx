@@ -23,7 +23,7 @@ import {
 } from "./protectedRoutes";
 import { Structure } from "../components/screens/Structure/Structure";
 import Testing from "../components/screens/Testing/Testing";
-
+import UsersList from "../components/screens/UsersList/UsersList";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -61,6 +61,9 @@ export const router = createBrowserRouter([
         path: "risks-menu/create-risk-situation",
         element: <CreateRiskSituation />,
       }, // Consistencia en nombres
+      {
+        path: "users-list", element: <UsersList />,
+      }
     ],
   },
   {
