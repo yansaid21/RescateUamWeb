@@ -19,14 +19,14 @@ const UserNavbar = () => {
             </div>
           </Link>
         </button>
-        {role_user === 2 ? 
+        {/* {role_user === 2 ? 
           <button className="icon-button">
           <Link to="/admin/usersStadistics">
             <div className="icon" >
             <BarChartOutlined />
             </div>
           </Link>
-        </button> : null}
+        </button> : null} */}
         <button className="icon-button">
           <Link to="/user/profile">
             <div className="icon">
