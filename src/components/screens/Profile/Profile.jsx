@@ -104,14 +104,14 @@ export const Profile = () => {
         >
         {loading ? (
             <div style={{ textAlign: 'center', margin: '20px 0' }}>
-                <Spin size="large" />
+                <Spinner />
             </div>
         ) : (
             <>
                 <div style={{ textAlign: 'center', marginBottom: 20 }}>
                     <Avatar
                         size={100}
-                        src={`https://${SERVER_IP}${userPhoto}`}
+                        src={`http://${SERVER_IP}${userPhoto}`}
                         alt={`${userInfo.name} ${userInfo.last_name}`}
                         style={{ marginBottom: 10 }}
                     />
