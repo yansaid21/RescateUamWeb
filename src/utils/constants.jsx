@@ -1,4 +1,4 @@
-const SERVER_IP = "127.0.0.1:8000";
+const SERVER_IP = "localhost:8000";
 const SECURE = false;
 export const SECRET_KEY =
   "quiñones:yXaNffqVUT2z9v6ESuJ/t8FJNWRAhbQWMNGR9Vcm1u0=";
@@ -23,7 +23,7 @@ export const ENV = {
     ZONES: "zones",
     ROOMS: "rooms",
     INSTITUTIONS: "institutions",
-    LEVELS: "levels"
+    LEVELS: "levels",
   },
   INSTITUTION_ID: 1,
 };

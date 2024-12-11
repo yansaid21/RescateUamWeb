@@ -41,6 +41,9 @@ const BrigadistsTable = ({ className, size }) => {
           {
             page: tableParams.pagination.current,
             perPage: tableParams.pagination.pageSize,
+            orderBy: tableParams.sortField,
+            order: tableParams.sortOrder,
+            filters: tableParams.filters,
           },
         );
 

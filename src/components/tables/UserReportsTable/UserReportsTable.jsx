@@ -18,6 +18,7 @@ const userReportColumns = [
     title: "E-mail",
     dataIndex: "email",
     key: "email",
+    sorter: true,
   },
   {
     title: "Número de telefono",
@@ -31,15 +32,15 @@ const userReportColumns = [
     filters: [
       {
         text: "Safe",
-        value: "Safe",
+        value: "safe",
       },
       {
         text: "In risk",
-        value: "In risk",
+        value: "at_risk",
       },
       {
-        text: "Out",
-        value: "Out",
+        text: "Outside",
+        value: "outside",
       },
     ],
   },
@@ -47,7 +48,7 @@ const userReportColumns = [
     title: "Resolución",
     dataIndex: "resolution",
     key: "resolution",
-    filter: true,
+    render: (resolution) => <span>{resolution ? resolution : "No hay"}</span>,
   },
   {
     title: "Acciones",
@@ -76,17 +77,20 @@ const UserReportsTable = ({ className, size }) => {
           {
             page: tableParams.pagination.current,
             perPage: tableParams.pagination.pageSize,
+            orderBy: tableParams.sortField,
+            order: tableParams.sortOrder,
+            filters: tableParams.filters,
           },
         );
 
       const newDataSource = userReports.map((userReport) => {
         return {
           key: userReport.id,
-          name: userReport.user.name,
-          email: userReport.user.email,
-          phone: userReport.user.phone_number,
+          name: userReport.user?.name,
+          email: userReport.user?.email,
+          phone: userReport.user?.phone_number,
           state: userReport.state,
-          resolution: userReport.resolution.state,
+          resolution: userReport.resolution?.state ?? null,
         };
       });
 
@@ -99,9 +103,9 @@ const UserReportsTable = ({ className, size }) => {
           total: dataPagination.total,
         },
       };
-
       return { newDataSource, newTableParams };
     } catch (error) {
+      console.error(error);
       return { newDataSource: [], newTableParams: tableParams };
     }
   }
