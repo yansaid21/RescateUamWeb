@@ -58,8 +58,6 @@ const UsersList = () => {
    
     try {
       if (brigadist === true ) {
-
-        console.log("entro a quitBrigadistRole");
         
         await BrigadistsController.quitBrigadistRole(userId);
         message.success("Usuario quitado de los brigadistas");
