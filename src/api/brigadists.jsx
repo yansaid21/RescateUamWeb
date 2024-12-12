@@ -18,6 +18,30 @@ const BrigadistsController = {
       throw error;
     }
   },
+  async setBrigadistRole(user_id) {
+    const url = `/${API_ROUTES.INSTITUTIONS}/${ENV.INSTITUTION_ID}/${API_ROUTES.BRIGADIERS}`;
+    try {
+      const response = await axiosInstance.post(url,{"users":[user_id]} );
+      return response.data;
+    } catch (error) {
+      console.log("error al setear el brigadista",error);
+      throw error;
+    }
+  },
+  async quitBrigadistRole(user_id) {
+    const url = `/${API_ROUTES.INSTITUTIONS}/${ENV.INSTITUTION_ID}/${API_ROUTES.BRIGADIERS}`;
+    try {
+      const response = await axiosInstance.delete(url, {
+        data: { users: [user_id] }, // El cuerpo debe ir dentro de `data` en solicitudes DELETE.
+      });
+      return response.data;
+    } catch (error) {
+      console.log("error al setear el brigadista",error);
+      throw error;
+    }
+  },
+
+
 };
 
 export default BrigadistsController;
