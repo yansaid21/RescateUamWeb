@@ -32,8 +32,10 @@ const UserController = {
     
     const formData = new FormData();
     formData.append("_method", "PUT");
-    formData.append("name", userData.name);
-    formData.append("last_name", userData.last_name);
+
+    if (userData.name) formData.append("name", userData.name);
+    if (userData.last_name) formData.append("last_name", userData.last_name);
+    if (userData.email) formData.append("email", userData.email);
     if (userData.id_card) {
       const idCard = parseInt(userData.id_card, 10);
       if (isNaN(idCard)) {
@@ -41,12 +43,9 @@ const UserController = {
       }
       formData.append("id_card", idCard);
     }
-
     if (userData.rhgb) formData.append("rhgb", userData.rhgb);
-    if (userData.phone_number)
-      formData.append("phone_number", userData.phone_number);
-    if (userData.social_security)
-      formData.append("social_security", userData.social_security);
+    if (userData.phone_number) formData.append("phone_number", userData.phone_number);
+    if (userData.social_security) formData.append("social_security", userData.social_security);
     if (userData.photo) formData.append("photo", userData.photo);
 
     try {

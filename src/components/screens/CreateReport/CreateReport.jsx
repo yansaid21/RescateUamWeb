@@ -1,6 +1,6 @@
 import React from "react";
 import "./CreateReport.css";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import { useFormik } from "formik";
 const { TextArea } = Input;
 import IncidentsController from "../../../api/incidents";
@@ -36,7 +36,11 @@ export const CreateReport = ({ onClose, risk }) => {
         console.log("update_incident createReport ", update_incident);
         onClose();
       } catch (error) {
-        console.log(error);
+        if (error.status === 422) {
+          message.error(error.response.data.message);
+        } else {
+          message.error(error.response.data.message);
+        }
       }
     },
   });

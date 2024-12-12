@@ -3,7 +3,7 @@ import './Profile.css';
 import UserController from '../../../api/user';
 import { Card, Descriptions, Avatar, Tag, Button, Input, message } from 'antd';
 import { Spinner } from '../../atoms/Spinner/Spinner';
-import { EditOutlined, LogoutOutlined, SaveOutlined } from '@ant-design/icons';
+import { EditOutlined, LogoutOutlined, SaveOutlined, UserOutlined } from '@ant-design/icons';
 import { userStore } from '../../../store/user';
 
 export const Profile = () => {
@@ -23,7 +23,7 @@ export const Profile = () => {
         try {
             const id_user = user.id;
             const response = await UserController.getUserInfo(id_user);
-            console.log('user profile ', response.data.photo_path);
+            console.log('user profile ', response.data);
             setUserPhoto(response.data.photo_path);
             setUserInfo(response.data);
         } catch (error){
@@ -35,21 +35,26 @@ export const Profile = () => {
 
     //ediatr info
     const handleEditClick = (field) => {
+        const valueToEdit = userInfo[field] || ''; // Asegura que no sea undefined
         setEditingField(field);
-        setEditedValue(userInfo[field]);
+        setEditedValue(valueToEdit);
     };
 
     const handleSave = async () => {
         setLoading(true);
         try {
             const id_user = user.id;
-            await UserController.updateUser(id_user, { [editingField]: editedValue });
-            setUserInfo((prev) => ({ ...prev, [editingField]: editedValue }));
+            const response = await UserController.updateUser(id_user, { [editingField]: editedValue });
+            console.log('Respuesta del backend tras actualizar:', response.data);
+            setUserInfo((prev) => ({
+                ...prev,
+                [editingField]: editedValue || prev[editingField], // Evita sobrescribir valores válidos con undefined
+            }));
             setEditingField(null);
-            message.success('Información actualizada correctamente');
+            message.success(response.message);
         } catch (error) {
             console.error('Error al actualizar: ', error);
-            message.error('No se pudo actualizar la información');
+            message.error(error.response.data.message);
         } finally {
             setLoading(false); // Ocultar el spinner
         }
@@ -73,7 +78,7 @@ export const Profile = () => {
 
     useEffect(() => {
         getUser();
-    },)
+    },[])
 
     if (loading) {
         return (
@@ -111,9 +116,10 @@ export const Profile = () => {
                 <div style={{ textAlign: 'center', marginBottom: 20 }}>
                     <Avatar
                         size={100}
-                        src={`http://${SERVER_IP}${userPhoto}`}
+                        src={userPhoto ? `http://${SERVER_IP}${userPhoto}` : null}
                         alt={`${userInfo.name} ${userInfo.last_name}`}
                         style={{ marginBottom: 10 }}
+                        icon={!userPhoto && <UserOutlined />}
                     />
                     <input
                         type="file"
@@ -168,6 +174,8 @@ export const Profile = () => {
                         </Descriptions.Item>
                         <Descriptions.Item label="Cédula">{userInfo.id_card}</Descriptions.Item>
                         <Descriptions.Item label="RH y Grupo Sanguíneo">{userInfo.rhgb}</Descriptions.Item>
+                        <Descriptions.Item label="Nombre">{userInfo.name}</Descriptions.Item>
+                        <Descriptions.Item label="Apellido">{userInfo.last_name}</Descriptions.Item>
                         <Descriptions.Item label="EPS">
                             {editingField === 'social_security' ? (
                                 <>

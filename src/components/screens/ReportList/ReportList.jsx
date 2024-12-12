@@ -20,7 +20,6 @@ const columns = [
 ];
 
 const { Search } = Input;
-const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 export const ReportList = () => {
   const [bordered, setBordered] = useState(true);
@@ -30,23 +29,41 @@ export const ReportList = () => {
   const [yScroll, setYScroll] = useState(false);
   const [incidentsData, setIncidentsData] = useState([]);
   const [loading, setLoading] = useState(false);
-    //filtro
-    const [filteredData, setFilteredData] = useState([]);
-    const [searchText, setSearchText] = useState('');
+  //filtro
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  //en caso de estar un incidente activo
+  const [activeIncident, setActiveIncident] = useState(null);
 
   const fetchIncidents = async () => {
     setLoading(true);
     try {
       const response = await IncidentsController.getIncidents(1);
       console.log("Incidents fetched:", response);
-      const formattedData = response.data.map((incident, index) => ({
-        key: index,
-        incidente: incident.risk_situation.name,
-        fecha: incident.initial_date.split(" ")[0],
-        hora: `${incident.initial_date.split(" ")[1]} - ${incident.final_date.split(" ")[1]}`,
-      }));
+      const formattedData = response.data.map((incident, index) => {
+        const initialDate = incident.initial_date || ""; // Valor predeterminado
+        const finalDate = incident.final_date || ""; // Valor predeterminado
+  
+        return {
+          key: index,
+          incidente: incident.risk_situation.name || "N/A", // Manejar posibles nulos
+          fecha: initialDate.split(" ")[0] || "Fecha no disponible",
+          hora: `${initialDate.split(" ")[1] || "N/A"} - ${finalDate.split(" ")[1] || "N/A"}`,
+          initialDate: initialDate ? new Date(initialDate) : null, // Si existe, convertir
+        };
+      });
       setIncidentsData(formattedData);
-            setFilteredData(formattedData);
+      setFilteredData(formattedData);
+      // Determinar incidente activo (por ejemplo, el más reciente sin finalizar)
+      const active = response.data.find(
+        (incident) => !incident.final_date // Si final_date es nulo, significa que está activo
+      );
+      if (active) {
+        setActiveIncident({
+          ...active,
+          initialDate: new Date(active.initial_date),
+        });
+      }
     } catch (error) {
       console.error("Error al obtener los incidentes:", error);
     } finally {
@@ -58,14 +75,24 @@ export const ReportList = () => {
     fetchIncidents();
   }, []);
 
-    const handleSearch = (value) => {
-        setSearchText(value);
-        const filtered = incidentsData.filter(item => 
-            item.incidente.toLowerCase().includes(value.toLowerCase()) || 
-            item.fecha.includes(value)
-        );
-        setFilteredData(filtered);
-    };
+  // Filtrar incidentes anteriores al activo
+  useEffect(() => {
+    if (activeIncident) {
+      const filtered = incidentsData.filter(
+        (incident) => incident.initialDate < activeIncident.initialDate
+      );
+      setFilteredData(filtered);
+    }
+  }, [activeIncident, incidentsData]);
+
+  const handleSearch = (value) => {
+    setSearchText(value);
+    const filtered = incidentsData.filter(item => 
+        item.incidente.toLowerCase().includes(value.toLowerCase()) || 
+        item.fecha.includes(value)
+    );
+    setFilteredData(filtered);
+};
 
   const tableProps = {
     bordered,

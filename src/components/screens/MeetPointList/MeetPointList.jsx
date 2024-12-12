@@ -73,6 +73,10 @@ export const MeetPointList = () => {
     setShowCreateMeetPoint(true);
   };
 
+  const handleMeetPointCreated = () => {
+    fetchMeetPoints(); // Actualiza la lista inmediatamente
+  };
+
   return (
     <>
       <div className="listmeetpoint">
@@ -92,6 +96,7 @@ export const MeetPointList = () => {
           <CreateMeetPoint
             onClose={() => setShowCreateMeetPoint(false)}
             onAddZone={handleOpenCreateZone}
+            onMeetPointCreated={handleMeetPointCreated}
           />
         )}
         {showCreateZone && (
