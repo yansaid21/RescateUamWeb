@@ -8,6 +8,8 @@ import RoundedButton from "../../../atoms/RoundedButton/RoundedButton";
 import { Spinner } from "../../../atoms/Spinner/Spinner";
 import BrigadistTable from "../../../tables/BrigadistTable/BrigadistTable";
 import { userStore } from "../../../../store/user";
+import SectionMenu from "../../../atoms/SectionMenu/SectionMenu";
+import ProtocolsController from "../../../../api/protocols";
 
 const { TextArea } = Input;
 
@@ -24,6 +26,7 @@ export const UserIncident = () => {
   const [declareSafe, setDeclareSafe] = useState(false);
   const [meetPoints, setMeetPoints] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [protocols, setProtocols] = useState([]);
 
   const handleModal = () => {
     if (userReport && (userReport.state === "outside" || userReport.resolution))
@@ -46,7 +49,7 @@ export const UserIncident = () => {
             incident.risk_situation_id,
             incident.id,
             userReport.id,
-            updatedFields,
+            updatedFields
           ).then((data) => {
             setMeetPoints(data.data.zone?.meet_points);
             setUserReport(data.data);
@@ -66,7 +69,7 @@ export const UserIncident = () => {
           state,
           zone_id: location,
           description,
-        },
+        }
       ).then((data) => {
         setUserReport(data.data);
         setMeetPoints(data.data.zone?.meet_points);
@@ -90,7 +93,7 @@ export const UserIncident = () => {
         {
           state: "safe",
           description: description,
-        },
+        }
       ).then((data) => {
         setUserReport(data.data);
         setShowModal(false);
@@ -108,7 +111,7 @@ export const UserIncident = () => {
               value: zone.id,
               label: zone.name,
             };
-          }),
+          })
         );
       } catch (error) {
         console.log(error);
@@ -119,7 +122,7 @@ export const UserIncident = () => {
       try {
         const userReport =
           await UserReportsController.getUserReportInActiveIncident(
-            institution.id,
+            institution.id
           );
         setUserReport(userReport.data);
         console.log(userReport.data);
@@ -168,8 +171,21 @@ export const UserIncident = () => {
       }
     }
 
+    const getProtocols = async () => {
+      try {
+        const response = await ProtocolsController.getProtocols(
+          incident.risk_situation_id
+        );
+        setProtocols(response.data);
+        console.log("Protocols: ", response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchZones();
     fetchUserReport();
+    getProtocols();
   }, [institution]);
 
   return loading ? (
@@ -180,54 +196,107 @@ export const UserIncident = () => {
         <RoundedButton
           onClick={() => setShowModal(true)}
           buttonClass={{
-            width: "200px",
-            height: "200px",
-            backgroundColor: "#F4D73B",
+            width: "240px",
+            height: "240px",
+            backgroundColor: "#fed822",
+            borderRadius: "50%",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            fontSize: "2rem",
+            fontWeight: "bold",
+            color: "#333",
+            // Colocar uppercase en el texto
+            textTransform: "uppercase",
           }}
           text={"Actualizar reporte"}
         />
         {meetPoints ? (
           <div className="user-incident-meet-points">
-            <h3>Puntos de encuentro</h3>
-            <ul>
+            <h3
+              style={{
+                color: "#0090d0",
+                textAlign: "center",
+                fontSize: "2rem",
+                margin: 0,
+              }}
+            >
+              Puntos de encuentro
+            </h3>
+            <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
               {meetPoints.map((meetPoint) => (
-                <li key={meetPoint.id}>
+                <li
+                  key={meetPoint.id}
+                  style={{
+                    backgroundColor: "#FFF3CD",
+                    margin: "10px 0",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
                   <strong>{meetPoint.name}</strong>: {meetPoint.description}
                 </li>
               ))}
             </ul>
           </div>
         ) : (
-          <h3>
+          <h3 style={{ color: "#F4D73B", textAlign: "center" }}>
             Ingresa tú ubicación en el reporte para ver los puntos de encuentro
             más cercanos
           </h3>
         )}
       </section>
       <section className="user-incident">
-        <h2>Protocolos</h2>
+        <section className="user-incident-protocols">
+          <h2
+            style={{
+              color: "#F4D73B",
+              textAlign: "center",
+              fontSize: "2rem",
+              margin: 0,
+            }}
+          >
+            Protocolos para
+            <span style={{ color: "#0090D0" }}>
+              {" "}
+              {incident.risk_situation.name}
+            </span>
+          </h2>
+          {protocols.map((protocol) => (
+            <SectionMenu
+              key={protocol.id}
+              color="#F4D73B"
+              text={protocol.name}
+              href={`/risk-sitiation/${incident.risk_situation_id}/show-protocol/${protocol.id}`}
+              logo="warning-amber"
+            />
+          ))}
+        </section>
         <BrigadistTable />
       </section>
       <Modal
         closable={false}
-        title={userReport ? "Actualiza tú reporte" : "Llena tú reporte"}
+        title={
+          <div
+            style={{ textAlign: "center", fontSize: "2rem", color: "#F4D73B" }}
+          >
+            {userReport ? "Actualiza tú reporte" : "Llena tú reporte"}
+          </div>
+        }
         open={showModal}
         centered
-        styles={{
-          header: {
-            textAlign: "center",
-            fontSize: "2rem",
-          },
-          mask: {
-            backdropFilter: "blur(10px)",
-          },
+        maskStyle={{
+          backdropFilter: "blur(10px)",
         }}
         footer={[
           userReport && (
             <Button
               key="cancel"
-              color="danger"
-              variant="solid"
+              style={{
+                backgroundColor: "#FF4D4F",
+                color: "white",
+                borderRadius: "8px",
+                fontWeight: "bold",
+              }}
               onClick={() => setShowModal(false)}
             >
               Cancelar
@@ -236,6 +305,12 @@ export const UserIncident = () => {
           <Button
             key="submit"
             type="primary"
+            style={{
+              backgroundColor: "#1890FF",
+              color: "white",
+              borderRadius: "8px",
+              fontWeight: "bold",
+            }}
             onClick={handleModal}
             disabled={
               userReport &&
@@ -251,7 +326,12 @@ export const UserIncident = () => {
             state == "safe" && (
               <Button
                 key="declare-safe"
-                style={{ backgroundColor: "#2ade06", color: "white" }}
+                style={{
+                  backgroundColor: "#2ade06",
+                  color: "white",
+                  borderRadius: "8px",
+                  fontWeight: "bold",
+                }}
                 onClick={() => handleDeclareSafe()}
               >
                 Declararme a salvo
@@ -272,7 +352,7 @@ export const UserIncident = () => {
                   else setDeclareSafe(false);
                 }
               }}
-              style={{ width: "100%" }}
+              style={{ width: "100%", marginBottom: "10px" }}
               defaultValue={
                 userReport
                   ? userReport.resolution
@@ -291,7 +371,7 @@ export const UserIncident = () => {
               placeholder="Ubicación"
               optionFilterProp="label"
               onChange={(value) => setLocation(value)}
-              style={{ width: "100%" }}
+              style={{ width: "100%", marginBottom: "10px" }}
               defaultValue={userReport ? userReport.zone_id : null}
               disabled={
                 userReport &&
@@ -328,7 +408,7 @@ export const UserIncident = () => {
                 userReport &&
                 (userReport.state === "outside" || userReport.resolution)
               }
-              style={{ height: 120 }}
+              style={{ height: 120, borderRadius: "8px", marginBottom: "10px" }}
             />
           </Tooltip>
         </div>

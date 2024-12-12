@@ -1,35 +1,72 @@
-import React, { useEffect, useState } from 'react'
-import SectionMenu from '../../atoms/SectionMenu/SectionMenu';
-import './Menu.css';
-import RiskSituationsController from '../../../api/risk_situations';
+import { useEffect, useState } from "react";
+import SectionMenu from "../../atoms/SectionMenu/SectionMenu";
+import "./Menu.css";
+import RiskSituationsController from "../../../api/risk_situations";
+import ProtocolsController from "../../../api/protocols";
+import { ENV } from "../../../utils/constants";
+import { useParams } from "react-router-dom";
 
 export const ProtocolsMenuUser = () => {
-    const riskId = localStorage.getItem('id_risk');
-    const [riskName, setRiskName] = useState('');
+  const { id_risk_situation } = useParams();
+  const [protocols, setProtocols] = useState([]);
+  const [riskSituation, setRiskSituation] = useState({});
+  const [loading, setLoading] = useState(true);
 
-    const getRisk = async () => {
-        try {
-            const response = await RiskSituationsController.getRisk(1, riskId);
-            setRiskName(response.data.name);
-        } catch (error){
-            console.log('Error getRisk in ProtocolsMenuUser', error);
-        }
-    }
+  useEffect(() => {
+    const getProtocols = async () => {
+      try {
+        const response = await ProtocolsController.getProtocols(
+          id_risk_situation
+        );
+        setProtocols(response.data);
+        console.log("Protocols: ", response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    useEffect(() => {
-        getRisk();
-    },)
+    const getRiskSituation = async () => {
+      try {
+        const response = await RiskSituationsController.getRisk(
+          ENV.INSTITUTION_ID,
+          id_risk_situation
+        );
+        setRiskSituation(response.data);
+        console.log("Risk Situation: ", response.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    return (
+    getProtocols();
+    getRiskSituation();
+  }, [id_risk_situation]);
+
+  return (
+    <>
+      {loading ? (
+        <h1>Cargando...</h1>
+      ) : (
         <>
-            <div className="menu-container">
-            <h2>{riskName}</h2>
-                <SectionMenu color="#0090D0" text="Modificar Indicaciones Antes" href="#" logo="warning-amber" />
-                <SectionMenu color="#E36727" text="Modificar Indicaciones Durante" href="#" logo="warning-amber" />
-                <SectionMenu color="#9CD04D" text="Modificar Indicaciones a Salvo" href="#" logo="warning-amber" />
-                <SectionMenu color="#CE0071" text="Modificar Indicaciones en Peligro" href="#" logo="warning-amber" />
+          <div className="menu-container" style={{ justifyContent: "start" }}>
+            <h1 className="menu-title">{riskSituation.name}</h1>
+            <h2 className="menu-subtitle">Descripción</h2>
+            <p className="menu-description">{riskSituation.description}</p>
+            <div className="menu">
+              {protocols.map((protocol) => (
+                <SectionMenu
+                  key={protocol.id}
+                  color="#F4D73B"
+                  text={protocol.name}
+                  href={`/risk-sitiation/${id_risk_situation}/show-protocol/${protocol.id}`}
+                  logo="warning-amber"
+                />
+              ))}
             </div>
+          </div>
         </>
-    )
-}
-
+      )}
+    </>
+  );
+};

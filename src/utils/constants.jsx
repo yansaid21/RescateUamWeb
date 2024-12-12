@@ -10,6 +10,7 @@ export const SECRET_KEY =
 
 export const ENV = {
   BASE_PATH: `${SECURE ? "https" : "http"}://${SERVER_IP}/api`,
+  IMAGE_PATH: `${SECURE ? "https" : "http"}://${SERVER_IP}/static`,
   ECHO_KEY: "bjvoc9h7uopfewap6d26",
   WS_HOST: "localhost",
   WS_PORT: 8080,
@@ -23,7 +24,8 @@ export const ENV = {
     ZONES: "zones",
     ROOMS: "rooms",
     INSTITUTIONS: "institutions",
-    LEVELS: "levels"
+    LEVELS: "levels",
+    PROTOCOLS: "protocols",
   },
   INSTITUTION_ID: 1,
 };
