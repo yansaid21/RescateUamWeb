@@ -1,4 +1,4 @@
-const SERVER_IP = "localhost:8000";
+const SERVER_IP = "api.rescateuam.just2devs.click";
 const SECURE = false;
 export const SECRET_KEY =
   "quiñones:yXaNffqVUT2z9v6ESuJ/t8FJNWRAhbQWMNGR9Vcm1u0=";
@@ -11,7 +11,7 @@ export const SECRET_KEY =
 export const ENV = {
   BASE_PATH: `${SECURE ? "https" : "http"}://${SERVER_IP}/api`,
   ECHO_KEY: "bjvoc9h7uopfewap6d26",
-  WS_HOST: "localhost",
+  WS_HOST: "api.rescateuam.just2devs.click",
   WS_PORT: 8080,
   API_ROUTES: {
     REGISTER: "users",

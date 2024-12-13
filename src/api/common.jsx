@@ -14,10 +14,13 @@ export function addFiltersParams(url, filters) {
 
 export function addQueryParams(
   url,
-  { page = 1, perPage = 15, orderBy, order, filters },
+  { page = 1, perPage = 15, orderBy, order, filters, searchValue },
 ) {
   url += `?page=${page}`;
   url += `&per_page=${perPage}`;
+  if (searchValue) {
+    url += `&search=${searchValue}`;
+  }
   if (orderBy) {
     url += `&order_by=${orderBy}`;
   }

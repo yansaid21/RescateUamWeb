@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axiosInstance } from "../config/axiosInstance";
 import { ENV } from "../utils/constants";
 const { API_ROUTES } = ENV;
@@ -16,7 +17,9 @@ const UserController = {
   },
   async getUsers(institutionId) {
     try {
-      const response = await axiosInstance.get(`/institutions/${institutionId}/${API_ROUTES.GET_USERS}`);
+      const response = await axiosInstance.get(
+        `/institutions/${institutionId}/${API_ROUTES.GET_USERS}`,
+      );
       return response.data;
     } catch (error) {
       console.log(error);
@@ -24,8 +27,8 @@ const UserController = {
     }
   },
   async updateUser(id, userData) {
-    console.log('userData en updateUser ', userData);
-    
+    console.log("userData en updateUser ", userData);
+
     const formData = new FormData();
     formData.append("_method", "PUT");
     formData.append("name", userData.name);
@@ -33,7 +36,7 @@ const UserController = {
     if (userData.id_card) {
       const idCard = parseInt(userData.id_card, 10);
       if (isNaN(idCard)) {
-          throw new Error("El campo cédula debe ser un número entero válido.");
+        throw new Error("El campo cédula debe ser un número entero válido.");
       }
       formData.append("id_card", idCard);
     }
@@ -81,26 +84,15 @@ const UserController = {
     }
   },
 
-  async getProfile() {
-    try {
-      const response = await axiosInstance.get(`/profile`);
-
-      console.log("respuesta despues del getProfile", response.data);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  },
-
-  // Overload
   async getProfile(sessionToken) {
     try {
-      const response = await axiosInstance.get(`/profile`, {
-        headers: {
+      const config = {};
+      if (sessionToken) {
+        config.headers = {
           Authorization: `Bearer ${sessionToken}`,
-        },
-      });
+        };
+      }
+      const response = await axiosInstance.get(`/profile`, config);
 
       console.log("respuesta despues del getProfile", response.data);
       return response.data;

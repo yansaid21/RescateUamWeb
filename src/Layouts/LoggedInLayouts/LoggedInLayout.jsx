@@ -8,7 +8,7 @@ export const AdminLayout = () => {
     <>
       <AdminNavbar />
       <main>
-        <AnimatedOutlet /> {/* Asegúrate de incluir Outlet aquí */}
+        <AnimatedOutlet />
       </main>
     </>
   );
@@ -19,7 +19,7 @@ export const UserLayout = () => {
     <>
       <UserNavbar />
       <main>
-        <AnimatedOutlet /> {/* Asegúrate de incluir Outlet aquí */}
+        <AnimatedOutlet />
       </main>
     </>
   );

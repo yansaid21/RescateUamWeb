@@ -4,7 +4,9 @@ import { create } from "zustand";
 import { ENV } from "../utils/constants";
 import InstitutionController from "../api/institution";
 import { institutionStore } from "../store/institution";
+import { userStore } from "../store/user";
 const { setInstitution, setIncident, setFlag } = institutionStore.getState();
+const { syncUser } = userStore.getState();
 
 export const echoStore = create((set) => ({
   echo: null,
@@ -28,18 +30,21 @@ export const echoStore = create((set) => ({
     echo
       .private(`public-channel.${ENV.INSTITUTION_ID}`)
       .listen(".incidentCreation", async (data) => {
+        console.log("RECIBI EL EVENTO");
         const { data: institution } =
           await InstitutionController.getInstitution(ENV.INSTITUTION_ID);
         setInstitution(institution);
         setIncident(institution.active_incident);
         setFlag(true);
+        await syncUser(true);
       });
     echo
       .private(`public-channel.${ENV.INSTITUTION_ID}`)
-      .listen(".incidentFinalization", (data) => {
+      .listen(".incidentFinalization", async (data) => {
         console.log("incidentFinalization", data);
         setIncident(null);
         setFlag(false);
+        await syncUser(true);
       });
 
     set({ echo });
