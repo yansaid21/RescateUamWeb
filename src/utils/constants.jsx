@@ -1,5 +1,5 @@
 export const SERVER_IP = "api.rescateuam.just2devs.click";
-const SECURE = false;
+const SECURE = true;
 export const SECRET_KEY =
   "quiñones:yXaNffqVUT2z9v6ESuJ/t8FJNWRAhbQWMNGR9Vcm1u0=";
 // server dns rescueapi.xyz

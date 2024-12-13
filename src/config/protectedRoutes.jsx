@@ -3,7 +3,7 @@ import { userStore } from "../store/user";
 
 export const routeFromRole = new Map([
   [1, "/admin"],
-  [2, "/brigadist"],
+  [2, "/brigadier"],
   [3, "/user"],
 ]);
 

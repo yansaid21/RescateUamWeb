@@ -92,24 +92,13 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/brigadist",
+    path: "/brigadier",
     element: (
       <BrigadistProtectedRoute>
         <Layout />
       </BrigadistProtectedRoute>
     ),
-    children: [
-      { index: true, element: <Brigadier /> },
-      { path: "profile", element: <Profile /> },
-      {
-        path: "risk/protocols-menu",
-        element: <ProtocolsMenuUser />,
-      }, // Consistencia en nombres
-      {
-        path: "brigadiers",
-        element: <BrigadierList />,
-      },
-    ],
+    children: [{ index: true, element: <Brigadier /> }],
   },
   {
     path: "/user",

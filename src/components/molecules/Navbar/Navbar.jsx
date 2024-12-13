@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { FaUserCircle } from "react-icons/fa";
 import { userStore } from "../../../store/user";
+import useIncidentNotification from "../../../hooks/useIncidentNotification";
 
 const Navbar = () => {
   const role = userStore((state) => state.role);
+  const { incident } = useIncidentNotification();
   return (
     <div className="navbar">
       <div className="icons-container">
@@ -24,7 +26,7 @@ const Navbar = () => {
               </div>
             </Link>
           </button>
-        ) : role === 2 ? (
+        ) : role === 2 && incident ? (
           <button className="icon-button">
             <Link to="/brigadier">
               <div className="icon">
