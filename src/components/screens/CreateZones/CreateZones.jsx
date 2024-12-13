@@ -6,7 +6,7 @@ import { Button, Form, Input, message } from "antd";
 import { ENV } from "../../../utils/constants";
 import ZonesController from "../../../api/zones";
 
-export const CreateZones = ({ onClose }) => {
+export const CreateZones = ({ onClose, onSuccess }) => {
   const validate = (values) => {
     const errors = {};
 
@@ -22,7 +22,7 @@ export const CreateZones = ({ onClose }) => {
 
     if (!values.description) {
       errors.description = "Este campo es requerido";
-    } else if (!/^[a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ\s]+$/.test(values.description)) {
+    } else if (!/^[a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ\s.,]+$/.test(values.description)) {
       errors.description = "No admite caracteres especiales";
     }
     return errors;
@@ -44,11 +44,12 @@ export const CreateZones = ({ onClose }) => {
         };
         const theZones = await ZonesController.createZones(
           ENV.INSTITUTION_ID,
-          zonesData,
+          zonesData
         );
         console.log("theZones createZones ", theZones);
-        message.success('Zona creada correctamente');
+        message.success("Zona creada correctamente");
         onClose();
+        onSuccess(theZones.data);
       } catch (error) {
         console.log(error);
         if (error.status === 422) {
@@ -102,11 +103,11 @@ export const CreateZones = ({ onClose }) => {
               Aceptar
             </Button>
             <Button
-                className="form__buttonroom"
-                type="button"
-                onClick={onClose}
+              className="form__buttonroom"
+              type="button"
+              onClick={onClose}
             >
-                Cancelar
+              Cancelar
             </Button>
           </div>
         </form>

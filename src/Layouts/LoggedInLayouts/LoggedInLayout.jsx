@@ -1,23 +1,10 @@
-import React from "react";
-import AdminNavbar from "../../components/molecules/Navbar/AdminNavbar";
-import UserNavbar from "../../components/molecules/Navbar/UserNavbar";
+import Navbar from "../../components/molecules/Navbar/Navbar";
 import AnimatedOutlet from "./AnimatedOutlet";
 
-export const AdminLayout = () => {
+export const Layout = () => {
   return (
     <>
-      <AdminNavbar />
-      <main>
-        <AnimatedOutlet />
-      </main>
-    </>
-  );
-};
-
-export const UserLayout = () => {
-  return (
-    <>
-      <UserNavbar />
+      <Navbar />
       <main>
         <AnimatedOutlet />
       </main>

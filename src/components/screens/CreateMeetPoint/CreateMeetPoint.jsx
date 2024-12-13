@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./CreateMeetPoint.css";
 import TextArea from "antd/es/input/TextArea";
 import { useFormik } from "formik";
@@ -40,7 +40,7 @@ export const CreateMeetPoint = ({ onClose, onAddZone, onMeetPointCreated }) => {
 
     if (!values.description) {
       errors.description = "Este campo es requerido";
-    } else if (!/^[a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ\s]+$/.test(values.description)) {
+    } else if (!/^[a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ,.\s]+$/.test(values.description)) {
       errors.description = "No admite caracteres especiales";
     }
     return errors;
@@ -63,10 +63,10 @@ export const CreateMeetPoint = ({ onClose, onAddZone, onMeetPointCreated }) => {
         };
         const meet_point = await MeetPointsController.createMeetPoint(
           ENV.INSTITUTION_ID,
-          meetPointData,
+          meetPointData
         );
         console.log("meet_point createMeetPoint ", meet_point);
-        message.success('Punto de encuentro creado correctamente');
+        message.success("Punto de encuentro creado correctamente");
         if (onMeetPointCreated) {
           onMeetPointCreated(); // Notifica a MeetPointList para actualizar
         }
@@ -162,11 +162,11 @@ export const CreateMeetPoint = ({ onClose, onAddZone, onMeetPointCreated }) => {
               Aceptar
             </Button>
             <Button
-                className="form__buttonmeetpoint"
-                type="button"
-                onClick={onClose}
+              className="form__buttonmeetpoint"
+              type="button"
+              onClick={onClose}
             >
-                Cancelar
+              Cancelar
             </Button>
           </div>
         </form>
