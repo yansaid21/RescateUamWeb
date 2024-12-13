@@ -127,6 +127,7 @@ export const CreateMeetPoint = ({ onClose, onAddZone, onMeetPointCreated }) => {
                 ))}
                 <Select.Option
                   value="addZone"
+                  id="addNewZone"
                   style={{ color: "#007BFF", fontWeight: "bold" }}
                 >
                   + Añadir Zona
