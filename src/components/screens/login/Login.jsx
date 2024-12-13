@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Login.css";
 import Logo from "../../../assets/UAM/Logos_UAM-07.png";
 import { Button, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import UserController from "../../../api/user";
 import { Spinner } from "../../atoms/Spinner/Spinner";
 import { userStore } from "../../../store/user";
 import CryptoJS from "crypto-js";
@@ -72,27 +71,26 @@ export const Login = () => {
           console.log("Login exitoso", response);
           localStorage.setItem(
             "google",
-            CryptoJS.AES.encrypt(response.token, SECRET_KEY).toString(),
+            CryptoJS.AES.encrypt(response.token, SECRET_KEY).toString()
           );
           // set axios instance headers
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${response.token}`;
           initEcho(response.token);
           const institution = await InstitutionsController.getInstitution(
-            ENV.INSTITUTION_ID,
+            ENV.INSTITUTION_ID
           );
           setInstitution(institution.data);
           if (routeFromRole.has(role)) {
             navigate(routeFromRole.get(role));
           }
-        } 
+        }
       } catch (error) {
-        console.log('error en logiiin ', error.status);
+        console.log("error en logiiin ", error.status);
         if (error.status === 422) {
-          message.error('Contraseña o correo incorrectos. Inténtalo de nuevo.');
+          message.error("Contraseña o correo incorrectos. Inténtalo de nuevo.");
         } else {
           message.error(error.response.data.message);
         }
-        
       } finally {
         setIsLoading(false);
       }

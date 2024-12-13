@@ -1,4 +1,3 @@
-import React from "react";
 import "./CreateRiskSituation.css";
 import { Button, Form, Input, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
@@ -6,9 +5,9 @@ import { useFormik } from "formik";
 import RiskSituationsController from "../../../api/risk_situations";
 
 export const CreateRiskSituation = ({ onClose }) => {
-    if (typeof onClose !== 'function') {
-        console.error('La prop onClose no es una función:', onClose);
-    }
+  if (typeof onClose !== "function") {
+    console.error("La prop onClose no es una función:", onClose);
+  }
   const validate = (values) => {
     const errors = {};
 
@@ -20,7 +19,7 @@ export const CreateRiskSituation = ({ onClose }) => {
 
     if (!values.description) {
       errors.description = "Este campo es requerido";
-    } else if (!/^[a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ\s]+$/.test(values.description)) {
+    } else if (!/^[a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ,.\s]+$/.test(values.description)) {
       errors.description = "No admite caracteres especiales";
     }
     return errors;
@@ -41,17 +40,17 @@ export const CreateRiskSituation = ({ onClose }) => {
         };
         const risk = await RiskSituationsController.createRiskSituation(
           riskSituationData,
-          1,
+          1
         );
         console.log("risk ", risk);
-        message.success('Riesgo creado correctamente');
+        message.success("Riesgo creado correctamente");
         onClose();
       } catch (error) {
         console.log(error);
         if (error.status === 422) {
           message.error(error.response.data.message);
         } else {
-          message.error('Ha ocurrido un error');
+          message.error("Ha ocurrido un error");
         }
       }
     },
@@ -97,15 +96,17 @@ export const CreateRiskSituation = ({ onClose }) => {
               Aceptar
             </Button>
           </div>
-                    <div className='btnrisk'>
-                        <Button className='form__buttonrisk' onClick={() => {
-                                console.log('onClose:', onClose); // Verifica si es una función aquí
-                                onClose();
-                            }}
-                        >
-                                Cancelar
-                        </Button>
-                    </div>
+          <div className="btnrisk">
+            <Button
+              className="form__buttonrisk"
+              onClick={() => {
+                console.log("onClose:", onClose); // Verifica si es una función aquí
+                onClose();
+              }}
+            >
+              Cancelar
+            </Button>
+          </div>
         </form>
       </div>
     </div>
