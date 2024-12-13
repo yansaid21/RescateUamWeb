@@ -89,9 +89,16 @@ const CompleteRegister = ({ onClose }) => {
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
+      const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+  
+      if (selectedFile.size > maxSizeInBytes) {
+        message.error("La imagen no debe exceder los 2 MB");
+        return; 
+      }
+  
       setFile(selectedFile); // Almacena el archivo seleccionado
-      const fileURL = URL.createObjectURL(selectedFile); // Crea la URL de previsualización
-      setPreview(fileURL); // Guarda la URL para previsualización
+      const fileURL = URL.createObjectURL(selectedFile); 
+      setPreview(fileURL); 
     }
   };
 
