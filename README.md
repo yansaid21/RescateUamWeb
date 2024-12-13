@@ -1,4 +1,3 @@
-
  # Rescate UAM
 
 ## Descripción
@@ -25,7 +24,36 @@ Rescate UAM es una herramienta diseñada para la identificación de los usuarios
 Para iniciar la aplicación, ejecuta:
    ```bash
    npm run dev
+```
+
+## Despliegue 
+
+Para desplegar la aplicación, ejecuta:
+   ```bash
+   npm run build
  ```
+
+Una vez ejecutado el comando anterior, se creará una carpeta llamada `dist` en la raíz del proyecto. Esta carpeta contiene los archivos necesarios para desplegar la aplicación en un servidor web.
+
+como servidor web recomendamos usar nginx, para ello, copie el contenido de la carpeta `dist` en la carpeta root configurada en el archivo de configuración de nginx como se muestra a continuación:
+
+```nginx
+server {
+        listen 80;
+        listen [::]:80;
+        server_name www.rescateuam.just2devs.click;
+
+        root /var/www/rescateuamweb;
+        index index.html index.htm index.nginx-debian.html;
+
+
+        location / {
+		try_files $uri /index.html;
+        }
+}
+```
+
+Es importante la sentencia try_files $uri /index.html; ya que esta permite que la aplicación funcione correctamente con las rutas de react.
 
 ## A USAR LA APLICACIÓN!
 Luego, abre tu navegador y ve a http://localhost:5173.

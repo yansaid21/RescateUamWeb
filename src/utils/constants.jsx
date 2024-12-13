@@ -11,8 +11,8 @@ export const SECRET_KEY =
 export const ENV = {
   BASE_PATH: `${SECURE ? "https" : "http"}://${SERVER_IP}/api`,
   ECHO_KEY: "bjvoc9h7uopfewap6d26",
-  WS_HOST: "api.rescateuam.just2devs.click",
-  WS_PORT: 8080,
+  WS_HOST: "reverb.rescateuam.just2devs.click",
+  WS_PORT: 80,
   API_ROUTES: {
     REGISTER: "users",
     LOGIN: "auth/login",
