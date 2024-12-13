@@ -204,7 +204,7 @@ export const Register = () => {
               onBlur={formik.handleBlur}
             >
               Aceptar{" "}
-              <Link className="register__terms">términos y condiciones</Link>
+              <Link className="register__terms" to="/terms-conditions">términos y condiciones</Link>
             </Checkbox>
             {formik.touched.terms && formik.errors.terms ? (
               <div className="register__error">{formik.errors.terms}</div>
@@ -212,7 +212,7 @@ export const Register = () => {
           </Col>
         </Row>
         <Row>
-          <Col span={24} className="register__inputs">
+          <Col span={24} className="register__inputs" >
             <Button
               htmlType="submit"
               className="register__button"

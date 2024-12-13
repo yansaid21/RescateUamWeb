@@ -28,6 +28,7 @@ import { Profile } from "../components/screens/Profile/Profile";
 import { ProtocolsMenuUser } from "../components/screens/Menu/ProtocolsMenuUser";
 import { BrigadierList } from "../components/screens/BrigadireList/BrigadierList";
 import UsersList from "../components/screens/UsersList/UsersList";
+import { TermsAndConditions } from "../components/screens/TermsAndConditions/TermsAndConditions";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -42,6 +43,14 @@ export const router = createBrowserRouter([
     element: (
       <NotAuthenticatedRoute>
         <Register />
+      </NotAuthenticatedRoute>
+    ),
+  },
+  {
+    path: "/terms-conditions",
+    element: (
+      <NotAuthenticatedRoute>
+        <TermsAndConditions />
       </NotAuthenticatedRoute>
     ),
   },
