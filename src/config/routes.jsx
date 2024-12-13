@@ -6,10 +6,7 @@ import { MeetPointList } from "../components/screens/MeetPointList/MeetPointList
 import { Register } from "../components/screens/register/Register";
 import { ReportList } from "../components/screens/ReportList/ReportList";
 import { Menu } from "../components/screens/Menu/Menu";
-import {
-  AdminLayout,
-  UserLayout,
-} from "../Layouts/LoggedInLayouts/LoggedInLayout";
+import { Layout } from "../Layouts/LoggedInLayouts/LoggedInLayout";
 import { ProtocolsMenu } from "../components/screens/Menu/ProtocolsMenu";
 import { RisksMenu } from "../components/screens/Menu/RisksMenu";
 import { CreateRiskSituation } from "../components/screens/CreateRiskSituation/CreateRiskSituation";
@@ -41,7 +38,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "risk-sitiation/:id_risk_situation/show-protocol/:id_protocol",
-    element: <ShowProtocol />,
+    element: (
+      <>
+        <Layout />
+        <ShowProtocol />
+      </>
+    ),
   },
   {
     path: "/register",
@@ -55,7 +57,7 @@ export const router = createBrowserRouter([
     path: "/admin",
     element: (
       <AdminProtectedRoute>
-        <AdminLayout />
+        <Layout />
       </AdminProtectedRoute>
     ),
     children: [
@@ -93,7 +95,7 @@ export const router = createBrowserRouter([
     path: "/brigadist",
     element: (
       <BrigadistProtectedRoute>
-        <UserLayout />
+        <Layout />
       </BrigadistProtectedRoute>
     ),
     children: [
@@ -113,7 +115,7 @@ export const router = createBrowserRouter([
     path: "/user",
     element: (
       <UserProtectedRoute>
-        <UserLayout />
+        <Layout />
       </UserProtectedRoute>
     ),
     children: [

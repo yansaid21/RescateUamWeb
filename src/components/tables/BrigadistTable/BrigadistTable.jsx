@@ -31,7 +31,7 @@ const brigadistColumns = [
 
 const BrigadistsTable = ({ className, size }) => {
   const { incident } = institutionStore();
-  async function syncBrigadists(tableParams) {
+  async function syncBrigadists(tableParams, searchValue = null) {
     try {
       const { data: brigadists, pagination: dataPagination } =
         await BrigadistsController.getActiveBrigadists(
@@ -41,6 +41,10 @@ const BrigadistsTable = ({ className, size }) => {
           {
             page: tableParams.pagination.current,
             perPage: tableParams.pagination.pageSize,
+            orderBy: tableParams.sortField,
+            order: tableParams.sortOrder,
+            filters: tableParams.filters,
+            searchValue,
           },
         );
 

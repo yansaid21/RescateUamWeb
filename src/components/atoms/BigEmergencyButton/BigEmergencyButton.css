@@ -3,27 +3,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;  
-  height: 300px; 
-  border-radius: 150px; 
+  width: 300px;
+  height: 300px;
+  border-radius: 150px;
   transition: background-color 0.3s; /* Añade una transición suave */
 }
 
 .emergencyButton {
-  background-color: #F4D73B; 
+  background-color: #42a5d0;
   cursor: pointer;
 }
 
 .emergencyButtonPressed {
-  background-color: #0090D0;
+  background-color: #0090d0;
   cursor: pointer;
 }
 
-.emergencyLogo{
+.emergencyLogo {
   width: auto;
   height: 270px;
 }
-.emergencyButtonDisabled{
-  background-color: #F4D73B;
+.emergencyButtonDisabled {
+  background-color: #f4d73b;
   cursor: not-allowed;
 }

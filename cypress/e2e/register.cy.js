@@ -62,14 +62,17 @@ describe("Register Page", () => {
   });
 
   it("should submit the form successfully", () => {
+    const randomNumber = Cypress._.random(100000, 999999);
+    const uniqueEmail = `usuario${randomNumber}@autonoma.edu.co`;
+    const uniqueId = `${randomNumber}`;
     // Llenar el formulario correctamente
-    cy.get("#email").type("usuario@autonoma.edu.co");
+    cy.get("#email").type(uniqueEmail);
     cy.get("#name").type("Nombre");
     cy.get("#lastname").type("Apellido");
     cy.get("#password").type("password1234");
     cy.get("#repassword").type("password1234");
     //cada que se haga esta prueba hay que cambiar el número del id
-    cy.get("#id").type("112255661");
+    cy.get("#id").type(uniqueId);
     cy.get("input[name='terms']").check();
 
     // Enviar el formulario

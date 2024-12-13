@@ -1,6 +1,7 @@
-import { Empty, Table } from "antd";
+import { Empty, Table, Input } from "antd";
 import { useEffect, useState } from "react";
 import { echoStore } from "../../../store/echo";
+const { Search } = Input;
 
 const defaultSyncDataSource = async () => {
   console.log("Default sync data source");
@@ -15,6 +16,7 @@ const TableWithSocket = ({
   className,
   size,
   title,
+  onRowClick,
   channel,
   event,
   syncDataSource = defaultSyncDataSource,
@@ -56,7 +58,6 @@ const TableWithSocket = ({
     fetchInitialDataSource();
     echo.private(channel).listen(event, async (data) => {
       try {
-        console.log("Event received =>", data);
         setLoading(true);
         await listener(data); // callback so the user can execute some logic when the event is received.
         const { newDataSource, newTableParams } =
@@ -95,20 +96,53 @@ const TableWithSocket = ({
     }
   };
 
+  const handleSearch = async (searchValue) => {
+    setLoading(true);
+    try {
+      const { newDataSource, newTableParams } = await syncDataSource(
+        tableParams,
+        searchValue,
+      );
+      setDataSource(newDataSource);
+      setTableParams(newTableParams);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <Table
-      className={className}
-      size={size}
-      title={title}
-      dataSource={dataSource}
-      columns={columns}
-      pagination={tableParams.pagination}
-      loading={loading}
-      onChange={handleTableChange}
-      locale={{
-        emptyText: <Empty description={emptyText}></Empty>,
-      }}
-    ></Table>
+    <section style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <Search
+        placeholder="nombre, email o teléfono"
+        allowClear={true}
+        onSearch={handleSearch}
+        style={{ width: 300 }}
+      />
+      <Table
+        className={className}
+        size={size}
+        title={title}
+        dataSource={dataSource}
+        columns={columns}
+        pagination={tableParams.pagination}
+        loading={loading}
+        onChange={handleTableChange}
+        locale={{
+          emptyText: <Empty description={emptyText}></Empty>,
+        }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              if (onRowClick) {
+                onRowClick(record, rowIndex);
+              }
+            },
+          };
+        }}
+      ></Table>
+    </section>
   );
 };
 

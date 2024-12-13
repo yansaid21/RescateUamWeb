@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./CompleteRegister.css";
 import { Button, Form, Input, message, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -67,10 +67,10 @@ const CompleteRegister = ({ onClose }) => {
 
         const response = await UserController.updateUser(
           Number(id_user),
-          userData,
+          userData
         );
         console.log("Datos actualizados correctamente", response);
-        message.success('Datos actualizados correctamente');
+        message.success("Datos actualizados correctamente");
         onClose();
         navigate("/admin");
       } catch (error) {
@@ -90,15 +90,15 @@ const CompleteRegister = ({ onClose }) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
       const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
-  
+
       if (selectedFile.size > maxSizeInBytes) {
         message.error("La imagen no debe exceder los 2 MB");
-        return; 
+        return;
       }
-  
+
       setFile(selectedFile); // Almacena el archivo seleccionado
-      const fileURL = URL.createObjectURL(selectedFile); 
-      setPreview(fileURL); 
+      const fileURL = URL.createObjectURL(selectedFile);
+      setPreview(fileURL);
     }
   };
 
@@ -107,104 +107,106 @@ const CompleteRegister = ({ onClose }) => {
       <div className="modal__content">
         <h2 className="modal__title">¡Completa tu registro!</h2>
         {isLoading ? ( // Condicional para mostrar el spinner
-          <Spinner/> 
+          <Spinner />
         ) : (
-        <form className="form" onSubmit={formik.handleSubmit}>
-          <div className="section">
-            <Form.Item>
-              <Select
-                placeholder="Grupo sanguíneo"
-                className="form__input"
-                id="rhgb"
-                name="rhgb"
-                onChange={(value) => formik.setFieldValue("rhgb", value)} // Actualiza el valor en Formik
-                value={formik.values.rhgb}
-              >
-                <Select.Option value="A+">A+</Select.Option>
-                <Select.Option value="A-">A-</Select.Option>
-                <Select.Option value="B+">B+</Select.Option>
-                <Select.Option value="B-">B-</Select.Option>
-                <Select.Option value="AB+">AB+</Select.Option>
-                <Select.Option value="AB-">AB-</Select.Option>
-                <Select.Option value="O+">O+</Select.Option>
-                <Select.Option value="O-">O-</Select.Option>
-              </Select>
-              {formik.errors.rhgb ? (
-                <div className="error__text">{formik.errors.rhgb}</div>
-              ) : null}
-            </Form.Item>
-            <Form.Item>
-              <Input
-                placeholder="Celular"
-                className="form__input"
-                id="phone_number"
-                name="phone_number"
-                onChange={formik.handleChange}
-                value={formik.values.phone_number}
-              />
-              {formik.errors.phone_number ? (
-                <div className="error__text">{formik.errors.phone_number}</div>
-              ) : null}
-            </Form.Item>
-          </div>
-          <div className="section">
-            <Form.Item>
-              <Input
-                placeholder="EPS"
-                className="form__input"
-                id="social_security"
-                name="social_security"
-                onChange={formik.handleChange}
-                value={formik.values.social_security}
-              />
-              {formik.errors.social_security ? (
-                <div className="error__text">
-                  {formik.errors.social_security}
-                </div>
-              ) : null}
-            </Form.Item>
-            <Form.Item>
-              <Input
-                placeholder="Código UAM"
-                className="form__input"
-                id="code"
-                name="code"
-                onChange={formik.handleChange}
-                value={formik.values.code}
-              />
-              {formik.errors.code ? (
-                <div className="error__text">{formik.errors.code}</div>
-              ) : null}
-            </Form.Item>
-          </div>
-          <Form.Item>
-            <label className="upload__label" htmlFor="photo">
-              <UploadOutlined className="upload__icon" />
-              <span> Subir foto </span>
-            </label>
-            <input
-              type="file"
-              id="photo"
-              className="form__input__photo"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
-            {formik.errors.photo ? (
-              <div className="error__text">{formik.errors.photo}</div>
-            ) : null}
-          </Form.Item>
-          {preview && (
-            <div className="image__preview">
-              <img src={preview} alt="Preview" className="preview__img" />
+          <form className="form" onSubmit={formik.handleSubmit}>
+            <div className="section">
+              <Form.Item>
+                <Select
+                  placeholder="Grupo sanguíneo"
+                  className="form__input"
+                  id="rhgb"
+                  name="rhgb"
+                  onChange={(value) => formik.setFieldValue("rhgb", value)} // Actualiza el valor en Formik
+                  value={formik.values.rhgb}
+                >
+                  <Select.Option value="A+">A+</Select.Option>
+                  <Select.Option value="A-">A-</Select.Option>
+                  <Select.Option value="B+">B+</Select.Option>
+                  <Select.Option value="B-">B-</Select.Option>
+                  <Select.Option value="AB+">AB+</Select.Option>
+                  <Select.Option value="AB-">AB-</Select.Option>
+                  <Select.Option value="O+">O+</Select.Option>
+                  <Select.Option value="O-">O-</Select.Option>
+                </Select>
+                {formik.errors.rhgb ? (
+                  <div className="error__text">{formik.errors.rhgb}</div>
+                ) : null}
+              </Form.Item>
+              <Form.Item>
+                <Input
+                  placeholder="Celular"
+                  className="form__input"
+                  id="phone_number"
+                  name="phone_number"
+                  onChange={formik.handleChange}
+                  value={formik.values.phone_number}
+                />
+                {formik.errors.phone_number ? (
+                  <div className="error__text">
+                    {formik.errors.phone_number}
+                  </div>
+                ) : null}
+              </Form.Item>
             </div>
-          )}
-          <Form.Item className="btn">
-            <Button htmlType="submit" className="form__button" type="submit">
-              Aceptar
-            </Button>
-          </Form.Item>
-        </form>
-      )}
+            <div className="section">
+              <Form.Item>
+                <Input
+                  placeholder="EPS"
+                  className="form__input"
+                  id="social_security"
+                  name="social_security"
+                  onChange={formik.handleChange}
+                  value={formik.values.social_security}
+                />
+                {formik.errors.social_security ? (
+                  <div className="error__text">
+                    {formik.errors.social_security}
+                  </div>
+                ) : null}
+              </Form.Item>
+              <Form.Item>
+                <Input
+                  placeholder="Código UAM"
+                  className="form__input"
+                  id="code"
+                  name="code"
+                  onChange={formik.handleChange}
+                  value={formik.values.code}
+                />
+                {formik.errors.code ? (
+                  <div className="error__text">{formik.errors.code}</div>
+                ) : null}
+              </Form.Item>
+            </div>
+            <Form.Item>
+              <label className="upload__label" htmlFor="photo">
+                <UploadOutlined className="upload__icon" />
+                <span> Subir foto </span>
+              </label>
+              <input
+                type="file"
+                id="photo"
+                className="form__input__photo"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+              {formik.errors.photo ? (
+                <div className="error__text">{formik.errors.photo}</div>
+              ) : null}
+            </Form.Item>
+            {preview && (
+              <div className="image__preview">
+                <img src={preview} alt="Preview" className="preview__img" />
+              </div>
+            )}
+            <Form.Item className="btn">
+              <Button htmlType="submit" className="form__button" type="submit">
+                Aceptar
+              </Button>
+            </Form.Item>
+          </form>
+        )}
       </div>
     </div>
   );
