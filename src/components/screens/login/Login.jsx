@@ -89,7 +89,9 @@ export const Login = () => {
         console.log('error en logiiin ', error.status);
         if (error.status === 422) {
           message.error('Contraseña o correo incorrectos. Inténtalo de nuevo.');
-        } 
+        } else {
+          message.error(error.response.data.message);
+        }
         
       } finally {
         setIsLoading(false);

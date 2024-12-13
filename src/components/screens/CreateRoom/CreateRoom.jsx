@@ -10,7 +10,7 @@ import { CreateZones } from '../CreateZones/CreateZones';
 import LevelsController from '../../../api/levels';
 import { CreateLevel } from '../CreateLevel/CreateLevel';
 
-export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
+export const CreateRoom = ({ onClose, onAddZone, onAddLevel, onRoomCreated }) => {
     //traer las zonas
     const [zones, setZones] = useState([{ id: 1, name: "Zona 1" }]);
     useEffect(() => {
@@ -113,10 +113,15 @@ export const CreateRoom = ({ onClose, onAddZone, onAddLevel }) => {
                 );
                 console.log("room createRooms ", room);
                 message.success('Salón creado correctamente');
+                onRoomCreated();
                 onClose();
             } catch (error) {
                 console.log(error);
-                message.success('Ha ocurrido un error');
+                if (error.status === 422) {
+                    message.error(error.response.data.message);
+                } else {
+                    message.error(error.response.data.message);
+                }
             }
         },
     });

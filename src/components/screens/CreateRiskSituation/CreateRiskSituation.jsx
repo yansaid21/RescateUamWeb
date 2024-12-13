@@ -35,13 +35,11 @@ export const CreateRiskSituation = ({ onClose }) => {
     onSubmit: async (values) => {
       console.log("values ", values);
       try {
-        const token = await localStorage.getItem("token");
         const riskSituationData = {
           name: values.name,
           description: values.description,
         };
         const risk = await RiskSituationsController.createRiskSituation(
-          token,
           riskSituationData,
           1,
         );
@@ -50,7 +48,11 @@ export const CreateRiskSituation = ({ onClose }) => {
         onClose();
       } catch (error) {
         console.log(error);
-        message.success('Ha ocurrido un error');
+        if (error.status === 422) {
+          message.error(error.response.data.message);
+        } else {
+          message.error('Ha ocurrido un error');
+        }
       }
     },
   });
