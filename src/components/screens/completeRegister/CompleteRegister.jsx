@@ -6,12 +6,14 @@ import { useFormik } from "formik";
 import UserController from "../../../api/user";
 import { useNavigate } from "react-router-dom";
 import { userStore } from "../../../store/user";
+import { Spinner } from "../../atoms/Spinner/Spinner";
 
 const CompleteRegister = ({ onClose }) => {
   const { user } = userStore();
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const validate = (values) => {
     const errors = {};
@@ -48,6 +50,7 @@ const CompleteRegister = ({ onClose }) => {
     },
     validate,
     onSubmit: async (values) => {
+      setIsLoading(true);
       console.log("values ", { ...values, photo: file });
       try {
         const id_user = user.id;
@@ -72,7 +75,13 @@ const CompleteRegister = ({ onClose }) => {
         navigate("/admin");
       } catch (error) {
         console.error("Error al actualizar los datos:", error);
-        message.error('Error al actualizar los datos');
+        if (error.status === 422) {
+          message.error(error.response.data.message);
+        } else {
+          message.error(error.response.data.message);
+        }
+      } finally {
+        setIsLoading(false); // Ocultar el spinner
       }
     },
   });
@@ -90,6 +99,9 @@ const CompleteRegister = ({ onClose }) => {
     <div className="modal">
       <div className="modal__content">
         <h2 className="modal__title">¡Completa tu registro!</h2>
+        {isLoading ? ( // Condicional para mostrar el spinner
+          <Spinner/> 
+        ) : (
         <form className="form" onSubmit={formik.handleSubmit}>
           <div className="section">
             <Form.Item>
@@ -185,6 +197,7 @@ const CompleteRegister = ({ onClose }) => {
             </Button>
           </Form.Item>
         </form>
+      )}
       </div>
     </div>
   );

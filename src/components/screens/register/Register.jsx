@@ -94,7 +94,9 @@ export const Register = () => {
       } catch (error){
         if (error.status === 400) {
           message.error('Este usuario ya existe. Inicia sesión');
-        } 
+        } else {
+          message.error(error.response.data.message);
+        }
       }
     },
   });
