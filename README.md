@@ -21,12 +21,12 @@ Rescate UAM es una herramienta diseñada para la identificación de los usuarios
 3. Instala las dependencias:
    ```bash
    npm install 
-##Uso
+## Uso
 Para iniciar la aplicación, ejecuta:
    ```bash
    npm run dev
 
-
+## A USAR LA APLICACIÓN!
 Luego, abre tu navegador y ve a http://localhost:5173.
 
 Una vez que está listo para entrar a la aplicación, y teniendo en cuenta que también ha clonado el backend, puede acceder a la aplicación en 3 roles distintos:
