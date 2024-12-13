@@ -20,37 +20,37 @@ export const Register = () => {
 
     //pasword validation
     if (!values.password) {
-      errors.password = "La contraseña debe tener más de 8 dígitos";
-    } else if (values.password.length < 8) {
       errors.password = "Este campo es requerido";
+    } else if (values.password.length < 8) {
+      errors.password = "La contraseña debe tener más de 8 dígitos";
     }
 
     // repassword validation
-    if (!values.password) {
-      errors.repassword = "Las contraseñas no coinciden";
-    } else if (values.password !== values.repassword) {
+    if (!values.repassword) {
       errors.repassword = "Este campo es requerido";
+    } else if (values.password !== values.repassword) {
+      errors.repassword = "Las contraseñas no coinciden";
     }
 
     //name validation
     if (!values.name) {
-      errors.name = "El nombre solo contiene letras";
-    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.name)) {
       errors.name = "Este campo es requerido";
+    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.name)) {
+      errors.name = "El nombre solo contiene letras";
     }
 
     //lastname validation
     if (!values.lastname) {
-      errors.lastname = "El apellido solo contiene letras";
-    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.lastname)) {
       errors.lastname = "Este campo es requerido";
+    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(values.lastname)) {
+      errors.lastname = "El apellido solo contiene letras";
     }
 
     // id validation
     if (!values.id) {
-      errors.id = "La identificación es con números";
+      errors.id = "Este campo es requerido";
     } else if (!/^[0-9]+$/.test(values.id)) {
-      errors.repassword = "Este campo es requerido";
+      errors.id = "La identificación es con números";
     }
 
     // checkbox validation

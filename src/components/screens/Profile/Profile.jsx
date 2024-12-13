@@ -10,7 +10,7 @@ export const Profile = () => {
     const [userInfo, setUserInfo] = useState();
     const [userPhoto, setUserPhoto] = useState();
     const [loading, setLoading] = useState(true);
-    const SERVER_IP = "rescueapi.xyz";
+    const SERVER_IP = "127.0.0.1:8000";
     const { user } = userStore();
 
 
@@ -48,7 +48,7 @@ export const Profile = () => {
             console.log('Respuesta del backend tras actualizar:', response.data);
             setUserInfo((prev) => ({
                 ...prev,
-                [editingField]: editedValue || prev[editingField], // Evita sobrescribir valores válidos con undefined
+                [editingField]: editedValue || prev[editingField],
             }));
             setEditingField(null);
             message.success(response.message);
@@ -56,13 +56,18 @@ export const Profile = () => {
             console.error('Error al actualizar: ', error);
             message.error(error.response.data.message);
         } finally {
-            setLoading(false); // Ocultar el spinner
+            setLoading(false); 
         }
     };
 
     const handleUpdatePhoto = async () => {
         setLoading(true); 
         if (!newPhoto) return;
+        const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+        if (newPhoto.size > maxSizeInBytes) {
+            message.error("La imagen no debe exceder los 2 MB");
+            return; 
+        }
         try {
             const updatedUser = await UserController.updateUser(user.id, { photo: newPhoto });
             setUserPhoto(updatedUser.photo_path); 
@@ -72,7 +77,7 @@ export const Profile = () => {
             console.error('Error al actualizar la foto:', error);
             message.error('No se pudo actualizar la información');
         } finally {
-            setLoading(false); // Ocultar el spinner
+            setLoading(false); 
         }
     };
 
@@ -116,7 +121,7 @@ export const Profile = () => {
                 <div style={{ textAlign: 'center', marginBottom: 20 }}>
                     <Avatar
                         size={100}
-                        src={userPhoto ? `http://${SERVER_IP}${userPhoto}` : null}
+                        src={`http://${SERVER_IP}${userPhoto}`}
                         alt={`${userInfo.name} ${userInfo.last_name}`}
                         style={{ marginBottom: 10 }}
                         icon={!userPhoto && <UserOutlined />}
