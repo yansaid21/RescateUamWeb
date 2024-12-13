@@ -1,17 +1,17 @@
 import RoundedButton from "../../../atoms/RoundedButton/RoundedButton";
 import "./BrigadierIncident.css";
-import logo1 from "../../../../assets/UAM/Logos_UAM-06.png"; // Ajusta la ruta según tu estructura
+import logo1 from "../../../../assets/UAM/Logos_UAM-06.png";
 import logo2 from "../../../../assets/UAM/Logos_UAM-10.png";
 import StatisticsReportWithSocket from "../../../molecules/StatisticsReportWithSocket/StatisticsReportWithSocket";
 import UserReportsTable from "../../../tables/UserReportsTable/UserReportsTable";
-import { notification } from "antd";
+import SelectMeetPointModal from "../../../molecules/SelectMeetPointModal/SelectMeetPointModal.jsx";
+import { notification, Tag, Tooltip } from "antd";
 import { institutionStore } from "../../../../store/institution";
 import { userStore } from "../../../../store/user";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ENV } from "../../../../utils/constants";
-import { Select, Modal, Button } from "antd";
-import MeetPointsController from "../../../../api/meet_points";
+import { Spinner } from "../../../atoms/Spinner/Spinner.jsx";
 
 export const BrigadierIncident = () => {
   const navigate = useNavigate();
@@ -19,39 +19,9 @@ export const BrigadierIncident = () => {
   const { incident } = institutionStore();
   const { user } = userStore();
   const [showModal, setShowModal] = useState(false);
-  const [meetpoint, setMeetpoint] = useState(null);
-  const [meetpoints, setMeetpoints] = useState([]);
-  const [loadingMeetpoints, setLoadingMeetpoints] = useState(false);
-
-  const handleAssignMeetPoint = async () => {
-    try {
-      await MeetPointsController.assignMeetPoint(ENV.INSTITUTION_ID, meetpoint);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setShowModal(false);
-    }
-  };
-
-  const syncMeetpoints = async () => {
-    try {
-      setLoadingMeetpoints(true);
-      const meetpoints = await MeetPointsController.getMeetPoints(
-        ENV.INSTITUTION_ID,
-      );
-      const newMeetPoints = meetpoints.data.map((meetpoint) => {
-        return { value: meetpoint.id, label: meetpoint.name };
-      });
-      setMeetpoints(newMeetPoints);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingMeetpoints(false);
-    }
-  };
+  const [loadingMeetPoint, setLoadingMeetPoint] = useState(false);
 
   useEffect(() => {
-    syncMeetpoints();
     if (incident && user.incident_reported === null) {
       api.warning({
         message: "Incidente",
@@ -71,62 +41,51 @@ export const BrigadierIncident = () => {
     <>
       {contextHolder}
       <section className="brigadier-incident">
-        <RoundedButton
-          className="assign"
-          onClick={() => setShowModal(true)}
-          buttonClass={{
-            width: "300px",
-            height: "300px",
-            backgroundColor: "#F4D73B",
-          }}
-          disabledClass={{ backgroundColor: "#0090D0" }}
-          imageSrc={logo1}
-          disabledImageSrc={logo2}
-        />
+        <section
+          style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
+        >
+          {loadingMeetPoint ? (
+            <Spinner />
+          ) : (
+            <>
+              <RoundedButton
+                disabled={!!user.brigadier_meet_point}
+                disabledText="Ya estas asignado a un punto de encuentro"
+                className="assign"
+                onClick={() => setShowModal(true)}
+                buttonClass={{
+                  width: "300px",
+                  height: "300px",
+                  backgroundColor: "#F4D73B",
+                }}
+                disabledClass={{ backgroundColor: "#0090D0" }}
+                imageSrc={logo1}
+                disabledImageSrc={logo2}
+              />
+              <div>
+                <strong>Punto de encuentro: </strong>
+                <Tag color={user.brigadier_meet_point ? "blue" : "default"}>
+                  {user.brigadier_meet_point
+                    ? user.brigadier_meet_point.meet_point.name
+                    : "No asignado"}
+                </Tag>
+              </div>
+            </>
+          )}
+        </section>
         <StatisticsReportWithSocket
           channel={`privileged-channel.${ENV.INSTITUTION_ID}`}
           event={`.userReportChange`}
         />
         <UserReportsTable className="user-reports wide-table" size="large" />
-        <Modal
+        <SelectMeetPointModal
+          open={showModal}
           onCancel={() => {
             setShowModal(false);
+            setLoadingMeetPoint(false);
           }}
-          title="Asignarse a un punto de encuentro"
-          open={showModal}
-          centered
-          styles={{
-            header: {
-              textAlign: "center",
-              fontSize: "2rem",
-            },
-            mask: {
-              backdropFilter: "blur(10px)",
-            },
-            body: {
-              display: "flex",
-              padding: "1rem",
-              justifyContent: "center",
-            },
-            footer: {
-              display: "flex",
-              justifyContent: "center",
-            },
-          }}
-          footer={[
-            <Button key="submit" type="primary" onClick={handleAssignMeetPoint}>
-              Asignarse
-            </Button>,
-          ]}
-        >
-          <Select
-            style={{ width: "300px" }}
-            size="large"
-            onChange={(value) => setMeetpoint(value)}
-            options={meetpoints}
-            loading={loadingMeetpoints}
-          />
-        </Modal>
+          onLoading={() => setLoadingMeetPoint(true)}
+        />
       </section>
     </>
   );

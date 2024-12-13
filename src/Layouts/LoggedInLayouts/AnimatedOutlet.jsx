@@ -1,5 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { userStore } from "../../store/user";
+import { Spinner } from "../../components/atoms/Spinner/Spinner";
 
 const pageVariants = {
   initial: { x: "60%", opacity: 0.3 }, // Start off-screen to the right
@@ -14,6 +16,7 @@ const pageTransition = {
 };
 
 export const AnimatedOutlet = () => {
+  const { reloading } = userStore();
   const location = useLocation();
   return (
     <motion.div
@@ -24,7 +27,7 @@ export const AnimatedOutlet = () => {
       variants={pageVariants}
       transition={pageTransition}
     >
-      <Outlet />
+      {reloading ? <Spinner /> : <Outlet />}
     </motion.div>
   );
 };
