@@ -221,6 +221,7 @@ export const Structure = () => {
                             onClose={() => setShowCreateRoom(false)}
                             onAddZone={handleOpenCreateZone}
                             onAddLevel={handleOpenCreateLevel}
+                            onRoomCreated={() => fetchRooms(selectedZone)}
                         />
                         )}
                     </div>

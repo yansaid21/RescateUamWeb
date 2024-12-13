@@ -3,14 +3,14 @@ import './Profile.css';
 import UserController from '../../../api/user';
 import { Card, Descriptions, Avatar, Tag, Button, Input, message } from 'antd';
 import { Spinner } from '../../atoms/Spinner/Spinner';
-import { EditOutlined, LogoutOutlined, SaveOutlined } from '@ant-design/icons';
+import { EditOutlined, LogoutOutlined, SaveOutlined, UserOutlined } from '@ant-design/icons';
 import { userStore } from '../../../store/user';
 
 export const Profile = () => {
     const [userInfo, setUserInfo] = useState();
     const [userPhoto, setUserPhoto] = useState();
     const [loading, setLoading] = useState(true);
-    const SERVER_IP = "rescueapi.xyz";
+    const SERVER_IP = "127.0.0.1:8000";
     const { user } = userStore();
 
 
@@ -23,7 +23,7 @@ export const Profile = () => {
         try {
             const id_user = user.id;
             const response = await UserController.getUserInfo(id_user);
-            console.log('user profile ', response.data.photo_path);
+            console.log('user profile ', response.data);
             setUserPhoto(response.data.photo_path);
             setUserInfo(response.data);
         } catch (error){
@@ -35,29 +35,39 @@ export const Profile = () => {
 
     //ediatr info
     const handleEditClick = (field) => {
+        const valueToEdit = userInfo[field] || ''; // Asegura que no sea undefined
         setEditingField(field);
-        setEditedValue(userInfo[field]);
+        setEditedValue(valueToEdit);
     };
 
     const handleSave = async () => {
         setLoading(true);
         try {
             const id_user = user.id;
-            await UserController.updateUser(id_user, { [editingField]: editedValue });
-            setUserInfo((prev) => ({ ...prev, [editingField]: editedValue }));
+            const response = await UserController.updateUser(id_user, { [editingField]: editedValue });
+            console.log('Respuesta del backend tras actualizar:', response.data);
+            setUserInfo((prev) => ({
+                ...prev,
+                [editingField]: editedValue || prev[editingField],
+            }));
             setEditingField(null);
-            message.success('Información actualizada correctamente');
+            message.success(response.message);
         } catch (error) {
             console.error('Error al actualizar: ', error);
-            message.error('No se pudo actualizar la información');
+            message.error(error.response.data.message);
         } finally {
-            setLoading(false); // Ocultar el spinner
+            setLoading(false); 
         }
     };
 
     const handleUpdatePhoto = async () => {
         setLoading(true); 
         if (!newPhoto) return;
+        const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+        if (newPhoto.size > maxSizeInBytes) {
+            message.error("La imagen no debe exceder los 2 MB");
+            return; 
+        }
         try {
             const updatedUser = await UserController.updateUser(user.id, { photo: newPhoto });
             setUserPhoto(updatedUser.photo_path); 
@@ -67,13 +77,13 @@ export const Profile = () => {
             console.error('Error al actualizar la foto:', error);
             message.error('No se pudo actualizar la información');
         } finally {
-            setLoading(false); // Ocultar el spinner
+            setLoading(false); 
         }
     };
 
     useEffect(() => {
         getUser();
-    },)
+    },[])
 
     if (loading) {
         return (
@@ -114,6 +124,7 @@ export const Profile = () => {
                         src={`http://${SERVER_IP}${userPhoto}`}
                         alt={`${userInfo.name} ${userInfo.last_name}`}
                         style={{ marginBottom: 10 }}
+                        icon={!userPhoto && <UserOutlined />}
                     />
                     <input
                         type="file"
@@ -168,6 +179,8 @@ export const Profile = () => {
                         </Descriptions.Item>
                         <Descriptions.Item label="Cédula">{userInfo.id_card}</Descriptions.Item>
                         <Descriptions.Item label="RH y Grupo Sanguíneo">{userInfo.rhgb}</Descriptions.Item>
+                        <Descriptions.Item label="Nombre">{userInfo.name}</Descriptions.Item>
+                        <Descriptions.Item label="Apellido">{userInfo.last_name}</Descriptions.Item>
                         <Descriptions.Item label="EPS">
                             {editingField === 'social_security' ? (
                                 <>

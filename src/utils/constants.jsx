@@ -1,4 +1,4 @@
-const SERVER_IP = "127.0.0.1:8000";
+export const SERVER_IP = "127.0.0.1:8000";
 const SECURE = false;
 export const SECRET_KEY =
   "quiñones:yXaNffqVUT2z9v6ESuJ/t8FJNWRAhbQWMNGR9Vcm1u0=";
@@ -26,6 +26,8 @@ export const ENV = {
     INSTITUTIONS: "institutions",
     LEVELS: "levels",
     PROTOCOLS: "protocols",
+    BRIGADIERS: "brigadiers",
+    ADMINISTRATORS: "administrators",
   },
   INSTITUTION_ID: 1,
 };

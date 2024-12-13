@@ -46,8 +46,11 @@ export const CreateLevel = ({onClose}) => {
                 message.success('Nivel/piso creado correctamente');
                 onClose();
             } catch (error) {
-                console.log(error);
-                message.success('Ha ocurrido un error');
+                if (error.status === 422) {
+                    message.error(error.response.data.message);
+                } else {
+                    message.error(error.response.data.message);
+                }
             }
         },
     });
