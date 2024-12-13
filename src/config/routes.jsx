@@ -28,6 +28,8 @@ import { Profile } from "../components/screens/Profile/Profile";
 import { ProtocolsMenuUser } from "../components/screens/Menu/ProtocolsMenuUser";
 import { BrigadierList } from "../components/screens/BrigadireList/BrigadierList";
 import UsersList from "../components/screens/UsersList/UsersList";
+import { ShowProtocol } from "../components/screens/ShowProtocol/ShowProtocol";
+import { EditProtocol } from "../components/screens/EditProtocol/EditProtocol";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +38,10 @@ export const router = createBrowserRouter([
         <Login />
       </NotAuthenticatedRoute>
     ),
+  },
+  {
+    path: "risk-sitiation/:id_risk_situation/show-protocol/:id_protocol",
+    element: <ShowProtocol />,
   },
   {
     path: "/register",
@@ -58,7 +64,15 @@ export const router = createBrowserRouter([
       { path: "meetpoint", element: <MeetPointList /> },
       { path: "menu", element: <Menu /> },
       { path: "usersStatistics", element: <UsersStatus /> }, // Corrección aquí
-      { path: "protocols-menu", element: <ProtocolsMenu /> }, // Consistencia en nombres
+      { path: "protocols-menu/:id_risk_situation", element: <ProtocolsMenu /> },
+      {
+        path: "protocols-menu/:id_risk_situation/protocol/:id_protocol/edit",
+        element: <EditProtocol />,
+      },
+      {
+        path: "protocols-menu/:id_risk_situation/create-protocol",
+        element: <CreateProtocol />,
+      },
       { path: "risks-menu", element: <RisksMenu /> }, // Consistencia en nombres
       { path: "structure", element: <Structure /> },
       {
@@ -66,16 +80,13 @@ export const router = createBrowserRouter([
         element: <CreateRiskSituation />,
       }, // Consistencia en nombres
       {
-        path: "risks-menu/protocols-menu/create-protocol",
-        element: <CreateProtocol />,
-      }, // Consistencia en nombres
-      {
         path: "profile",
         element: <Profile />,
       }, // Consistencia en nombres
       {
-        path: "users-list", element: <UsersList />,
-      }
+        path: "users-list",
+        element: <UsersList />,
+      },
     ],
   },
   {
@@ -85,16 +96,17 @@ export const router = createBrowserRouter([
         <UserLayout />
       </BrigadistProtectedRoute>
     ),
-    children: [{ index: true, element: <Brigadier /> },
-                {path: "profile",element: <Profile />}, 
-                {
-                  path: "risk/protocols-menu",
-                  element: <ProtocolsMenuUser />,
-                }, // Consistencia en nombres
-                {
-                  path: "brigadiers",
-                  element: <BrigadierList />,
-                },
+    children: [
+      { index: true, element: <Brigadier /> },
+      { path: "profile", element: <Profile /> },
+      {
+        path: "risk/protocols-menu",
+        element: <ProtocolsMenuUser />,
+      }, // Consistencia en nombres
+      {
+        path: "brigadiers",
+        element: <BrigadierList />,
+      },
     ],
   },
   {
@@ -104,13 +116,14 @@ export const router = createBrowserRouter([
         <UserLayout />
       </UserProtectedRoute>
     ),
-    children: [{ index: true, element: <User /> },
+    children: [
+      { index: true, element: <User /> },
       {
         path: "profile",
         element: <Profile />,
       }, // Consistencia en nombres
       {
-        path: "risk/protocols-menu",
+        path: "risk-sitiation/:id_risk_situation",
         element: <ProtocolsMenuUser />,
       }, // Consistencia en nombres
       {
