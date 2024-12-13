@@ -17,4 +17,26 @@ Rescate UAM es una herramienta diseñada para la identificación de los usuarios
 
 2. Navega al directorio del proyecto
    ```bash
-   cd
+   cd ./RescateUam
+3. Instala las dependencias:
+   ```bash
+   npm install 
+##Uso
+Para iniciar la aplicación, ejecuta:
+   ```bash
+   npm run dev
+Luego, abre tu navegador y ve a http://localhost:5173.
+
+Una vez que está listo para entrar a la aplicación, y teniendo en cuenta que también ha clonado el backend, puede acceder a la aplicación en 3 roles distintos:
+ admin ->
+ correo: johndoe@autonoma.edu.co
+ password: password123
+ 
+ brigadista ->
+ correo: janesmith@autonoma.edu.co
+ password: password123
+
+ usuario ->
+ correo: finaluser@autonoma.edu.co
+ password: password123
+
